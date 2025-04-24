@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H DESIGN - 디자인 컨설팅</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#2C3E50',secondary:'#95A5A6'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Noto Sans KR', sans-serif;
+}
+.service-card {
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.service-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.process-step {
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.process-step:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.case-study-card {
+transition: transform 0.3s ease;
+}
+.case-study-card:hover {
+transform: scale(1.02);
+}
+.case-study-overlay {
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+.case-study-card:hover .case-study-overlay {
+opacity: 1;
+}
+</style>
+</head>
+<body class="bg-white text-gray-800">
+<!-- 헤더 -->
+<header class="w-full bg-white shadow-sm fixed top-0 z-50">
+<div class="container mx-auto px-4 py-4 flex justify-between items-center">
+<a href="/" class="h-8">
+<img src="https://static.readdy.ai/image/3c16391a4b5d74433155a2d2f7dc5d27/28b33284de352d170bd25741ad52ba00.png" alt="홈" class="h-full">
+</a>
+<nav class="hidden md:flex space-x-8">
+<div class="relative" id="service-dropdown">
+<a href="#" class="font-medium text-primary transition-colors flex items-center gap-1" id="service-dropdown-btn">
+서비스
+<i class="ri-arrow-down-s-line transition-transform duration-200" id="service-dropdown-icon"></i>
+</a>
+<div class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden z-50" id="service-dropdown-menu">
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/23fdb509-1062-4974-b009-a52dded521a2" data-readdy="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">브랜드 디자인</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/985da341-dc51-44e8-b143-503fc133cb36" data-readdy="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">공간 디자인</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/73ea4681-a0e4-4fa0-bf32-c02388d76d08" data-readdy="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">그래픽 디자인</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/62381296-9e36-49b2-b796-56b7075bfc9b" data-readdy="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">디지털 디자인</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/9a35ed7d-a2d4-4514-80bc-6fe62bf9ea7f" data-readdy="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">모션 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-primary hover:bg-gray-50 hover:text-primary">디자인 컨설팅</a>
+</div>
+</div>
+<a href="#" class="font-medium text-primary font-bold border-b-2 border-primary">메디컬 디자인 All Pack</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="font-medium hover:text-primary transition-colors">포트폴리오</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/b5e7fbfd-237a-4dc1-b7e2-87ee46bf5928" data-readdy="true" class="font-medium hover:text-primary transition-colors">프로세스</a>
+<a href="#" class="font-medium hover:text-primary transition-colors">문의하기</a>
+</nav>
+<div class="md:hidden w-8 h-8 flex items-center justify-center">
+<i class="ri-menu-line ri-lg"></i>
+</div>
+</div>
+</header>
+<!-- 디자인 컨설팅 헤더 -->
+<section class="pt-32 pb-16 bg-gray-50 relative">
+<div class="absolute inset-0 z-0">
+<img src="https://readdy.ai/api/search-image?query=professional%20business%20meeting%20in%20modern%20office%20space%20with%20korean%20executives%20discussing%20design%20strategy%2C%20elegant%20corporate%20environment%20with%20glass%20walls%20and%20minimalist%20decor%2C%20business%20professionals%20analyzing%20documents%20and%20presentations%20on%20large%20screens%2C%20collaborative%20workspace%20with%20natural%20lighting&width=1920&height=400&seq=8&orientation=landscape" alt="디자인 컨설팅 미팅" class="w-full h-full object-cover object-top opacity-10">
+</div>
+<div class="container mx-auto px-4 relative z-10">
+<div class="max-w-3xl p-10">
+<h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900 tracking-wide">디자인 컨설팅</h1>
+<p class="text-lg text-gray-900 tracking-wide leading-relaxed">비즈니스 성장을 위한 전략적 디자인 솔루션</p>
+</div>
+</div>
+</section>
+<!-- 디자인 컨설팅 소개 -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div>
+<h2 class="text-3xl font-bold mb-6">전략적 디자인으로<br>비즈니스 가치를 창출합니다</h2>
+<p class="text-gray-600 mb-6">
+에이치디자인의 디자인 컨설팅은 단순한 시각적 디자인을 넘어 비즈니스 목표와 사용자 니즈를 깊이 이해하고 이를 연결하는 전략적 디자인 솔루션을 제공합니다. 브랜드 전략, 사용자 경험 분석, 디자인 시스템 구축 등 다양한 영역에서 데이터와 인사이트를 기반으로 한 컨설팅으로 비즈니스의 실질적인 성장을 지원합니다.
+</p>
+<p class="text-gray-600 mb-8">
+10년 이상의 디자인 전문성과 다양한 산업 분야의 경험을 바탕으로 클라이언트의 비즈니스 맥락을 정확히 파악하고, 차별화된 경쟁력을 확보할 수 있는 최적의 디자인 전략을 제시합니다. 에이치디자인과 함께 디자인의 전략적 가치를 극대화하세요.
+</p>
+<a href="#contact" class="bg-primary text-white py-3 px-8 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button inline-flex items-center">
+컨설팅 상담 신청하기
+<i class="ri-arrow-right-line ml-2"></i>
+</a>
+</div>
+<div class="rounded-lg overflow-hidden shadow-xl">
+<img src="https://readdy.ai/api/search-image?query=modern%20minimalist%20design%20studio%20interior%20with%20creative%20professionals%20working%2C%20sleek%20workstations%20with%20large%20displays%20showing%20design%20projects%2C%20glass%20walls%20with%20design%20sketches%20and%20mood%20boards%2C%20contemporary%20office%20space%20with%20natural%20lighting%20and%20designer%20furniture%2C%20elegant%20and%20professional%20atmosphere&width=600&height=400&seq=9&orientation=landscape" alt="디자인 컨설팅 회의" class="w-full h-full object-cover object-top">
+</div>
+</div>
+</div>
+</section>
+<!-- 컨설팅 서비스 유형 -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="text-center mb-16">
+<h2 class="text-3xl font-bold mb-4">컨설팅 서비스 유형</h2>
+<p class="text-gray-600 max-w-3xl mx-auto">
+비즈니스 목표와 니즈에 맞는 다양한 디자인 컨설팅 서비스를 제공합니다
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- 서비스 1: 브랜드 전략 컨설팅 -->
+<div class="service-card bg-white rounded-lg p-8 shadow-md">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+<i class="ri-focus-3-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-bold mb-4">브랜드 전략 컨설팅</h3>
+<p class="text-gray-600 mb-6">
+브랜드의 핵심 가치와 차별점을 정의하고, 일관된 브랜드 경험을 구축하기 위한 전략적 컨설팅을 제공합니다. 시장 분석, 경쟁사 조사, 타겟 고객 분석을 통해 브랜드의 포지셔닝과 메시지를 최적화합니다.
+</p>
+<ul class="space-y-2 text-gray-600">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>브랜드 아이덴티티 개발</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>브랜드 포지셔닝 전략</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>브랜드 경험 설계</span>
+</li>
+</ul>
+</div>
+<!-- 서비스 2: 사용자 경험 분석 -->
+<div class="service-card bg-white rounded-lg p-8 shadow-md">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+<i class="ri-user-heart-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-bold mb-4">사용자 경험 분석</h3>
+<p class="text-gray-600 mb-6">
+사용자의 니즈와 행동 패턴을 깊이 이해하고, 이를 바탕으로 최적의 사용자 경험을 설계하기 위한 컨설팅을 제공합니다. 사용성 테스트, 사용자 인터뷰, 행동 분석 등 다양한 방법으로 인사이트를 도출합니다.
+</p>
+<ul class="space-y-2 text-gray-600">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>사용자 리서치 및 페르소나 개발</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>사용자 여정 맵 작성</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>사용성 평가 및 개선 전략</span>
+</li>
+</ul>
+</div>
+<!-- 서비스 3: 디자인 시스템 구축 -->
+<div class="service-card bg-white rounded-lg p-8 shadow-md">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+<i class="ri-layout-grid-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-bold mb-4">디자인 시스템 구축</h3>
+<p class="text-gray-600 mb-6">
+일관되고 효율적인 디자인 프로세스를 위한 디자인 시스템 구축을 지원합니다. 디자인 원칙, 컴포넌트 라이브러리, 스타일 가이드 등을 체계적으로 정립하여 브랜드의 일관성을 유지하고 디자인 작업의 효율성을 높입니다.
+</p>
+<ul class="space-y-2 text-gray-600">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>디자인 원칙 및 가이드라인 수립</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>컴포넌트 라이브러리 개발</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>디자인 자산 관리 시스템 구축</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+<!-- 서비스 4: 디자인 조직 컨설팅 -->
+<div class="service-card bg-white rounded-lg p-8 shadow-md">
+<div class="flex items-center mb-6">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+<i class="ri-team-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-bold">디자인 조직 컨설팅</h3>
+</div>
+<p class="text-gray-600 mb-6">
+기업의 디자인 역량을 강화하기 위한 조직 구조, 프로세스, 문화 등에 대한 컨설팅을 제공합니다. 디자인 씽킹을 기업 문화에 통합하고, 효과적인 디자인 리더십을 구축하는 방법을 안내합니다.
+</p>
+<ul class="space-y-2 text-gray-600">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>디자인 조직 구조 최적화</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>디자인 프로세스 개선</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>디자인 씽킹 워크숍 및 교육</span>
+</li>
+</ul>
+</div>
+<!-- 서비스 5: 디지털 전환 컨설팅 -->
+<div class="service-card bg-white rounded-lg p-8 shadow-md">
+<div class="flex items-center mb-6">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+<i class="ri-rocket-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-bold">디지털 전환 컨설팅</h3>
+</div>
+<p class="text-gray-600 mb-6">
+기업의 디지털 전환을 위한 디자인 전략을 수립하고, 디지털 채널에서의 브랜드 경험을 최적화하기 위한 컨설팅을 제공합니다. 디지털 시대에 맞는 비즈니스 모델과 고객 경험을 디자인합니다.
+</p>
+<ul class="space-y-2 text-gray-600">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>디지털 채널 전략 수립</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>디지털 고객 경험 설계</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>디지털 비즈니스 모델 혁신</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- 컨설팅 프로세스 -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="text-center mb-16">
+<h2 class="text-3xl font-bold mb-4">디자인 컨설팅 프로세스</h2>
+<p class="text-gray-600 max-w-3xl mx-auto">
+에이치디자인의 체계적인 컨설팅 프로세스를 통해
+비즈니스 목표 달성을 위한 최적의 디자인 전략을 수립합니다
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+<!-- 프로세스 1 -->
+<div class="process-step bg-white rounded-lg p-6 shadow-md">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white mb-4 mx-auto">
+<span class="font-bold">01</span>
+</div>
+<h3 class="text-lg font-bold text-center mb-3">진단 및 발견</h3>
+<p class="text-gray-600 text-center text-sm">
+비즈니스 목표, 시장 환경, 사용자 니즈, 현재 디자인 상태 등을 종합적으로 분석하여 핵심 과제와 기회를 발견합니다.
+</p>
+</div>
+<!-- 프로세스 2 -->
+<div class="process-step bg-white rounded-lg p-6 shadow-md">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white mb-4 mx-auto">
+<span class="font-bold">02</span>
+</div>
+<h3 class="text-lg font-bold text-center mb-3">전략 수립</h3>
+<p class="text-gray-600 text-center text-sm">
+발견된 인사이트를 바탕으로 비즈니스 목표 달성을 위한 디자인 전략과 실행 계획을 수립합니다.
+</p>
+</div>
+<!-- 프로세스 3 -->
+<div class="process-step bg-white rounded-lg p-6 shadow-md">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white mb-4 mx-auto">
+<span class="font-bold">03</span>
+</div>
+<h3 class="text-lg font-bold text-center mb-3">디자인 방향 설정</h3>
+<p class="text-gray-600 text-center text-sm">
+전략적 목표에 부합하는 디자인 원칙과 방향성을 정의하고, 주요 디자인 요소의 기준을 설정합니다.
+</p>
+</div>
+<!-- 프로세스 4 -->
+<div class="process-step bg-white rounded-lg p-6 shadow-md">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white mb-4 mx-auto">
+<span class="font-bold">04</span>
+</div>
+<h3 class="text-lg font-bold text-center mb-3">실행 및 검증</h3>
+<p class="text-gray-600 text-center text-sm">
+수립된 전략을 바탕으로 디자인 솔루션을 개발하고, 사용자 테스트와 데이터 분석을 통해 효과성을 검증합니다.
+</p>
+</div>
+<!-- 프로세스 5 -->
+<div class="process-step bg-white rounded-lg p-6 shadow-md">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white mb-4 mx-auto">
+<span class="font-bold">05</span>
+</div>
+<h3 class="text-lg font-bold text-center mb-3">최적화 및 확장</h3>
+<p class="text-gray-600 text-center text-sm">
+검증 결과를 바탕으로 디자인 솔루션을 지속적으로 개선하고, 조직 전체로 디자인 역량을 확장합니다.
+</p>
+</div>
+</div>
+<div class="mt-16 bg-gray-50 rounded-lg p-8 shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div>
+<h3 class="text-2xl font-bold mb-4">데이터 기반 디자인 컨설팅</h3>
+<p class="text-gray-600 mb-6">
+에이치디자인의 컨설팅은 직관과 경험에만 의존하지 않고, 사용자 리서치, 시장 분석, 데이터 분석 등 객관적인 데이터를 기반으로 합니다. 이를 통해 불확실성을 줄이고, 검증된 인사이트를 바탕으로 한 전략적 디자인 의사결정을 지원합니다.
+</p>
+<p class="text-gray-600 mb-6">
+각 프로젝트마다 맞춤형 리서치 방법론을 적용하여 클라이언트의 비즈니스 맥락에 가장 적합한 데이터를 수집하고 분석합니다. 정량적 데이터와 정성적 인사이트를 균형 있게 활용하여 보다 통합적인 디자인 전략을 수립합니다.
+</p>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/b5e7fbfd-237a-4dc1-b7e2-87ee46bf5928" data-readdy="true" class="text-primary font-medium flex items-center">
+컨설팅 프로세스 자세히 보기
+<i class="ri-arrow-right-line ml-1"></i>
+</a>
+</div>
+<div class="rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=korean%2520design%2520consultants%2520analyzing%2520data%2520and%2520research%2520results%2520in%2520modern%2520office%252C%2520asian%2520professionals%2520reviewing%2520user%2520research%2520findings%2520and%2520design%2520metrics%2520on%2520large%2520screens%2520and%2520documents%252C%2520data-driven%2520design%2520consultation%2520with%2520charts%2520and%2520analytics%2520displayed&width=600&height=400&seq=3&orientation=landscape" alt="데이터 기반 디자인 컨설팅" class="w-full h-full object-cover object-top">
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 성공 사례 -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="text-center mb-16">
+<h2 class="text-3xl font-bold mb-4">디자인 컨설팅 성공 사례</h2>
+<p class="text-gray-600 max-w-3xl mx-auto">
+에이치디자인의 디자인 컨설팅이 클라이언트의 비즈니스에
+어떤 가치를 창출했는지 실제 사례를 통해 확인하세요
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- 성공 사례 1 -->
+<div class="case-study-card bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=modern%2520korean%2520fintech%2520app%2520interface%2520with%2520clean%2520design%252C%2520banking%2520dashboard%2520showing%2520financial%2520data%2520visualization%252C%2520user-friendly%2520mobile%2520banking%2520screens%2520with%2520korean%2520text%252C%2520professional%2520UI%2520design%2520for%2520financial%2520services&width=400&height=250&seq=4&orientation=landscape" alt="신한금융그룹 디자인 시스템" class="w-full h-full object-cover object-top">
+<div class="case-study-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+<h4 class="text-xl font-bold mb-2">신한금융그룹</h4>
+<p class="text-sm text-center mb-4">디자인 시스템 구축 컨설팅</p>
+<a href="#" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+자세히 보기
+</a>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold mb-2">신한금융그룹</h4>
+<p class="text-gray-600 text-sm mb-4">디자인 시스템 구축 컨설팅</p>
+<ul class="space-y-2 text-gray-600 text-sm">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>디지털 채널 일관성 40% 향상</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>디자인 개발 시간 35% 단축</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>사용자 만족도 25% 증가</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- 성공 사례 2 -->
+<div class="case-study-card bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=modern%2520korean%2520e-commerce%2520website%2520with%2520elegant%2520product%2520displays%252C%2520fashion%2520items%2520showcased%2520with%2520clean%2520layout%252C%2520shopping%2520cart%2520and%2520checkout%2520process%2520screens%252C%2520professional%2520online%2520shopping%2520platform%2520with%2520korean%2520text%252C%2520high-end%2520retail%2520digital%2520experience&width=400&height=250&seq=5&orientation=landscape" alt="롯데백화점 UX 개선" class="w-full h-full object-cover object-top">
+<div class="case-study-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+<h4 class="text-xl font-bold mb-2">롯데백화점</h4>
+<p class="text-sm text-center mb-4">디지털 경험 혁신 컨설팅</p>
+<a href="#" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+자세히 보기
+</a>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold mb-2">롯데백화점</h4>
+<p class="text-gray-600 text-sm mb-4">디지털 경험 혁신 컨설팅</p>
+<ul class="space-y-2 text-gray-600 text-sm">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>온라인 매출 45% 증가</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>고객 이탈률 30% 감소</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>앱 사용 시간 28% 증가</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- 성공 사례 3 -->
+<div class="case-study-card bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=modern%2520korean%2520corporate%2520brand%2520identity%2520materials%2520with%2520logo%2520design%252C%2520business%2520cards%252C%2520letterheads%252C%2520and%2520digital%2520assets%2520displayed%2520on%2520elegant%2520mockups%252C%2520professional%2520branding%2520package%2520for%2520korean%2520technology%2520company%252C%2520clean%2520and%2520minimal%2520design%2520system&width=400&height=250&seq=6&orientation=landscape" alt="네이버 브랜드 전략" class="w-full h-full object-cover object-top">
+<div class="case-study-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+<h4 class="text-xl font-bold mb-2">네이버</h4>
+<p class="text-sm text-center mb-4">브랜드 전략 컨설팅</p>
+<a href="#" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+자세히 보기
+</a>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold mb-2">네이버</h4>
+<p class="text-gray-600 text-sm mb-4">브랜드 전략 컨설팅</p>
+<ul class="space-y-2 text-gray-600 text-sm">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>브랜드 인지도 32% 상승</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>서비스 충성도 38% 증가</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>신규 사용자 유입 40% 증가</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="mt-16 bg-white rounded-lg p-8 shadow-md">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+<div class="md:col-span-1">
+<img src="https://readdy.ai/api/search-image?query=professional%2520korean%2520female%2520executive%2520in%2520business%2520attire%252C%2520confident%2520asian%2520woman%2520leader%2520with%2520elegant%2520appearance%252C%2520corporate%2520portrait%2520with%2520neutral%2520background%252C%2520korean%2520business%2520director%2520in%2520modern%2520setting&width=400&height=400&seq=7&orientation=portrait" alt="김민지 디지털 혁신 총괄" class="w-full h-auto rounded-lg shadow-sm">
+</div>
+<div class="md:col-span-2">
+<div class="flex mb-4">
+<div class="text-primary">
+<i class="ri-double-quotes-l ri-3x"></i>
+</div>
+</div>
+<p class="text-gray-700 text-lg italic mb-6">
+에이치디자인의 컨설팅은 단순히 디자인의 외관을 개선하는 것을 넘어 비즈니스의 본질적인 과제를 해결하는 데 초점을 맞추었습니다. 특히 데이터 기반의 접근 방식과 사용자 중심의 전략이 인상적이었습니다. 컨설팅을 통해 우리 회사는 디자인을 전략적 자산으로 활용하는 방법을 배웠고, 이는 실질적인 비즈니스 성과로 이어졌습니다. 디자인의 가치를 비즈니스 언어로 명확하게 전달해 주신 에이치디자인 팀에게 깊은 감사를 드립니다.
+</p>
+<div>
+<p class="font-bold">김민지 디지털 혁신 총괄</p>
+<p class="text-gray-600 text-sm">롯데백화점</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 상담 신청 섹션 -->
+<section id="contact" class="py-16 bg-gradient-to-r from-primary/10 to-primary/5">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div>
+<h2 class="text-3xl font-bold mb-6">디자인 컨설팅 상담 신청</h2>
+<p class="text-gray-600 mb-8">
+에이치디자인과 함께 비즈니스 성장을 위한 전략적 디자인 솔루션을 찾아보세요.
+전문 디자인 컨설턴트가 귀사의 비즈니스 목표와 과제에 맞는
+최적의 디자인 전략을 제안해 드립니다.
+</p>
+<div class="bg-white rounded-lg p-6 shadow-md mb-8">
+<h3 class="text-xl font-bold mb-4">상담 절차</h3>
+<ul class="space-y-4">
+<li class="flex items-start">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mr-4 flex-shrink-0">
+<span class="font-bold">1</span>
+</div>
+<div>
+<h4 class="font-bold">상담 신청</h4>
+<p class="text-gray-600 text-sm">온라인 양식을 통해 간단한 정보를 입력하고 상담을 신청합니다.</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mr-4 flex-shrink-0">
+<span class="font-bold">2</span>
+</div>
+<div>
+<h4 class="font-bold">담당자 연락</h4>
+<p class="text-gray-600 text-sm">1-2일 내에 전담 컨설턴트가 연락하여 상세한 상담 일정을 조율합니다.</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mr-4 flex-shrink-0">
+<span class="font-bold">3</span>
+</div>
+<div>
+<h4 class="font-bold">초기 컨설팅</h4>
+<p class="text-gray-600 text-sm">비즈니스 목표와 디자인 과제를 상세히 분석하고 컨설팅 방향을 설정합니다.</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mr-4 flex-shrink-0">
+<span class="font-bold">4</span>
+</div>
+<div>
+<h4 class="font-bold">맞춤형 제안</h4>
+<p class="text-gray-600 text-sm">귀사의 니즈에 맞는 맞춤형 디자인 컨설팅 솔루션을 제안합니다.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div>
+<div class="bg-white rounded-lg p-8 shadow-lg">
+<h3 class="text-xl font-bold mb-6 text-center">상담 신청하기</h3>
+<form>
+<div class="mb-4">
+<label for="company" class="block text-gray-700 font-medium mb-2">회사명</label>
+<input type="text" id="company" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="회사명을 입력해주세요">
+</div>
+<div class="mb-4">
+<label for="name" class="block text-gray-700 font-medium mb-2">담당자명</label>
+<input type="text" id="name" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="담당자명을 입력해주세요">
+</div>
+<div class="mb-4">
+<label for="email" class="block text-gray-700 font-medium mb-2">이메일</label>
+<input type="email" id="email" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="이메일을 입력해주세요">
+</div>
+<div class="mb-4">
+<label for="phone" class="block text-gray-700 font-medium mb-2">연락처</label>
+<input type="tel" id="phone" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="연락처를 입력해주세요">
+</div>
+<div class="mb-4">
+<label for="consulting-type" class="block text-gray-700 font-medium mb-2">컨설팅 유형</label>
+<div class="relative">
+<select id="consulting-type" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm appearance-none pr-8">
+<option value="">컨설팅 유형을 선택해주세요</option>
+<option value="brand">브랜드 전략 컨설팅</option>
+<option value="ux">사용자 경험 분석</option>
+<option value="design-system">디자인 시스템 구축</option>
+<option value="organization">디자인 조직 컨설팅</option>
+<option value="digital">디지털 전환 컨설팅</option>
+<option value="other">기타</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+<i class="ri-arrow-down-s-line text-gray-400"></i>
+</div>
+</div>
+</div>
+<div class="mb-6">
+<label for="message" class="block text-gray-700 font-medium mb-2">문의 내용</label>
+<textarea id="message" rows="4" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="디자인 컨설팅 관련 문의 내용을 입력해주세요"></textarea>
+</div>
+<div class="mb-6">
+<label class="flex items-start">
+<div class="relative w-5 h-5 mt-0.5 mr-2 flex-shrink-0">
+<input type="checkbox" class="opacity-0 absolute w-full h-full cursor-pointer z-10">
+<div class="w-5 h-5 border border-gray-300 rounded bg-white"></div>
+<div class="absolute hidden w-5 h-5 rounded bg-primary flex items-center justify-center check-icon">
+<i class="ri-check-line text-white text-xs"></i>
+</div>
+</div>
+<span class="text-sm text-gray-600">개인정보 수집 및 이용에 동의합니다. (필수)</span>
+</label>
+</div>
+<button type="submit" class="w-full bg-primary text-white py-3 px-6 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button">
+상담 신청하기
+</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ 섹션 -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="text-center mb-16">
+<h2 class="text-3xl font-bold mb-4">자주 묻는 질문</h2>
+<p class="text-gray-600 max-w-3xl mx-auto">
+디자인 컨설팅 서비스에 대해 궁금한 점을 확인하세요
+</p>
+</div>
+<div class="max-w-3xl mx-auto">
+<div class="mb-6">
+<button class="flex justify-between items-center w-full text-left p-6 bg-gray-50 rounded-lg focus:outline-none" id="faq1-btn">
+<h3 class="text-lg font-bold">디자인 컨설팅은 어떤 기업에 필요한가요?</h3>
+<i class="ri-add-line ri-lg" id="faq1-icon"></i>
+</button>
+<div class="hidden overflow-hidden bg-white p-6 rounded-b-lg shadow-sm" id="faq1-content">
+<p class="text-gray-600">
+디자인 컨설팅은 다양한 규모와 산업의 기업에 도움이 될 수 있습니다. 특히 다음과 같은 상황에 있는 기업에게 유용합니다: 1) 브랜드 아이덴티티를 재정립하거나 강화하고자 하는 기업, 2) 디지털 전환을 추진 중이거나 사용자 경험을 개선하고자 하는 기업, 3) 일관된 디자인 시스템을 구축하여 효율성을 높이고자 하는 기업, 4) 디자인 조직을 구축하거나 개선하고자 하는 기업, 5) 새로운 제품이나 서비스를 출시하기 위한 전략적 디자인 방향이 필요한 기업 등입니다. 기업의 규모보다는 디자인을 전략적 자산으로 활용하고자 하는 의지가 중요합니다.
+</p>
+</div>
+</div>
+<div class="mb-6">
+<button class="flex justify-between items-center w-full text-left p-6 bg-gray-50 rounded-lg focus:outline-none" id="faq2-btn">
+<h3 class="text-lg font-bold">디자인 컨설팅 비용은 어떻게 책정되나요?</h3>
+<i class="ri-add-line ri-lg" id="faq2-icon"></i>
+</button>
+<div class="hidden overflow-hidden bg-white p-6 rounded-b-lg shadow-sm" id="faq2-content">
+<p class="text-gray-600">
+디자인 컨설팅 비용은 프로젝트의 범위, 기간, 복잡성, 필요한 전문 인력 등에 따라 달라집니다. 에이치디자인은 크게 세 가지 방식으로 비용을 책정합니다: 1) 프로젝트 기반 - 명확한 목표와 결과물이 있는 컨설팅의 경우 프로젝트 전체에 대한 고정 비용으로 책정, 2) 시간 기반 - 지속적인 자문이나 유연한 범위의 컨설팅의 경우 시간당 또는 일당 요율로 책정, 3) 리테이너 방식 - 장기적인 파트너십의 경우 월 단위로 일정 시간의 컨설팅 서비스를 제공하는 방식입니다. 정확한 비용은 초기 상담을 통해 클라이언트의 니즈와 예산을 고려하여 맞춤형으로 제안해 드립니다.
+</p>
+</div>
+</div>
+<div class="mb-6">
+<button class="flex justify-between items-center w-full text-left p-6 bg-gray-50 rounded-lg focus:outline-none" id="faq3-btn">
+<h3 class="text-lg font-bold">디자인 컨설팅 프로젝트는 얼마나 걸리나요?</h3>
+<i class="ri-add-line ri-lg" id="faq3-icon"></i>
+</button>
+<div class="hidden overflow-hidden bg-white p-6 rounded-b-lg shadow-sm" id="faq3-content">
+<p class="text-gray-600">
+디자인 컨설팅 프로젝트의 기간은 컨설팅의 유형과 범위에 따라 다양합니다. 간단한 디자인 진단은 2-4주 정도 소요되며, 브랜드 전략 컨설팅이나 사용자 경험 분석은 일반적으로 2-3개월이 필요합니다. 디자인 시스템 구축과 같은 복잡한 프로젝트는 3-6개월 또는 그 이상이 소요될 수 있습니다. 디자인 조직 컨설팅이나 디지털 전환 컨설팅과 같은 장기적인 변화를 다루는 프로젝트는 6-12개월의 지속적인 협업이 필요할 수 있습니다. 모든 프로젝트는 초기 진단 단계, 전략 수립 단계, 실행 계획 단계를 거치며, 각 단계마다 클라이언트와의 협업과 피드백이 중요합니다.
+</p>
+</div>
+</div>
+<div class="mb-6">
+<button class="flex justify-between items-center w-full text-left p-6 bg-gray-50 rounded-lg focus:outline-none" id="faq4-btn">
+<h3 class="text-lg font-bold">컨설팅 결과물은 어떤 형태로 받게 되나요?</h3>
+<i class="ri-add-line ri-lg" id="faq4-icon"></i>
+</button>
+<div class="hidden overflow-hidden bg-white p-6 rounded-b-lg shadow-sm" id="faq4-content">
+<p class="text-gray-600">
+디자인 컨설팅의 결과물은 프로젝트의 유형과 목표에 따라 다양한 형태로 제공됩니다. 일반적으로 다음과 같은 결과물을 포함합니다: 1) 상세한 분석 보고서 - 현황 분석, 문제점 진단, 기회 영역 식별 등, 2) 전략 문서 - 디자인 전략, 실행 계획, 로드맵 등, 3) 디자인 가이드라인 - 브랜드 가이드라인, 디자인 시스템 문서, UX 원칙 등, 4) 프로토타입 및 개념 증명 - 주요 디자인 컨셉의 시각화, 5) 워크숍 및 교육 자료 - 조직 내 디자인 역량 강화를 위한 자료, 6) 실행 지원 도구 - 템플릿, 체크리스트, 평가 도구 등입니다. 모든 결과물은 클라이언트가 실제로 활용할 수 있도록 실용적이고 구체적인 형태로 제공됩니다.
+</p>
+</div>
+</div>
+<div>
+<button class="flex justify-between items-center w-full text-left p-6 bg-gray-50 rounded-lg focus:outline-none" id="faq5-btn">
+<h3 class="text-lg font-bold">컨설팅 이후 실행 지원도 제공하나요?</h3>
+<i class="ri-add-line ri-lg" id="faq5-icon"></i>
+</button>
+<div class="hidden overflow-hidden bg-white p-6 rounded-b-lg shadow-sm" id="faq5-content">
+<p class="text-gray-600">
+에이치디자인은 컨설팅 결과의 실질적인 구현을 위한 다양한 실행 지원 서비스를 제공합니다. 컨설팅 프로젝트 완료 후에도 클라이언트가 전략을 효과적으로 실행할 수 있도록 다음과 같은 지원을 제공합니다: 1) 실행 코칭 - 정기적인 미팅을 통해 실행 과정에서의 문제 해결 지원, 2) 역량 강화 워크숍 - 조직 내 디자인 역량 강화를 위한 맞춤형 교육 프로그램, 3) 실행 점검 및 평가 - 주요 마일스톤에서의 진행 상황 검토 및 피드백 제공, 4) 디자인 파트너 연결 - 필요한 경우 실행을 위한 전문 디자인 파트너 추천 및 연결, 5) 지속적인 자문 - 장기적인 파트너십을 통한 지속적인 전략적 자문 서비스입니다. 실행 지원의 범위와 기간은 클라이언트의 니즈에 맞게 조정 가능합니다.
+</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA 섹션 -->
+<section class="py-16 bg-gradient-to-r from-primary/10 to-primary/5">
+<div class="container mx-auto px-4 text-center">
+<h2 class="text-2xl md:text-3xl font-bold mb-4">에이치디자인과 함께 디자인의 전략적 가치를 발견하세요</h2>
+<p class="text-gray-600 mb-8 max-w-2xl mx-auto">
+비즈니스 성장을 위한 전략적 디자인 컨설팅으로
+차별화된 경쟁력을 확보하세요
+</p>
+<div class="flex flex-col md:flex-row gap-4 justify-center">
+<a href="#contact" class="bg-primary text-white py-3 px-8 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button">
+무료 상담 신청하기
+</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/62381296-9e36-49b2-b796-56b7075bfc9b" data-readdy="true" class="bg-white text-primary border border-primary py-3 px-8 rounded-button font-medium hover:bg-primary hover:bg-opacity-5 transition-colors whitespace-nowrap !rounded-button">
+디지털 디자인 서비스 보기
+</a>
+</div>
+</div>
+</section>
+<!-- 푸터 -->
+<footer class="bg-gray-900 text-white py-12">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<div>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/ec9e3f64-8d8f-4578-8daa-17734376e05a" data-readdy="true" class="h-6 mb-4 inline-block">
+<img src="https://static.readdy.ai/image/3c16391a4b5d74433155a2d2f7dc5d27/28b33284de352d170bd25741ad52ba00.png" alt="logo" class="h-full brightness-0 invert">
+</a>
+<p class="text-gray-400 text-sm">에이치디자인은 브랜드 전문 디자인 에이전시로, 10년 이상의 경험을 바탕으로 최고의 디자인 솔루션을 제공합니다.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">서비스</h3>
+<ul class="space-y-2 text-gray-400">
+<li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/23fdb509-1062-4974-b009-a52dded521a2" data-readdy="true" class="hover:text-white transition-colors">브랜드 디자인</a></li>
+<li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/985da341-dc51-44e8-b143-503fc133cb36" data-readdy="true" class="hover:text-white transition-colors">공간 디자인</a></li>
+<li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/73ea4681-a0e4-4fa0-bf32-c02388d76d08" data-readdy="true" class="hover:text-white transition-colors">그래픽 디자인</a></li>
+<li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/62381296-9e36-49b2-b796-56b7075bfc9b" data-readdy="true" class="hover:text-white transition-colors">디지털 디자인</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">회사 정보</h3>
+<ul class="space-y-2 text-gray-400">
+<li><a href="#" class="hover:text-white transition-colors">회사 소개</a></li>
+<li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="hover:text-white transition-colors">포트폴리오</a></li>
+<li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/b5e7fbfd-237a-4dc1-b7e2-87ee46bf5928" data-readdy="true" class="hover:text-white transition-colors">프로세스</a></li>
+<li><a href="#" class="hover:text-white transition-colors">채용 정보</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">연락처</h3>
+<ul class="space-y-2 text-gray-400">
+<li class="flex items-center gap-2">
+<i class="ri-map-pin-line"></i>
+<span>서울특별시 강남구 테헤란로 123</span>
+</li>
+<li class="flex items-center gap-2">
+<i class="ri-phone-line"></i>
+<span>02-1234-5678</span>
+</li>
+<li class="flex items-center gap-2">
+<i class="ri-mail-line"></i>
+<span>info@hdesign.co.kr</span>
+</li>
+</ul>
+<div class="flex gap-4 mt-4">
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-instagram-line"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-facebook-line"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-youtube-line"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-kakao-talk-line"></i>
+</a>
+</div>
+</div>
+</div>
+<div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+<p>© 2025 에이치디자인. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 서비스 드롭다운 메뉴 관리
+const serviceDropdownBtn = document.getElementById('service-dropdown-btn');
+const serviceDropdownMenu = document.getElementById('service-dropdown-menu');
+const serviceDropdownIcon = document.getElementById('service-dropdown-icon');
+let isDropdownOpen = false;
+serviceDropdownBtn.addEventListener('click', function(e) {
+e.preventDefault();
+isDropdownOpen = !isDropdownOpen;
+if(isDropdownOpen) {
+serviceDropdownMenu.classList.remove('hidden');
+serviceDropdownIcon.style.transform = 'rotate(180deg)';
+} else {
+serviceDropdownMenu.classList.add('hidden');
+serviceDropdownIcon.style.transform = 'rotate(0deg)';
+}
+});
+document.addEventListener('click', function(e) {
+if (!document.getElementById('service-dropdown').contains(e.target)) {
+serviceDropdownMenu.classList.add('hidden');
+serviceDropdownIcon.style.transform = 'rotate(0deg)';
+isDropdownOpen = false;
+}
+});
+});
+document.addEventListener('DOMContentLoaded', function() {
+// FAQ 아코디언
+const faqBtns = document.querySelectorAll('[id$="-btn"]');
+faqBtns.forEach(btn => {
+btn.addEventListener('click', function() {
+const contentId = this.id.replace('-btn', '-content');
+const iconId = this.id.replace('-btn', '-icon');
+const content = document.getElementById(contentId);
+const icon = document.getElementById(iconId);
+if (content.classList.contains('hidden')) {
+content.classList.remove('hidden');
+icon.classList.remove('ri-add-line');
+icon.classList.add('ri-subtract-line');
+} else {
+content.classList.add('hidden');
+icon.classList.remove('ri-subtract-line');
+icon.classList.add('ri-add-line');
+}
+});
+});
+});
+document.addEventListener('DOMContentLoaded', function() {
+// 포트폴리오 아이템 애니메이션
+const caseStudyCards = document.querySelectorAll('.case-study-card');
+const observerOptions = {
+threshold: 0.1,
+rootMargin: '0px 0px -50px 0px'
+};
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.style.opacity = '1';
+entry.target.style.transform = 'translateY(0)';
+}
+});
+}, observerOptions);
+caseStudyCards.forEach(item => {
+item.style.opacity = '0';
+item.style.transform = 'translateY(20px)';
+item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+observer.observe(item);
+});
+// 프로세스 스텝 애니메이션
+const processSteps = document.querySelectorAll('.process-step');
+processSteps.forEach(step => {
+step.style.opacity = '0';
+step.style.transform = 'translateY(20px)';
+step.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+observer.observe(step);
+});
+});
+document.addEventListener('DOMContentLoaded', function() {
+// 커스텀 체크박스
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+checkboxes.forEach(checkbox => {
+const checkIcon = checkbox.parentElement.querySelector('.check-icon');
+checkbox.addEventListener('change', function() {
+if (this.checked) {
+checkIcon.classList.remove('hidden');
+} else {
+checkIcon.classList.add('hidden');
+}
+});
+});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H DESIGN - 포트폴리오</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#2C3E50',secondary:'#95A5A6'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Noto Sans KR', sans-serif;
+}
+.portfolio-card {
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.portfolio-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.portfolio-card img {
+transition: transform 0.5s ease;
+}
+.portfolio-card:hover img {
+transform: scale(1.05);
+}
+.category-filter-btn {
+transition: all 0.3s ease;
+}
+.category-filter-btn.active {
+background-color: #2C3E50;
+color: white;
+}
+.fade-in {
+animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+.portfolio-grid {
+transition: opacity 0.3s ease;
+}
+</style>
+</head>
+<body class="bg-white text-gray-800">
+<!-- 헤더 -->
+<header class="w-full bg-white shadow-sm fixed top-0 z-50">
+<div class="container mx-auto px-4 py-4 flex justify-between items-center">
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/ec9e3f64-8d8f-4578-8daa-17734376e05a" data-readdy="true" class="h-8">
+<img src="https://static.readdy.ai/image/3c16391a4b5d74433155a2d2f7dc5d27/28b33284de352d170bd25741ad52ba00.png" alt="logo" class="h-full">
+</a>
+<nav class="hidden md:flex space-x-8">
+<div class="relative" id="service-dropdown">
+<a href="#" class="font-medium hover:text-primary transition-colors flex items-center gap-1" id="service-dropdown-btn">
+서비스
+<i class="ri-arrow-down-s-line transition-transform duration-200" id="service-dropdown-icon"></i>
+</a>
+<div class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden z-50" id="service-dropdown-menu">
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">브랜드 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">공간 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">그래픽 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">디지털 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">모션 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">디자인 컨설팅</a>
+</div>
+</div>
+<a href="#" class="font-medium hover:text-primary transition-colors">디자인 올팩 All Pack</a>
+<a href="#" class="font-medium text-primary border-b-2 border-primary">포트폴리오</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/b5e7fbfd-237a-4dc1-b7e2-87ee46bf5928" data-readdy="true" class="font-medium hover:text-primary transition-colors">프로세스</a>
+<a href="#" class="font-medium hover:text-primary transition-colors">문의하기</a>
+</nav>
+<div class="md:hidden w-8 h-8 flex items-center justify-center">
+<i class="ri-menu-line ri-lg"></i>
+</div>
+</div>
+</header>
+<!-- 포트폴리오 헤더 -->
+<section class="pt-32 pb-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="max-w-3xl mx-auto text-center">
+<h1 class="text-4xl md:text-5xl font-bold mb-4">포트폴리오</h1>
+<p class="text-lg text-gray-600">에이치디자인의 다양한 프로젝트를 만나보세요</p>
+</div>
+</div>
+</section>
+<!-- 카테고리 필터 -->
+<section class="py-8 bg-white border-b border-gray-100">
+<div class="container mx-auto px-4">
+<div class="flex flex-wrap justify-center gap-3 md:gap-4">
+<button class="category-filter-btn active px-5 py-2 rounded-full border border-gray-200 text-sm font-medium !rounded-button" data-category="all">
+전체 보기
+</button>
+<button class="category-filter-btn px-5 py-2 rounded-full border border-gray-200 text-sm font-medium !rounded-button" data-category="brand">
+브랜드 디자인
+</button>
+<button class="category-filter-btn px-5 py-2 rounded-full border border-gray-200 text-sm font-medium !rounded-button" data-category="space">
+공간 디자인
+</button>
+<button class="category-filter-btn px-5 py-2 rounded-full border border-gray-200 text-sm font-medium !rounded-button" data-category="graphic">
+그래픽 디자인
+</button>
+<button class="category-filter-btn px-5 py-2 rounded-full border border-gray-200 text-sm font-medium !rounded-button" data-category="digital">
+디지털 디자인
+</button>
+<button class="category-filter-btn px-5 py-2 rounded-full border border-gray-200 text-sm font-medium !rounded-button" data-category="motion">
+모션 디자인
+</button>
+</div>
+</div>
+</section>
+<!-- 포트폴리오 그리드 -->
+<section class="py-16">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 portfolio-grid">
+<!-- 포트폴리오 아이템 1 -->
+<a href="#" class="portfolio-card bg-white rounded-lg overflow-hidden shadow-sm" data-category="brand space">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=modern%2520minimalist%2520medical%2520clinic%2520interior%2520design%2520with%2520clean%2520lines%252C%2520professional%2520atmosphere%252C%2520contemporary%2520furniture%252C%2520soft%2520lighting%252C%2520waiting%2520area%2520with%2520comfortable%2520seating%252C%2520reception%2520desk%2520with%2520brand%2520logo%2520displayed%2520prominently&width=600&height=400&seq=1&orientation=landscape" alt="메디컬 센터 브랜딩" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">브랜드 디자인</span>
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">공간 디자인</span>
+</div>
+<h3 class="text-xl font-bold mb-2">세인트 메디컬 센터</h3>
+<p class="text-gray-600 text-sm line-clamp-2">고급스러운 분위기와 환자 중심의 경험을 제공하는 메디컬 센터의 브랜딩 및 공간 디자인 프로젝트</p>
+</div>
+</a>
+<!-- 포트폴리오 아이템 2 -->
+<a href="#" class="portfolio-card bg-white rounded-lg overflow-hidden shadow-sm" data-category="brand graphic">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=premium%2520cosmetic%2520brand%2520identity%2520design%2520with%2520elegant%2520packaging%252C%2520minimalist%2520logo%252C%2520sophisticated%2520color%2520palette%252C%2520product%2520photography%2520on%2520marble%2520background%252C%2520luxury%2520skincare%2520products%2520with%2520consistent%2520visual%2520identity&width=600&height=400&seq=2&orientation=landscape" alt="코스메틱 브랜드 아이덴티티" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">브랜드 디자인</span>
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">그래픽 디자인</span>
+</div>
+<h3 class="text-xl font-bold mb-2">루나 코스메틱</h3>
+<p class="text-gray-600 text-sm line-clamp-2">프리미엄 스킨케어 브랜드의 아이덴티티 및 패키지 디자인으로 고급스러운 브랜드 이미지 구축</p>
+</div>
+</a>
+<!-- 포트폴리오 아이템 3 -->
+<a href="#" class="portfolio-card bg-white rounded-lg overflow-hidden shadow-sm" data-category="digital">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=modern%2520responsive%2520website%2520design%2520for%2520healthcare%2520provider%2520with%2520clean%2520interface%252C%2520mobile%2520and%2520desktop%2520views%252C%2520appointment%2520booking%2520system%252C%2520medical%2520service%2520information%2520pages%252C%2520professional%2520UI%2520UX%2520design&width=600&height=400&seq=3&orientation=landscape" alt="헬스케어 웹사이트" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">디지털 디자인</span>
+</div>
+<h3 class="text-xl font-bold mb-2">헬스케어 플랫폼</h3>
+<p class="text-gray-600 text-sm line-clamp-2">사용자 경험을 최적화한 헬스케어 서비스 웹사이트 및 모바일 앱 UI/UX 디자인</p>
+</div>
+</a>
+<!-- 포트폴리오 아이템 4 -->
+<a href="#" class="portfolio-card bg-white rounded-lg overflow-hidden shadow-sm" data-category="space">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=luxury%2520dental%2520clinic%2520interior%2520design%2520with%2520sophisticated%2520waiting%2520area%252C%2520modern%2520treatment%2520rooms%252C%2520custom%2520lighting%252C%2520premium%2520materials%252C%2520calming%2520color%2520scheme%252C%2520elegant%2520reception%2520desk%252C%2520professional%2520yet%2520welcoming%2520atmosphere&width=600&height=400&seq=4&orientation=landscape" alt="치과 인테리어" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">공간 디자인</span>
+</div>
+<h3 class="text-xl font-bold mb-2">퍼스트 덴탈 클리닉</h3>
+<p class="text-gray-600 text-sm line-clamp-2">환자의 불안감을 줄이고 편안함을 제공하는 프리미엄 치과 클리닉 인테리어 디자인</p>
+</div>
+</a>
+<!-- 포트폴리오 아이템 5 -->
+<a href="#" class="portfolio-card bg-white rounded-lg overflow-hidden shadow-sm" data-category="graphic">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=premium%2520print%2520materials%2520for%2520medical%2520conference%2520including%2520brochures%252C%2520name%2520badges%252C%2520program%2520booklets%252C%2520signage%252C%2520professional%2520layout%2520design%252C%2520consistent%2520branding%252C%2520information%2520hierarchy%252C%2520elegant%2520typography&width=600&height=400&seq=5&orientation=landscape" alt="메디컬 컨퍼런스 인쇄물" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">그래픽 디자인</span>
+</div>
+<h3 class="text-xl font-bold mb-2">국제 메디컬 컨퍼런스</h3>
+<p class="text-gray-600 text-sm line-clamp-2">국제 의료 컨퍼런스를 위한 브로셔, 배너, 프로그램북 등 통합 그래픽 디자인 솔루션</p>
+</div>
+</a>
+<!-- 포트폴리오 아이템 6 -->
+<a href="#" class="portfolio-card bg-white rounded-lg overflow-hidden shadow-sm" data-category="motion">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=medical%2520animation%2520and%2520motion%2520graphics%2520for%2520healthcare%2520education%2520with%2520professional%25203D%2520visualization%252C%2520anatomical%2520models%252C%2520treatment%2520procedure%2520explanation%252C%2520clean%2520visual%2520style%252C%2520informative%2520graphics&width=600&height=400&seq=6&orientation=landscape" alt="의료 애니메이션" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">모션 디자인</span>
+</div>
+<h3 class="text-xl font-bold mb-2">의료 교육 애니메이션</h3>
+<p class="text-gray-600 text-sm line-clamp-2">복잡한 의료 정보를 쉽게 이해할 수 있도록 제작된 3D 애니메이션 및 모션 그래픽</p>
+</div>
+</a>
+<!-- 포트폴리오 아이템 7 -->
+<a href="#" class="portfolio-card bg-white rounded-lg overflow-hidden shadow-sm" data-category="brand digital">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=wellness%2520center%2520brand%2520identity%2520and%2520digital%2520presence%2520with%2520logo%2520design%252C%2520website%2520interface%252C%2520mobile%2520app%252C%2520social%2520media%2520templates%252C%2520cohesive%2520visual%2520language%252C%2520holistic%2520health%2520concept&width=600&height=400&seq=7&orientation=landscape" alt="웰니스 센터 브랜딩" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">브랜드 디자인</span>
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">디지털 디자인</span>
+</div>
+<h3 class="text-xl font-bold mb-2">하모니 웰니스 센터</h3>
+<p class="text-gray-600 text-sm line-clamp-2">통합적인 건강 관리를 위한 웰니스 센터의 브랜드 아이덴티티 및 디지털 플랫폼 디자인</p>
+</div>
+</a>
+<!-- 포트폴리오 아이템 8 -->
+<a href="#" class="portfolio-card bg-white rounded-lg overflow-hidden shadow-sm" data-category="space graphic">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=pharmacy%2520retail%2520design%2520with%2520modern%2520interior%252C%2520custom%2520signage%2520system%252C%2520product%2520display%2520solutions%252C%2520wayfinding%2520graphics%252C%2520branded%2520environment%252C%2520clean%2520and%2520professional%2520atmosphere&width=600&height=400&seq=8&orientation=landscape" alt="약국 디자인" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">공간 디자인</span>
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">그래픽 디자인</span>
+</div>
+<h3 class="text-xl font-bold mb-2">그린 약국 체인</h3>
+<p class="text-gray-600 text-sm line-clamp-2">현대적인 약국 인테리어와 통합 사인 시스템으로 고객 경험을 향상시킨 리테일 디자인</p>
+</div>
+</a>
+<!-- 포트폴리오 아이템 9 -->
+<a href="#" class="portfolio-card bg-white rounded-lg overflow-hidden shadow-sm" data-category="digital motion">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=health%2520monitoring%2520app%2520interface%2520design%2520with%2520data%2520visualization%252C%2520user%2520dashboard%252C%2520activity%2520tracking%2520screens%252C%2520clean%2520UI%2520elements%252C%2520animated%2520transitions%252C%2520intuitive%2520navigation%252C%2520medical%2520information%2520display&width=600&height=400&seq=9&orientation=landscape" alt="헬스 모니터링 앱" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">디지털 디자인</span>
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">모션 디자인</span>
+</div>
+<h3 class="text-xl font-bold mb-2">라이프케어 모니터링 앱</h3>
+<p class="text-gray-600 text-sm line-clamp-2">건강 데이터를 직관적으로 시각화하고 사용자 경험을 최적화한 모바일 앱 UI/UX 디자인</p>
+</div>
+</a>
+<!-- 포트폴리오 아이템 10 -->
+<a href="#" class="portfolio-card bg-white rounded-lg overflow-hidden shadow-sm" data-category="brand space">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=luxury%2520dermatology%2520clinic%2520with%2520high-end%2520interior%2520design%252C%2520brand%2520identity%2520elements%252C%2520custom%2520furniture%252C%2520elegant%2520reception%2520area%252C%2520treatment%2520rooms%2520with%2520premium%2520finishes%252C%2520sophisticated%2520atmosphere&width=600&height=400&seq=10&orientation=landscape" alt="피부과 클리닉" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">브랜드 디자인</span>
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">공간 디자인</span>
+</div>
+<h3 class="text-xl font-bold mb-2">에클레어 피부과</h3>
+<p class="text-gray-600 text-sm line-clamp-2">럭셔리한 분위기와 고급스러운 브랜드 이미지를 구현한 프리미엄 피부과 클리닉 디자인</p>
+</div>
+</a>
+<!-- 포트폴리오 아이템 11 -->
+<a href="#" class="portfolio-card bg-white rounded-lg overflow-hidden shadow-sm" data-category="graphic motion">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=healthcare%2520campaign%2520materials%2520with%2520promotional%2520graphics%252C%2520video%2520content%252C%2520social%2520media%2520assets%252C%2520animated%2520infographics%252C%2520consistent%2520visual%2520style%252C%2520informative%2520and%2520engaging%2520design&width=600&height=400&seq=11&orientation=landscape" alt="헬스케어 캠페인" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">그래픽 디자인</span>
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">모션 디자인</span>
+</div>
+<h3 class="text-xl font-bold mb-2">건강 증진 캠페인</h3>
+<p class="text-gray-600 text-sm line-clamp-2">공공 건강 증진을 위한 통합 캠페인 디자인으로 그래픽 자료와 모션 콘텐츠 제작</p>
+</div>
+</a>
+<!-- 포트폴리오 아이템 12 -->
+<a href="#" class="portfolio-card bg-white rounded-lg overflow-hidden shadow-sm" data-category="digital">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=telemedicine%2520platform%2520interface%2520design%2520with%2520video%2520consultation%2520screens%252C%2520patient%2520management%2520dashboard%252C%2520appointment%2520scheduling%2520system%252C%2520medical%2520records%2520view%252C%2520clean%2520and%2520professional%2520UI%2520UX%2520design&width=600&height=400&seq=12&orientation=landscape" alt="원격 의료 플랫폼" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">디지털 디자인</span>
+</div>
+<h3 class="text-xl font-bold mb-2">메디컨넥트 원격진료</h3>
+<p class="text-gray-600 text-sm line-clamp-2">의사와 환자 간의 원활한 소통을 위한 원격 의료 플랫폼 UI/UX 디자인</p>
+</div>
+</a>
+</div>
+<!-- 더 보기 버튼 -->
+<div class="text-center mt-12">
+<button id="load-more" class="bg-white border border-gray-300 text-gray-700 px-8 py-3 rounded-button font-medium hover:bg-gray-50 transition-colors !rounded-button">
+더 많은 프로젝트 보기
+</button>
+</div>
+</div>
+</section>
+<!-- CTA 섹션 -->
+<section class="py-16 bg-primary bg-opacity-5">
+<div class="container mx-auto px-4 text-center">
+<h2 class="text-2xl md:text-3xl font-bold mb-4">나만의 프로젝트를 시작해보세요</h2>
+<p class="text-gray-600 mb-8 max-w-2xl mx-auto">에이치디자인의 전문가들이 귀하의 비전을 현실로 만들어드립니다</p>
+<div class="flex flex-col md:flex-row gap-4 justify-center">
+<a href="#" class="bg-primary text-white py-3 px-8 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button">
+무료 상담 신청하기
+</a>
+<a href="#" class="bg-white text-primary border border-primary py-3 px-8 rounded-button font-medium hover:bg-primary hover:bg-opacity-5 transition-colors whitespace-nowrap !rounded-button">
+서비스 자세히 보기
+</a>
+</div>
+</div>
+</section>
+<!-- 푸터 -->
+<footer class="bg-gray-900 text-white py-12">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<div>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/ec9e3f64-8d8f-4578-8daa-17734376e05a" data-readdy="true" class="h-6 mb-4 inline-block">
+<img src="https://static.readdy.ai/image/3c16391a4b5d74433155a2d2f7dc5d27/28b33284de352d170bd25741ad52ba00.png" alt="logo" class="h-full">
+</a>
+<p class="text-gray-400 text-sm">에이치디자인은 병원 전문 디자인 에이전시로, 10년 이상의 경험을 바탕으로 최고의 디자인 솔루션을 제공합니다.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">서비스</h3>
+<ul class="space-y-2 text-gray-400">
+<li><a href="#" class="hover:text-white transition-colors">공간 디자인</a></li>
+<li><a href="#" class="hover:text-white transition-colors">사인물 디자인</a></li>
+<li><a href="#" class="hover:text-white transition-colors">인쇄물 디자인</a></li>
+<li><a href="#" class="hover:text-white transition-colors">온라인 디자인</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">회사 정보</h3>
+<ul class="space-y-2 text-gray-400">
+<li><a href="#" class="hover:text-white transition-colors">회사 소개</a></li>
+<li><a href="#" class="hover:text-white transition-colors">포트폴리오</a></li>
+<li><a href="#" class="hover:text-white transition-colors">블로그</a></li>
+<li><a href="#" class="hover:text-white transition-colors">채용 정보</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">연락처</h3>
+<ul class="space-y-2 text-gray-400">
+<li class="flex items-center gap-2">
+<i class="ri-map-pin-line"></i>
+<span>서울특별시 강남구 테헤란로 123</span>
+</li>
+<li class="flex items-center gap-2">
+<i class="ri-phone-line"></i>
+<span>02-1234-5678</span>
+</li>
+<li class="flex items-center gap-2">
+<i class="ri-mail-line"></i>
+<span>info@hdesign.co.kr</span>
+</li>
+</ul>
+<div class="flex gap-4 mt-4">
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-instagram-line"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-facebook-line"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-youtube-line"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-kakao-talk-line"></i>
+</a>
+</div>
+</div>
+</div>
+<div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+<p>© 2025 에이치디자인. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 서비스 드롭다운 메뉴 관리
+const serviceDropdownBtn = document.getElementById('service-dropdown-btn');
+const serviceDropdownMenu = document.getElementById('service-dropdown-menu');
+const serviceDropdownIcon = document.getElementById('service-dropdown-icon');
+let isDropdownOpen = false;
+serviceDropdownBtn.addEventListener('click', function(e) {
+e.preventDefault();
+isDropdownOpen = !isDropdownOpen;
+if(isDropdownOpen) {
+serviceDropdownMenu.classList.remove('hidden');
+serviceDropdownIcon.style.transform = 'rotate(180deg)';
+} else {
+serviceDropdownMenu.classList.add('hidden');
+serviceDropdownIcon.style.transform = 'rotate(0deg)';
+}
+});
+document.addEventListener('click', function(e) {
+if (!document.getElementById('service-dropdown').contains(e.target)) {
+serviceDropdownMenu.classList.add('hidden');
+serviceDropdownIcon.style.transform = 'rotate(0deg)';
+isDropdownOpen = false;
+}
+});
+// 카테고리 필터링
+const filterButtons = document.querySelectorAll('.category-filter-btn');
+const portfolioItems = document.querySelectorAll('.portfolio-card');
+const portfolioGrid = document.querySelector('.portfolio-grid');
+filterButtons.forEach(button => {
+button.addEventListener('click', function() {
+// 활성화된 버튼 스타일 변경
+filterButtons.forEach(btn => btn.classList.remove('active'));
+this.classList.add('active');
+const category = this.getAttribute('data-category');
+// 그리드 페이드 아웃
+portfolioGrid.style.opacity = '0';
+setTimeout(() => {
+if (category === 'all') {
+// 모든 아이템 표시
+portfolioItems.forEach(item => {
+item.style.display = 'block';
+setTimeout(() => {
+item.classList.add('fade-in');
+}, 50);
+});
+} else {
+// 선택된 카테고리 아이템만 표시
+portfolioItems.forEach(item => {
+const itemCategories = item.getAttribute('data-category').split(' ');
+if (itemCategories.includes(category)) {
+item.style.display = 'block';
+setTimeout(() => {
+item.classList.add('fade-in');
+}, 50);
+} else {
+item.style.display = 'none';
+item.classList.remove('fade-in');
+}
+});
+}
+// 그리드 페이드 인
+portfolioGrid.style.opacity = '1';
+}, 300);
+});
+});
+// 더 보기 버튼 (예시 기능)
+const loadMoreBtn = document.getElementById('load-more');
+let isLoading = false;
+loadMoreBtn.addEventListener('click', function() {
+if (isLoading) return;
+isLoading = true;
+loadMoreBtn.textContent = '로딩 중...';
+// 실제로는 AJAX 요청 등으로 추가 데이터를 불러오겠지만, 예시로 타임아웃 사용
+setTimeout(() => {
+loadMoreBtn.textContent = '더 많은 프로젝트 보기';
+alert('현재 모든 프로젝트가 표시되었습니다.');
+isLoading = false;
+}, 1500);
+});
+});
+</script>
+</body>
+</html>

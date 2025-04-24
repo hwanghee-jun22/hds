@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H DESIGN - 모션 디자인</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#2C3E50',secondary:'#95A5A6'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.motion-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.motion-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.process-step {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.process-step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.portfolio-item {
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+.portfolio-item:hover {
+  transform: scale(1.02);
+}
+.portfolio-overlay {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.portfolio-item:hover .portfolio-overlay {
+  opacity: 1;
+}
+.motion-demo {
+  position: relative;
+  overflow: hidden;
+}
+.motion-demo::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shimmer 2s infinite;
+  transform: skewX(-20deg);
+}
+@keyframes shimmer {
+  100% {
+    left: 150%;
+  }
+}
+.motion-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #2C3E50;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 4px;
+  opacity: 0.3;
+  animation: dot-pulse 1.5s infinite;
+}
+.motion-dot:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.motion-dot:nth-child(3) {
+  animation-delay: 0.6s;
+}
+@keyframes dot-pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.timeline-item {
+  position: relative;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background-color: #e5e7eb;
+  z-index: -1;
+}
+.timeline-item:last-child::before {
+  height: 50%;
+}
+.timeline-item:first-child::before {
+  top: 50%;
+  height: 50%;
+}
+.timeline-dot {
+  position: relative;
+  z-index: 2;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(44, 62, 80, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(44, 62, 80, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(44, 62, 80, 0);
+  }
+}
+.filter-btn.active {
+  background-color: #2C3E50;
+  color: white;
+}
+</style>
+</head>
+<body class="bg-white text-gray-800">
+<!-- 헤더 -->
+<header class="w-full bg-white shadow-sm fixed top-0 z-50">
+  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/ec9e3f64-8d8f-4578-8daa-17734376e05a" data-readdy="true" class="h-8">
+      <img src="https://static.readdy.ai/image/3c16391a4b5d74433155a2d2f7dc5d27/28b33284de352d170bd25741ad52ba00.png" alt="logo" class="h-full">
+    </a>
+    <nav class="hidden md:flex space-x-8">
+      <div class="relative" id="service-dropdown">
+        <a href="#" class="font-medium text-primary transition-colors flex items-center gap-1" id="service-dropdown-btn">
+          서비스
+          <i class="ri-arrow-down-s-line transition-transform duration-200" id="service-dropdown-icon"></i>
+        </a>
+        <div class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden z-50" id="service-dropdown-menu">
+          <a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/23fdb509-1062-4974-b009-a52dded521a2" data-readdy="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">브랜드 디자인</a>
+          <a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/985da341-dc51-44e8-b143-503fc133cb36" data-readdy="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">공간 디자인</a>
+          <a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/73ea4681-a0e4-4fa0-bf32-c02388d76d08" data-readdy="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">그래픽 디자인</a>
+          <a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/62381296-9e36-49b2-b796-56b7075bfc9b" data-readdy="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">디지털 디자인</a>
+          <a href="#" class="block px-4 py-2 text-sm text-primary hover:bg-gray-50 hover:text-primary font-bold">모션 디자인</a>
+          <a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/84632771-5a46-4a09-b92f-32d33887731c" data-readdy="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">디자인 컨설팅</a>
+        </div>
+      </div>
+      <a href="#" class="font-medium text-primary font-bold border-b-2 border-primary">메디컬 디자인 All Pack</a>
+      <a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="font-medium hover:text-primary transition-colors">포트폴리오</a>
+      <a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/b5e7fbfd-237a-4dc1-b7e2-87ee46bf5928" data-readdy="true" class="font-medium hover:text-primary transition-colors">프로세스</a>
+      <a href="#" class="font-medium hover:text-primary transition-colors">문의하기</a>
+    </nav>
+    <div class="md:hidden w-8 h-8 flex items-center justify-center">
+      <i class="ri-menu-line ri-lg"></i>
+    </div>
+  </div>
+</header>
+
+<!-- 모션 디자인 헤더 -->
+<section class="pt-32 pb-16 bg-gray-50 relative overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <img src="https://readdy.ai/api/search-image?query=abstract%2520motion%2520design%2520elements%2520with%2520flowing%2520curves%2520and%2520dynamic%2520shapes%252C%2520modern%2520animation%2520concept%2520with%2520subtle%2520gradients%2520and%2520light%2520effects%252C%2520professional%2520motion%2520graphics%2520background%2520with%2520korean%2520aesthetic%252C%2520clean%2520and%2520minimal%2520design%2520style%2520with%2520elegant%2520movement%2520patterns&width=1920&height=400&seq=1&orientation=landscape" alt="모션 디자인 배경" class="w-full h-full object-cover object-top opacity-20">
+  </div>
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="max-w-3xl p-10">
+      <div class="flex items-center mb-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-wide">모션 디자인</h1>
+        <div class="ml-4 flex">
+          <span class="motion-dot"></span>
+          <span class="motion-dot"></span>
+          <span class="motion-dot"></span>
+        </div>
+      </div>
+      <p class="text-lg text-gray-900 tracking-wide leading-relaxed">브랜드에 생명력을 불어넣는 움직임의 예술</p>
+    </div>
+  </div>
+</section>
+
+<!-- 모션 디자인 소개 -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-3xl font-bold mb-6">움직임으로<br>브랜드 스토리를 전달합니다</h2>
+        <p class="text-gray-600 mb-6">
+          에이치디자인의 모션 디자인은 정적인 디자인에 움직임을 더해 브랜드의 메시지를 더욱 강력하게 전달합니다. 움직임은 감정을 불러일으키고, 주의를 끌며, 복잡한 정보를 쉽게 이해할 수 있도록 도와줍니다. 브랜드 아이덴티티, UI/UX, 영상 콘텐츠 등 다양한 영역에서 목적에 맞는 최적의 모션 디자인을 제공합니다.
+        </p>
+        <p class="text-gray-600 mb-8">
+          전문 모션 디자이너와 애니메이터로 구성된 팀이 브랜드의 특성과 목표에 맞는 맞춤형 모션 디자인을 개발합니다. 단순한 움직임이 아닌, 브랜드의 가치와 메시지를 효과적으로 전달할 수 있는 전략적인 모션 디자인으로 디지털 환경에서 차별화된 브랜드 경험을 제공하세요.
+        </p>
+        <a href="#contact" class="bg-primary text-white py-3 px-8 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button inline-flex items-center">
+          모션 디자인 문의하기
+          <i class="ri-arrow-right-line ml-2"></i>
+        </a>
+      </div>
+      <div class="rounded-lg overflow-hidden shadow-xl relative motion-demo">
+        <img src="https://readdy.ai/api/search-image?query=professional%2520motion%2520designer%2520working%2520on%2520computer%2520with%2520animation%2520software%252C%2520korean%2520creative%2520professional%2520in%2520modern%2520studio%2520environment%252C%2520screens%2520showing%2520motion%2520graphics%2520project%2520in%2520progress%252C%2520elegant%2520workspace%2520with%2520animation%2520storyboards%2520and%2520visual%2520references&width=600&height=400&seq=2&orientation=landscape" alt="모션 디자인 작업" class="w-full h-full object-cover object-top">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 모션 디자인 유형 -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold mb-4">모션 디자인 유형</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">
+        목적과 매체에 따라 최적화된 다양한 모션 디자인 서비스를 제공합니다
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- 유형 1: 브랜드 모션 -->
+      <div class="motion-card bg-white rounded-lg overflow-hidden shadow-md">
+        <div class="h-48 bg-primary/5 relative">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
+              <i class="ri-award-line ri-2x text-primary"></i>
+            </div>
+          </div>
+        </div>
+        <div class="p-8">
+          <h3 class="text-xl font-bold mb-4">브랜드 모션</h3>
+          <p class="text-gray-600 mb-6">
+            브랜드 아이덴티티에 생동감을 불어넣는 모션 디자인으로, 로고 애니메이션, 브랜드 모션 가이드라인, 모션 시그니처 등을 개발합니다. 브랜드의 개성과 가치를 움직임으로 표현하여 소비자에게 강력한 브랜드 인상을 남깁니다.
+          </p>
+          <ul class="space-y-2 text-gray-600">
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>로고 애니메이션</span>
+            </li>
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>브랜드 모션 가이드라인</span>
+            </li>
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>모션 시그니처</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- 유형 2: UI 모션 -->
+      <div class="motion-card bg-white rounded-lg overflow-hidden shadow-md">
+        <div class="h-48 bg-primary/5 relative">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
+              <i class="ri-layout-masonry-line ri-2x text-primary"></i>
+            </div>
+          </div>
+        </div>
+        <div class="p-8">
+          <h3 class="text-xl font-bold mb-4">UI 모션</h3>
+          <p class="text-gray-600 mb-6">
+            디지털 인터페이스에 적용되는 모션 디자인으로, 사용자 경험을 향상시키고 직관적인 상호작용을 제공합니다. 마이크로 인터랙션, 전환 효과, 피드백 애니메이션 등을 통해 사용자 인터페이스에 생동감과 의미를 부여합니다.
+          </p>
+          <ul class="space-y-2 text-gray-600">
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>마이크로 인터랙션</span>
+            </li>
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>전환 애니메이션</span>
+            </li>
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>인터랙티브 프로토타입</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- 유형 3: 영상 모션 -->
+      <div class="motion-card bg-white rounded-lg overflow-hidden shadow-md">
+        <div class="h-48 bg-primary/5 relative">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
+              <i class="ri-movie-line ri-2x text-primary"></i>
+            </div>
+          </div>
+        </div>
+        <div class="p-8">
+          <h3 class="text-xl font-bold mb-4">영상 모션</h3>
+          <p class="text-gray-600 mb-6">
+            영상 콘텐츠를 위한 모션 그래픽 디자인으로, 복잡한 정보를 시각적으로 전달하거나 브랜드 스토리를 효과적으로 전달합니다. 모션 그래픽, 애니메이션 인포그래픽, 타이포그래피 애니메이션 등 다양한 기법을 활용합니다.
+          </p>
+          <ul class="space-y-2 text-gray-600">
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>모션 그래픽</span>
+            </li>
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>애니메이션 인포그래픽</span>
+            </li>
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>타이포그래피 애니메이션</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+      <!-- 유형 4: 3D 모션 -->
+      <div class="motion-card bg-white rounded-lg p-8 shadow-md">
+        <div class="flex items-center mb-6">
+          <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+            <i class="ri-3d-cube-line ri-xl text-primary"></i>
+          </div>
+          <h3 class="text-xl font-bold">3D 모션</h3>
+        </div>
+        <p class="text-gray-600 mb-6">
+          3D 그래픽과 애니메이션을 활용한 모션 디자인으로, 현실감 있는 제품 시각화, 공간 애니메이션, 캐릭터 애니메이션 등을 제작합니다. 복잡한 개념이나 제품을 입체적으로 표현하여 더욱 효과적으로 정보를 전달합니다.
+        </p>
+        <ul class="space-y-2 text-gray-600">
+          <li class="flex items-start">
+            <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+              <i class="ri-check-line"></i>
+            </div>
+            <span>3D 제품 애니메이션</span>
+          </li>
+          <li class="flex items-start">
+            <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+              <i class="ri-check-line"></i>
+            </div>
+            <span>건축 및 공간 시각화</span>
+          </li>
+          <li class="flex items-start">
+            <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+              <i class="ri-check-line"></i>
+            </div>
+            <span>캐릭터 애니메이션</span>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- 유형 5: 인터랙티브 모션 -->
+      <div class="motion-card bg-white rounded-lg p-8 shadow-md">
+        <div class="flex items-center mb-6">
+          <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+            <i class="ri-cursor-line ri-xl text-primary"></i>
+          </div>
+          <h3 class="text-xl font-bold">인터랙티브 모션</h3>
+        </div>
+        <p class="text-gray-600 mb-6">
+          사용자의 상호작용에 반응하는 모션 디자인으로, 웹사이트, 앱, 키오스크 등 다양한 플랫폼에서 몰입감 있는 경험을 제공합니다. 스크롤 애니메이션, 인터랙티브 스토리텔링, 게임형 인터페이스 등을 개발합니다.
+        </p>
+        <ul class="space-y-2 text-gray-600">
+          <li class="flex items-start">
+            <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+              <i class="ri-check-line"></i>
+            </div>
+            <span>스크롤 기반 애니메이션</span>
+          </li>
+          <li class="flex items-start">
+            <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+              <i class="ri-check-line"></i>
+            </div>
+            <span>인터랙티브 스토리텔링</span>
+          </li>
+          <li class="flex items-start">
+            <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+              <i class="ri-check-line"></i>
+            </div>
+            <span>데이터 시각화 애니메이션</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 모션 디자인 프로세스 -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold mb-4">모션 디자인 프로세스</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">
+        에이치디자인의 체계적인 모션 디자인 프로세스를 통해
+        목적에 맞는 효과적인 모션 디자인을 개발합니다
+      </p>
+    </div>
+    
+    <div class="max-w-4xl mx-auto">
+      <div class="flex flex-col space-y-8">
+        <!-- 프로세스 1 -->
+        <div class="timeline-item flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 p-6 order-2 md:order-1">
+            <h3 class="text-xl font-bold mb-3">기획 및 전략 수립</h3>
+            <p class="text-gray-600">
+              프로젝트의 목표, 타겟 오디언스, 핵심 메시지를 정의하고, 이를 효과적으로 전달할 수 있는 모션 디자인 전략을 수립합니다. 브랜드 가이드라인과 프로젝트 특성을 고려하여 모션의 방향성을 설정합니다.
+            </p>
+          </div>
+          <div class="timeline-dot w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white order-1 md:order-2 mb-4 md:mb-0">
+            <span class="font-bold">01</span>
+          </div>
+        </div>
+        
+        <!-- 프로세스 2 -->
+        <div class="timeline-item flex flex-col md:flex-row items-center">
+          <div class="timeline-dot w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white order-1 mb-4 md:mb-0">
+            <span class="font-bold">02</span>
+          </div>
+          <div class="md:w-1/2 p-6 order-2">
+            <h3 class="text-xl font-bold mb-3">스토리보드 및 시각화</h3>
+            <p class="text-gray-600">
+              모션 디자인의 핵심 장면과 흐름을 스토리보드로 시각화하고, 키프레임을 통해 주요 모션의 스타일과 타이밍을 설계합니다. 이 단계에서 클라이언트와의 협의를 통해 모션 디자인의 방향성을 구체화합니다.
+            </p>
+          </div>
+        </div>
+        
+        <!-- 프로세스 3 -->
+        <div class="timeline-item flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 p-6 order-2 md:order-1">
+            <h3 class="text-xl font-bold mb-3">디자인 및 에셋 제작</h3>
+            <p class="text-gray-600">
+              모션 디자인에 필요한 그래픽 요소, 일러스트레이션, 타이포그래피 등의 에셋을 제작합니다. 각 요소는 애니메이션을 고려하여 설계되며, 필요에 따라 3D 모델링이나 특수 효과 등을 준비합니다.
+            </p>
+          </div>
+          <div class="timeline-dot w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white order-1 md:order-2 mb-4 md:mb-0">
+            <span class="font-bold">03</span>
+          </div>
+        </div>
+        
+        <!-- 프로세스 4 -->
+        <div class="timeline-item flex flex-col md:flex-row items-center">
+          <div class="timeline-dot w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white order-1 mb-4 md:mb-0">
+            <span class="font-bold">04</span>
+          </div>
+          <div class="md:w-1/2 p-6 order-2">
+            <h3 class="text-xl font-bold mb-3">애니메이션 및 모션 개발</h3>
+            <p class="text-gray-600">
+              준비된 에셋에 움직임을 부여하는 단계로, 타이밍, 속도, 가속도, 이징 등을 세밀하게 조정하여 자연스럽고 효과적인 모션을 구현합니다. 필요에 따라 사운드 디자인과의 연동도 고려합니다.
+            </p>
+          </div>
+        </div>
+        
+        <!-- 프로세스 5 -->
+        <div class="timeline-item flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 p-6 order-2 md:order-1">
+            <h3 class="text-xl font-bold mb-3">최적화 및 구현</h3>
+            <p class="text-gray-600">
+              완성된 모션 디자인을 목표 플랫폼에 맞게 최적화하고 구현합니다. 웹, 모바일, 영상 등 각 매체의 특성에 맞는 포맷과 성능을 고려하여 최종 결과물을 전달합니다.
+            </p>
+          </div>
+          <div class="timeline-dot w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white order-1 md:order-2 mb-4 md:mb-0">
+            <span class="font-bold">05</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-16 bg-gray-50 rounded-lg p-8 shadow-sm">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h3 class="text-2xl font-bold mb-4">목적 중심의 모션 디자인</h3>
+          <p class="text-gray-600 mb-6">
+            에이치디자인의 모션 디자인은 단순히 시각적으로 화려한 움직임을 추구하는 것이 아닌, 명확한 목적과 메시지를 전달하기 위한 전략적 접근을 중요시합니다. 모든 움직임은 브랜드의 개성을 표현하고, 사용자의 이해를 돕고, 감정적 연결을 강화하는 등의 구체적인 목적을 가지고 설계됩니다.
+          </p>
+          <p class="text-gray-600 mb-6">
+            또한 모션 디자인의 효과를 극대화하기 위해 사용자 리서치와 데이터 분석을 기반으로 한 검증 과정을 거칩니다. 이를 통해 단순히 아름다운 모션이 아닌, 실질적인 비즈니스 목표 달성에 기여하는 효과적인 모션 디자인을 제공합니다.
+          </p>
+          <a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/b5e7fbfd-237a-4dc1-b7e2-87ee46bf5928" data-readdy="true" class="text-primary font-medium flex items-center">
+            디자인 프로세스 자세히 보기
+            <i class="ri-arrow-right-line ml-1"></i>
+          </a>
+        </div>
+        <div class="rounded-lg overflow-hidden shadow-md">
+          <img src="https://readdy.ai/api/search-image?query=korean%2520motion%2520designers%2520reviewing%2520animation%2520storyboard%2520in%2520modern%2520studio%252C%2520professional%2520team%2520discussing%2520motion%2520design%2520project%2520with%2520screens%2520showing%2520animation%2520sequences%252C%2520creative%2520workspace%2520with%2520animation%2520frames%2520and%2520visual%2520references%252C%2520collaborative%2520environment&width=600&height=400&seq=3&orientation=landscape" alt="모션 디자인 협업" class="w-full h-full object-cover object-top">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 성공 사례 -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold mb-4">모션 디자인 성공 사례</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">
+        에이치디자인의 모션 디자인이 클라이언트의 브랜드와 제품에
+        어떤 가치를 더했는지 실제 사례를 통해 확인하세요
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- 성공 사례 1 -->
+      <div class="portfolio-item bg-white rounded-lg overflow-hidden shadow-md">
+        <div class="relative h-48">
+          <img src="https://readdy.ai/api/search-image?query=samsung%2520electronics%2520brand%2520animation%2520with%2520sleek%2520modern%2520design%252C%2520corporate%2520logo%2520animation%2520sequence%2520with%2520blue%2520color%2520scheme%252C%2520professional%2520motion%2520graphics%2520for%2520korean%2520tech%2520company%252C%2520elegant%2520brand%2520identity%2520animation%2520on%2520digital%2520screen&width=400&height=250&seq=4&orientation=landscape" alt="삼성전자 브랜드 모션" class="w-full h-full object-cover object-top">
+          <div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+            <h4 class="text-xl font-bold mb-2">삼성전자</h4>
+            <p class="text-sm text-center mb-4">브랜드 모션 아이덴티티</p>
+            <a href="#" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+              자세히 보기
+            </a>
+          </div>
+        </div>
+        <div class="p-6">
+          <h4 class="text-xl font-bold mb-2">삼성전자</h4>
+          <p class="text-gray-600 text-sm mb-4">브랜드 모션 아이덴티티</p>
+          <ul class="space-y-2 text-gray-600 text-sm">
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>브랜드 인지도 35% 향상</span>
+            </li>
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>디지털 광고 참여율 42% 증가</span>
+            </li>
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>글로벌 브랜드 일관성 강화</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- 성공 사례 2 -->
+      <div class="portfolio-item bg-white rounded-lg overflow-hidden shadow-md">
+        <div class="relative h-48">
+          <img src="https://readdy.ai/api/search-image?query=toss%2520fintech%2520app%2520UI%2520animation%2520sequence%2520showing%2520smooth%2520transitions%2520and%2520micro-interactions%252C%2520korean%2520mobile%2520banking%2520interface%2520with%2520elegant%2520motion%2520design%252C%2520professional%2520user%2520interface%2520animations%2520with%2520blue%2520and%2520white%2520color%2520scheme%252C%2520modern%2520app%2520design&width=400&height=250&seq=5&orientation=landscape" alt="토스 UI 모션" class="w-full h-full object-cover object-top">
+          <div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+            <h4 class="text-xl font-bold mb-2">토스</h4>
+            <p class="text-sm text-center mb-4">UI 모션 디자인</p>
+            <a href="#" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+              자세히 보기
+            </a>
+          </div>
+        </div>
+        <div class="p-6">
+          <h4 class="text-xl font-bold mb-2">토스</h4>
+          <p class="text-gray-600 text-sm mb-4">UI 모션 디자인</p>
+          <ul class="space-y-2 text-gray-600 text-sm">
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>사용자 만족도 48% 상승</span>
+            </li>
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>앱 사용 시간 28% 증가</span>
+            </li>
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>사용자 오류 30% 감소</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- 성공 사례 3 -->
+      <div class="portfolio-item bg-white rounded-lg overflow-hidden shadow-md">
+        <div class="relative h-48">
+          <img src="https://readdy.ai/api/search-image?query=hyundai%2520motor%2520company%2520promotional%2520video%2520with%2520motion%2520graphics%252C%2520car%2520animation%2520sequence%2520showing%2520vehicle%2520features%2520with%2520elegant%2520transitions%252C%2520korean%2520automotive%2520brand%2520video%2520with%2520professional%2520motion%2520design%252C%2520dynamic%2520product%2520visualization&width=400&height=250&seq=6&orientation=landscape" alt="현대자동차 모션 그래픽" class="w-full h-full object-cover object-top">
+          <div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+            <h4 class="text-xl font-bold mb-2">현대자동차</h4>
+            <p class="text-sm text-center mb-4">제품 소개 모션 그래픽</p>
+            <a href="#" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+              자세히 보기
+            </a>
+          </div>
+        </div>
+        <div class="p-6">
+          <h4 class="text-xl font-bold mb-2">현대자동차</h4>
+          <p class="text-gray-600 text-sm mb-4">제품 소개 모션 그래픽</p>
+          <ul class="space-y-2 text-gray-600 text-sm">
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>영상 시청 완료율 65% 달성</span>
+            </li>
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>소셜 미디어 공유 52% 증가</span>
+            </li>
+            <li class="flex items-start">
+              <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+                <i class="ri-check-line"></i>
+              </div>
+              <span>제품 이해도 45% 향상</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-16 bg-white rounded-lg p-8 shadow-md">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+        <div class="md:col-span-1">
+          <img src="https://readdy.ai/api/search-image?query=professional%2520korean%2520male%2520executive%2520in%2520business%2520attire%252C%2520confident%2520asian%2520man%2520leader%2520with%2520elegant%2520appearance%252C%2520corporate%2520portrait%2520with%2520neutral%2520background%252C%2520korean%2520business%2520director%2520in%2520modern%2520setting&width=400&height=400&seq=7&orientation=portrait" alt="박준호 디지털 마케팅 팀장" class="w-full h-auto rounded-lg shadow-sm">
+        </div>
+        <div class="md:col-span-2">
+          <div class="flex mb-4">
+            <div class="text-primary">
+              <i class="ri-double-quotes-l ri-3x"></i>
+            </div>
+          </div>
+          <p class="text-gray-700 text-lg italic mb-6">
+            에이치디자인의 모션 디자인 팀은 단순히 기술적으로 뛰어난 애니메이션을 만드는 것을 넘어, 우리 브랜드의 본질과 메시지를 깊이 이해하고 이를 움직임으로 완벽하게 표현해 주었습니다. 특히 브랜드 로고 애니메이션은 우리 회사의 혁신적이고 역동적인 이미지를 정확히 담아내어, 다양한 디지털 채널에서 일관된 브랜드 경험을 제공하는 데 큰 도움이 되었습니다. 프로젝트 전반에 걸친 전문적인 접근 방식과 창의적인 솔루션에 깊은 감사를 드립니다.
+          </p>
+          <div>
+            <p class="font-bold">박준호 디지털 마케팅 팀장</p>
+            <p class="text-gray-600 text-sm">삼성전자</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 포트폴리오 갤러리 -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold mb-4">모션 디자인 포트폴리오</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">
+        다양한 산업과 목적에 맞춰 제작된 에이치디자인의 모션 디자인 작품들을 확인하세요
+      </p>
+    </div>
+    
+    <div class="mb-8 flex flex-wrap justify-center gap-4">
+      <button class="filter-btn active py-2 px-4 rounded-full bg-gray-100 text-gray-700 text-sm font-medium transition-colors" data-filter="all">
+        전체 보기
+      </button>
+      <button class="filter-btn py-2 px-4 rounded-full bg-gray-100 text-gray-700 text-sm font-medium transition-colors" data-filter="brand">
+        브랜드 모션
+      </button>
+      <button class="filter-btn py-2 px-4 rounded-full bg-gray-100 text-gray-700 text-sm font-medium transition-colors" data-filter="ui">
+        UI 모션
+      </button>
+      <button class="filter-btn py-2 px-4 rounded-full bg-gray-100 text-gray-700 text-sm font-medium transition-colors" data-filter="video">
+        영상 모션
+      </button>
+      <button class="filter-btn py-2 px-4 rounded-full bg-gray-100 text-gray-700 text-sm font-medium transition-colors" data-filter="3d">
+        3D 모션
+      </button>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="portfolio-grid">
+      <!-- 포트폴리오 아이템 1 -->
+      <div class="portfolio-item rounded-lg overflow-hidden shadow-md" data-category="brand">
+        <div class="relative">
+          <img src="https://readdy.ai/api/search-image?query=elegant%2520logo%2520animation%2520for%2520luxury%2520korean%2520cosmetic%2520brand%252C%2520minimal%2520and%2520sophisticated%2520motion%2520design%2520with%2520flowing%2520elements%252C%2520beauty%2520product%2520brand%2520identity%2520animation%2520with%2520soft%2520colors%252C%2520professional%2520motion%2520graphics&width=400&height=300&seq=8&orientation=landscape" alt="화장품 브랜드 로고 애니메이션" class="w-full h-auto">
+          <div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+            <h4 class="text-lg font-bold mb-2">아모레퍼시픽</h4>
+            <p class="text-sm text-center mb-4">브랜드 로고 애니메이션</p>
+            <a href="#" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+              상세 보기
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 포트폴리오 아이템 2 -->
+      <div class="portfolio-item rounded-lg overflow-hidden shadow-md" data-category="ui">
+        <div class="relative">
+          <img src="https://readdy.ai/api/search-image?query=mobile%2520app%2520UI%2520animation%2520sequence%2520showing%2520smooth%2520transitions%2520between%2520screens%252C%2520korean%2520food%2520delivery%2520app%2520interface%2520with%2520micro-interactions%252C%2520professional%2520user%2520interface%2520motion%2520design%2520with%2520orange%2520accent%2520colors%252C%2520modern%2520app%2520design&width=400&height=300&seq=9&orientation=landscape" alt="배달앱 UI 모션" class="w-full h-auto">
+          <div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+            <h4 class="text-lg font-bold mb-2">배달의민족</h4>
+            <p class="text-sm text-center mb-4">앱 UI 인터랙션 디자인</p>
+            <a href="#" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+              상세 보기
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 포트폴리오 아이템 3 -->
+      <div class="portfolio-item rounded-lg overflow-hidden shadow-md" data-category="video">
+        <div class="relative">
+          <img src="https://readdy.ai/api/search-image?query=animated%2520infographic%2520explaining%2520financial%2520concepts%252C%2520korean%2520banking%2520service%2520motion%2520graphics%2520with%2520data%2520visualization%252C%2520educational%2520animation%2520with%2520clean%2520design%2520and%2520typography%252C%2520professional%2520explainer%2520video%2520with%2520blue%2520color%2520scheme&width=400&height=300&seq=10&orientation=landscape" alt="금융 인포그래픽 애니메이션" class="w-full h-auto">
+          <div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+            <h4 class="text-lg font-bold mb-2">KB국민은행</h4>
+            <p class="text-sm text-center mb-4">금융 서비스 인포그래픽</p>
+            <a href="#" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+              상세 보기
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 포트폴리오 아이템 4 -->
+      <div class="portfolio-item rounded-lg overflow-hidden shadow-md" data-category="3d">
+        <div class="relative">
+          <img src="https://readdy.ai/api/search-image?query=3D%2520product%2520animation%2520for%2520korean%2520electronics%2520company%252C%2520smartphone%2520exploded%2520view%2520animation%2520showing%2520internal%2520components%252C%2520realistic%2520product%2520visualization%2520with%2520sleek%2520design%252C%2520professional%25203D%2520motion%2520graphics%2520for%2520tech%2520product&width=400&height=300&seq=11&orientation=landscape" alt="스마트폰 3D 애니메이션" class="w-full h-auto">
+          <div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+            <h4 class="text-lg font-bold mb-2">LG전자</h4>
+            <p class="text-sm text-center mb-4">스마트폰 3D 제품 애니메이션</p>
+            <a href="#" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+              상세 보기
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 포트폴리오 아이템 5 -->
+      <div class="portfolio-item rounded-lg overflow-hidden shadow-md" data-category="brand">
+        <div class="relative">
+          <img src="https://readdy.ai/api/search-image?query=animated%2520brand%2520guidelines%2520for%2520korean%2520airline%2520company%252C%2520motion%2520design%2520system%2520showing%2520logo%2520usage%2520and%2520animation%2520principles%252C%2520corporate%2520identity%2520motion%2520guide%2520with%2520blue%2520and%2520teal%2520colors%252C%2520professional%2520brand%2520motion%2520design&width=400&height=300&seq=12&orientation=landscape" alt="항공사 브랜드 모션 가이드라인" class="w-full h-auto">
+          <div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+            <h4 class="text-lg font-bold mb-2">대한항공</h4>
+            <p class="text-sm text-center mb-4">브랜드 모션 가이드라인</p>
+            <a href="#" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+              상세 보기
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 포트폴리오 아이템 6 -->
+      <div class="portfolio-item rounded-lg overflow-hidden shadow-md" data-category="ui">
+        <div class="relative">
+          <img src="https://readdy.ai/api/search-image?query=website%2520scroll%2520animation%2520for%2520korean%2520fashion%2520brand%252C%2520interactive%2520web%2520design%2520with%2520parallax%2520effects%2520and%2520smooth%2520transitions%252C%2520e-commerce%2520site%2520with%2520elegant%2520motion%2520design%252C%2520professional%2520web%2520animation%2520with%2520product%2520showcase&width=400&height=300&seq=13&orientation=landscape" alt="패션 브랜드 웹사이트 스크롤 애니메이션" class="w-full h-auto">
+          <div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+            <h4 class="text-lg font-bold mb-2">무신사</h4>
+            <p class="text-sm text-center mb-4">웹사이트 스크롤 애니메이션</p>
+            <a href="#" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+              상세 보기
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-12 text-center">
+      <a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="bg-primary text-white py-3 px-8 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button inline-flex items-center">
+        전체 포트폴리오 보기
+        <i class="ri-arrow-right-line ml-2"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 문의 양식 -->
+<section id="contact" class="py-16 bg-gradient-to-r from-primary/10 to-primary/5">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-3xl font-bold mb-6">모션 디자인 문의하기</h2>
+        <p class="text-gray-600 mb-8">
+          에이치디자인과 함께 브랜드에 생동감을 불어넣는 모션 디자인을 시작하세요.
+          전문 모션 디자이너가 귀사의 비즈니스 목표와 브랜드 특성에 맞는
+          최적의 모션 디자인 솔루션을 제안해 드립니다.
+        </p>
+        <div class="bg-white rounded-lg p-6 shadow-md mb-8">
+          <h3 class="text-xl font-bold mb-4">프로젝트 진행 절차</h3>
+          <ul class="space-y-4">
+            <li class="flex items-start">
+              <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mr-4 flex-shrink-0">
+                <span class="font-bold">1</span>
+              </div>
+              <div>
+                <h4 class="font-bold">문의 및 상담</h4>
+                <p class="text-gray-600 text-sm">프로젝트 목표와 요구사항에 대한 초기 상담을 진행합니다.</p>
+              </div>
+            </li>
+            <li class="flex items-start">
+              <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mr-4 flex-shrink-0">
+                <span class="font-bold">2</span>
+              </div>
+              <div>
+                <h4 class="font-bold">제안 및 견적</h4>
+                <p class="text-gray-600 text-sm">프로젝트 범위와 목표에 맞는 모션 디자인 솔루션과 견적을 제안합니다.</p>
+              </div>
+            </li>
+            <li class="flex items-start">
+              <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mr-4 flex-shrink-0">
+                <span class="font-bold">3</span>
+              </div>
+              <div>
+                <h4 class="font-bold">계약 및 기획</h4>
+                <p class="text-gray-600 text-sm">계약 체결 후 상세 기획과 스토리보드 작업을 진행합니다.</p>
+              </div>
+            </li>
+            <li class="flex items-start">
+              <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mr-4 flex-shrink-0">
+                <span class="font-bold">4</span>
+              </div>
+              <div>
+                <h4 class="font-bold">제작 및 납품</h4>
+                <p class="text-gray-600 text-sm">승인된 기획을 바탕으로 모션 디자인을 제작하고 최종 결과물을 전달합니다.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="bg-white rounded-lg p-8 shadow-lg">
+          <h3 class="text-xl font-bold mb-6 text-center">프로젝트 문의하기</h3>
+          <form>
+            <div class="mb-4">
+              <label for="company" class="block text-gray-700 font-medium mb-2">회사명</label>
+              <input type="text" id="company" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="회사명을 입력해주세요">
+            </div>
+            <div class="mb-4">
+              <label for="name" class="block text-gray-700 font-medium mb-2">담당자명</label>
+              <input type="text" id="name" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="담당자명을 입력해주세요">
+            </div>
+            <div class="mb-4">
+              <label for="email" class="block text-gray-700 font-medium mb-2">이메일</label>
+              <input type="email" id="email" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="이메일을 입력해주세요">
+            </div>
+            <div class="mb-4">
+              <label for="phone" class="block text-gray-700 font-medium mb-2">연락처</label>
+              <input type="tel" id="phone" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="연락처를 입력해주세요">
+            </div>
+            <div class="mb-4">
+              <label for="project-type" class="block text-gray-700 font-medium mb-2">프로젝트 유형</label>
+              <div class="relative">
+                <select id="project-type" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm appearance-none pr-8">
+                  <option value="">프로젝트 유형을 선택해주세요</option>
+                  <option value="brand">브랜드 모션</option>
+                  <option value="ui">UI 모션</option>
+                  <option value="video">영상 모션</option>
+                  <option value="3d">3D 모션</option>
+                  <option value="interactive">인터랙티브 모션</option>
+                  <option value="other">기타</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <i class="ri-arrow-down-s-line text-gray-400"></i>
+                </div>
+              </div>
+            </div>
+            <div class="mb-4">
+              <label for="budget" class="block text-gray-700 font-medium mb-2">예산 범위</label>
+              <div class="relative">
+                <select id="budget" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm appearance-none pr-8">
+                  <option value="">예산 범위를 선택해주세요</option>
+                  <option value="under-5m">500만원 미만</option>
+                  <option value="5m-10m">500만원 - 1,000만원</option>
+                  <option value="10m-20m">1,000만원 - 2,000만원</option>
+                  <option value="over-20m">2,000만원 이상</option>
+                  <option value="undecided">미정</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <i class="ri-arrow-down-s-line text-gray-400"></i>
+                </div>
+              </div>
+            </div>
+            <div class="mb-4">
+              <label for="deadline" class="block text-gray-700 font-medium mb-2">마감 일정</label>
+              <input type="date" id="deadline" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm">
+            </div>
+            <div class="mb-6">
+              <label for="message" class="block text-gray-700 font-medium mb-2">프로젝트 내용</label>
+              <textarea id="message" rows="4" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="프로젝트 목표, 요구사항, 참고 자료 등을 자유롭게 입력해주세요"></textarea>
+            </div>
+            <div class="mb-6">
+              <label class="flex items-start">
+                <div class="relative w-5 h-5 mt-0.5 mr-2 flex-shrink-0">
+                  <input type="checkbox" class="opacity-0 absolute w-full h-full cursor-pointer z-10">
+                  <div class="w-5 h-5 border border-gray-300 rounded bg-white"></div>
+                  <div class="absolute hidden w-5 h-5 rounded bg-primary flex items-center justify-center check-icon">
+                    <i class="ri-check-line text-white text-xs"></i>
+                  </div>
+                </div>
+                <span class="text-sm text-gray-600">개인정보 수집 및 이용에 동의합니다. (필수)</span>
+              </label>
+            </div>
+            <button type="submit" class="w-full bg-primary text-white py-3 px-6 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button">
+              문의하기
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA 섹션 -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-2xl md:text-3xl font-bold mb-4">에이치디자인과 함께 브랜드에 움직임을 더하세요</h2>
+    <p class="text-gray-600 mb-8 max-w-2xl mx-auto">
+      전략적인 모션 디자인으로 브랜드 경험을 향상시키고
+      효과적인 메시지 전달로 비즈니스 성과를 높이세요
+    </p>
+    <div class="flex flex-col md:flex-row gap-4 justify-center">
+      <a href="#contact" class="bg-primary text-white py-3 px-8 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button">
+        무료 상담 신청하기
+      </a>
+      <a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/84632771-5a46-4a09-b92f-32d33887731c" data-readdy="true" class="bg-white text-primary border border-primary py-3 px-8 rounded-button font-medium hover:bg-primary hover:bg-opacity-5 transition-colors whitespace-nowrap !rounded-button">
+        디자인 컨설팅 서비스 보기
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 푸터 -->
+<footer class="bg-gray-900 text-white py-12">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/ec9e3f64-8d8f-4578-8daa-17734376e05a" data-readdy="true" class="h-6 mb-4 inline-block">
+          <img src="https://static.readdy.ai/image/3c16391a4b5d74433155a2d2f7dc5d27/28b33284de352d170bd25741ad52ba00.png" alt="logo" class="h-full brightness-0 invert">
+        </a>
+        <p class="text-gray-400 text-sm">에이치디자인은 브랜드 전문 디자인 에이전시로, 10년 이상의 경험을 바탕으로 최고의 디자인 솔루션을 제공합니다.</p>
+      </div>
+      <div>
+        <h3 class="text-lg font-bold mb-4">서비스</h3>
+        <ul class="space-y-2 text-gray-400">
+          <li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/23fdb509-1062-4974-b009-a52dded521a2" data-readdy="true" class="hover:text-white transition-colors">브랜드 디자인</a></li>
+          <li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/985da341-dc51-44e8-b143-503fc133cb36" data-readdy="true" class="hover:text-white transition-colors">공간 디자인</a></li>
+          <li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/73ea4681-a0e4-4fa0-bf32-c02388d76d08" data-readdy="true" class="hover:text-white transition-colors">그래픽 디자인</a></li>
+          <li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/62381296-9e36-49b2-b796-56b7075bfc9b" data-readdy="true" class="hover:text-white transition-colors">디지털 디자인</a></li>
+          <li><a href="#" class="text-white font-medium">모션 디자인</a></li>
+          <li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/84632771-5a46-4a09-b92f-32d33887731c" data-readdy="true" class="hover:text-white transition-colors">디자인 컨설팅</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-lg font-bold mb-4">회사 정보</h3>
+        <ul class="space-y-2 text-gray-400">
+          <li><a href="#" class="hover:text-white transition-colors">회사 소개</a></li>
+          <li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="hover:text-white transition-colors">포트폴리오</a></li>
+          <li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/b5e7fbfd-237a-4dc1-b7e2-87ee46bf5928" data-readdy="true" class="hover:text-white transition-colors">프로세스</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">채용 정보</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-lg font-bold mb-4">연락처</h3>
+        <ul class="space-y-2 text-gray-400">
+          <li class="flex items-center gap-2">
+            <i class="ri-map-pin-line"></i>
+            <span>서울특별시 강남구 테헤란로 123</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i class="ri-phone-line"></i>
+            <span>02-1234-5678</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i class="ri-mail-line"></i>
+            <span>info@hdesign.co.kr</span>
+          </li>
+        </ul>
+        <div class="flex gap-4 mt-4">
+          <a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+            <i class="ri-instagram-line"></i>
+          </a>
+          <a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+            <i class="ri-facebook-line"></i>
+          </a>
+          <a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+            <i class="ri-youtube-line"></i>
+          </a>
+          <a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+            <i class="ri-kakao-talk-line"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+      <p>© 2025 에이치디자인. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 서비스 드롭다운 메뉴 관리
+  const serviceDropdownBtn = document.getElementById('service-dropdown-btn');
+  const serviceDropdownMenu = document.getElementById('service-dropdown-menu');
+  const serviceDropdownIcon = document.getElementById('service-dropdown-icon');
+  let isDropdownOpen = false;
+  
+  serviceDropdownBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    isDropdownOpen = !isDropdownOpen;
+    if(isDropdownOpen) {
+      serviceDropdownMenu.classList.remove('hidden');
+      serviceDropdownIcon.style.transform = 'rotate(180deg)';
+    } else {
+      serviceDropdownMenu.classList.add('hidden');
+      serviceDropdownIcon.style.transform = 'rotate(0deg)';
+    }
+  });
+  
+  document.addEventListener('click', function(e) {
+    if (!document.getElementById('service-dropdown').contains(e.target)) {
+      serviceDropdownMenu.classList.add('hidden');
+      serviceDropdownIcon.style.transform = 'rotate(0deg)';
+      isDropdownOpen = false;
+    }
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  // 포트폴리오 필터링
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const portfolioItems = document.querySelectorAll('.portfolio-item');
+  
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      // 활성 버튼 스타일 변경
+      filterBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      
+      const filter = this.getAttribute('data-filter');
+      
+      // 아이템 필터링
+      portfolioItems.forEach(item => {
+        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  // 애니메이션 요소 관찰
+  const animatedElements = document.querySelectorAll('.portfolio-item, .process-step, .motion-card');
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+  
+  animatedElements.forEach(item => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(20px)';
+    item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(item);
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  // 커스텀 체크박스
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {
+    const checkIcon = checkbox.parentElement.querySelector('.check-icon');
+    checkbox.addEventListener('change', function() {
+      if (this.checked) {
+        checkIcon.classList.remove('hidden');
+      } else {
+        checkIcon.classList.add('hidden');
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>

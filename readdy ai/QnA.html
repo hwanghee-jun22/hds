@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H DESIGN - 문의하기</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#2C3E50',secondary:'#95A5A6'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Noto Sans KR', sans-serif;
+}
+input:focus, textarea:focus, select:focus {
+outline: none;
+}
+input[type="checkbox"] {
+appearance: none;
+-webkit-appearance: none;
+width: 20px;
+height: 20px;
+border: 2px solid #e5e7eb;
+border-radius: 4px;
+position: relative;
+cursor: pointer;
+}
+input[type="checkbox"]:checked {
+background-color: #2C3E50;
+border-color: #2C3E50;
+}
+input[type="checkbox"]:checked::after {
+content: "";
+position: absolute;
+top: 2px;
+left: 6px;
+width: 5px;
+height: 10px;
+border: solid white;
+border-width: 0 2px 2px 0;
+transform: rotate(45deg);
+}
+input[type="radio"] {
+appearance: none;
+-webkit-appearance: none;
+width: 20px;
+height: 20px;
+border: 2px solid #e5e7eb;
+border-radius: 50%;
+position: relative;
+cursor: pointer;
+}
+input[type="radio"]:checked {
+border-color: #2C3E50;
+}
+input[type="radio"]:checked::after {
+content: "";
+position: absolute;
+top: 3px;
+left: 3px;
+width: 10px;
+height: 10px;
+border-radius: 50%;
+background-color: #2C3E50;
+}
+.custom-select {
+position: relative;
+}
+.custom-select select {
+display: none;
+}
+.select-selected {
+background-color: white;
+}
+.select-items div, .select-selected {
+padding: 12px 16px;
+cursor: pointer;
+}
+.select-items {
+position: absolute;
+background-color: white;
+top: 100%;
+left: 0;
+right: 0;
+z-index: 99;
+border-radius: 8px;
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+max-height: 300px;
+overflow-y: auto;
+}
+.select-hide {
+display: none;
+}
+.select-items div:hover {
+background-color: rgba(44, 62, 80, 0.1);
+}
+.accordion-content {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.3s ease;
+}
+.accordion-content.active {
+max-height: 500px;
+}
+</style>
+</head>
+<body class="bg-white text-gray-800">
+<!-- 헤더 -->
+<header class="w-full bg-white shadow-sm fixed top-0 z-50">
+<div class="container mx-auto px-4 py-4 flex justify-between items-center">
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/ec9e3f64-8d8f-4578-8daa-17734376e05a" data-readdy="true" class="h-8">
+<img src="https://static.readdy.ai/image/3c16391a4b5d74433155a2d2f7dc5d27/28b33284de352d170bd25741ad52ba00.png" alt="logo" class="h-full">
+</a>
+<nav class="hidden md:flex space-x-8">
+<div class="relative" id="service-dropdown">
+<a href="#" class="font-medium hover:text-primary transition-colors flex items-center gap-1" id="service-dropdown-btn">
+서비스
+<i class="ri-arrow-down-s-line transition-transform duration-200" id="service-dropdown-icon"></i>
+</a>
+<div class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden z-50" id="service-dropdown-menu">
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/23fdb509-1062-4974-b009-a52dded521a2" data-readdy="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">브랜드 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">공간 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">그래픽 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">디지털 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">모션 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">디자인 컨설팅</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/ff9e2b6a-180b-4b0d-8e35-d2da2f4082fd" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary border-t border-gray-100 mt-2 pt-2">디자인 올팩</a>
+</div>
+</div>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/ff9e2b6a-180b-4b0d-8e35-d2da2f4082fd" class="font-medium hover:text-primary transition-colors">디자인 올팩 All Pack</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="font-medium hover:text-primary transition-colors">포트폴리오</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/b5e7fbfd-237a-4dc1-b7e2-87ee46bf5928" data-readdy="true" class="font-medium hover:text-primary transition-colors">프로세스</a>
+<a href="#" class="font-medium text-primary border-b-2 border-primary">문의하기</a>
+</nav>
+<div class="md:hidden w-8 h-8 flex items-center justify-center">
+<i class="ri-menu-line ri-lg"></i>
+</div>
+</div>
+</header>
+<!-- 문의하기 헤더 -->
+<section class="pt-32 pb-16 bg-gradient-to-r from-primary/5 to-primary/10">
+<div class="container mx-auto px-4">
+<div class="max-w-3xl mx-auto text-center">
+<h1 class="text-4xl md:text-5xl font-bold mb-4">문의하기</h1>
+<p class="text-lg text-gray-600">에이치디자인에 관심을 가져주셔서 감사합니다. 프로젝트에 대해 상담해 보세요.</p>
+</div>
+</div>
+</section>
+<!-- 문의 양식 및 회사 정보 섹션 -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- 문의 양식 -->
+<div class="lg:col-span-2">
+<div class="bg-white rounded-lg shadow-md p-8">
+<h2 class="text-2xl font-bold mb-6">상담 신청하기</h2>
+<form id="contactForm">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div>
+<label for="name" class="block text-sm font-medium text-gray-700 mb-1">이름 <span class="text-red-500">*</span></label>
+<input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded text-sm" placeholder="홍길동" required>
+</div>
+<div>
+<label for="email" class="block text-sm font-medium text-gray-700 mb-1">이메일 <span class="text-red-500">*</span></label>
+<input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded text-sm" placeholder="example@email.com" required>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div>
+<label for="phone" class="block text-sm font-medium text-gray-700 mb-1">연락처 <span class="text-red-500">*</span></label>
+<input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded text-sm" placeholder="010-1234-5678" required>
+</div>
+<div>
+<label for="inquiryType" class="block text-sm font-medium text-gray-700 mb-1">문의 유형 <span class="text-red-500">*</span></label>
+<div class="custom-select w-full">
+<div class="relative">
+<div class="select-selected flex items-center justify-between w-full px-4 py-3 border border-gray-300 rounded text-sm">
+<span id="selectedOption">문의 유형을 선택해주세요</span>
+<i class="ri-arrow-down-s-line"></i>
+</div>
+<div class="select-items select-hide">
+<div data-value="brand">브랜드 디자인</div>
+<div data-value="space">공간 디자인</div>
+<div data-value="graphic">그래픽 디자인</div>
+<div data-value="digital">디지털 디자인</div>
+<div data-value="motion">모션 디자인</div>
+<div data-value="consulting">디자인 컨설팅</div>
+<div data-value="other">기타 문의</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mb-6">
+<label for="projectDescription" class="block text-sm font-medium text-gray-700 mb-1">프로젝트 설명 <span class="text-red-500">*</span></label>
+<textarea id="projectDescription" name="projectDescription" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded text-sm resize-none" placeholder="프로젝트에 대한 간략한 설명과 요구사항을 작성해주세요." required></textarea>
+</div>
+<div class="mb-6">
+<label for="budget" class="block text-sm font-medium text-gray-700 mb-1">예산 범위</label>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="flex items-center">
+<input type="radio" id="budget1" name="budget" value="1000000">
+<label for="budget1" class="ml-2 text-sm">100만원 미만</label>
+</div>
+<div class="flex items-center">
+<input type="radio" id="budget2" name="budget" value="3000000">
+<label for="budget2" class="ml-2 text-sm">100-300만원</label>
+</div>
+<div class="flex items-center">
+<input type="radio" id="budget3" name="budget" value="5000000">
+<label for="budget3" class="ml-2 text-sm">300-500만원</label>
+</div>
+<div class="flex items-center">
+<input type="radio" id="budget4" name="budget" value="10000000">
+<label for="budget4" class="ml-2 text-sm">500만원 이상</label>
+</div>
+</div>
+</div>
+<div class="mb-6">
+<label class="block text-sm font-medium text-gray-700 mb-1">참고 파일 (선택사항)</label>
+<div class="flex items-center justify-center w-full">
+<label for="fileUpload" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded cursor-pointer bg-gray-50 hover:bg-gray-100">
+<div class="flex flex-col items-center justify-center pt-5 pb-6">
+<i class="ri-upload-2-line ri-2x text-gray-400 mb-2"></i>
+<p class="mb-2 text-sm text-gray-500"><span class="font-semibold">클릭하여 파일 업로드</span></p>
+<p class="text-xs text-gray-500">PNG, JPG, PDF (최대 10MB)</p>
+</div>
+<input id="fileUpload" type="file" class="hidden" />
+</label>
+</div>
+</div>
+<div class="mb-6 flex items-start">
+<input type="checkbox" id="privacyConsent" name="privacyConsent" class="mt-1" required>
+<label for="privacyConsent" class="ml-2 text-sm text-gray-600">
+개인정보 수집 및 이용에 동의합니다. 수집된 정보는 문의 답변 목적으로만 사용되며, 제3자에게 제공되지 않습니다. <a href="#" class="text-primary hover:underline">개인정보처리방침</a> 자세히 보기
+</label>
+</div>
+<div class="mb-6 flex items-start">
+<input type="checkbox" id="marketingConsent" name="marketingConsent" class="mt-1">
+<label for="marketingConsent" class="ml-2 text-sm text-gray-600">
+마케팅 정보 수신에 동의합니다. (선택사항)
+</label>
+</div>
+<button type="submit" id="submitBtn" class="bg-primary text-white py-3 px-8 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button">
+문의하기
+</button>
+</form>
+</div>
+</div>
+<!-- 회사 정보 -->
+<div>
+<div class="bg-white rounded-lg shadow-md p-8 mb-8">
+<h2 class="text-2xl font-bold mb-6">연락처 정보</h2>
+<ul class="space-y-4">
+<li class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-4">
+<i class="ri-map-pin-line ri-lg"></i>
+</div>
+<div>
+<h3 class="font-medium">주소</h3>
+<p class="text-gray-600">서울특별시 강남구 테헤란로 123 에이치디자인 빌딩 5층</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-4">
+<i class="ri-phone-line ri-lg"></i>
+</div>
+<div>
+<h3 class="font-medium">전화번호</h3>
+<p class="text-gray-600">02-1234-5678</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-4">
+<i class="ri-mail-line ri-lg"></i>
+</div>
+<div>
+<h3 class="font-medium">이메일</h3>
+<p class="text-gray-600">contact@hdesign.co.kr</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-4">
+<i class="ri-time-line ri-lg"></i>
+</div>
+<div>
+<h3 class="font-medium">업무 시간</h3>
+<p class="text-gray-600">평일: 오전 9시 - 오후 6시</p>
+<p class="text-gray-600">주말 및 공휴일: 휴무</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- 지도 -->
+<div class="bg-white rounded-lg shadow-md p-8">
+<h2 class="text-2xl font-bold mb-6">오시는 길</h2>
+<div class="w-full h-64 rounded overflow-hidden mb-4">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url(https://public.readdy.ai/gen_page/map_placeholder_1280x720.png);"></div>
+</div>
+<p class="text-gray-600 text-sm">
+<span class="font-medium">지하철:</span> 2호선 강남역 3번 출구에서 도보 5분<br>
+<span class="font-medium">버스:</span> 테헤란로 사거리 정류장 하차 (146, 341, 360, 740번)
+</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ 섹션 -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="max-w-3xl mx-auto">
+<h2 class="text-3xl font-bold text-center mb-12">자주 묻는 질문</h2>
+<div class="space-y-4">
+<!-- FAQ 아이템 1 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+<div class="accordion-header flex justify-between items-center p-5 cursor-pointer">
+<h3 class="text-lg font-medium">디자인 프로젝트의 진행 기간은 얼마나 걸리나요?</h3>
+<i class="ri-arrow-down-s-line ri-lg accordion-icon transition-transform duration-300"></i>
+</div>
+<div class="accordion-content px-5 pb-5">
+<p class="text-gray-600">
+프로젝트의 규모와 복잡성에 따라 다르지만, 일반적으로 브랜드 디자인은 4-8주, 공간 디자인은 8-12주, 웹사이트 디자인은 6-10주 정도 소요됩니다. 정확한 일정은 초기 상담 시 프로젝트 요구사항을 바탕으로 안내해 드립니다. 급하게 진행해야 하는 프로젝트의 경우, 별도로 문의해 주시면 최대한 일정을 조율해 드립니다.
+</p>
+</div>
+</div>
+<!-- FAQ 아이템 2 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+<div class="accordion-header flex justify-between items-center p-5 cursor-pointer">
+<h3 class="text-lg font-medium">디자인 비용은 어떻게 책정되나요?</h3>
+<i class="ri-arrow-down-s-line ri-lg accordion-icon transition-transform duration-300"></i>
+</div>
+<div class="accordion-content px-5 pb-5">
+<p class="text-gray-600">
+디자인 비용은 프로젝트의 범위, 복잡성, 소요 시간 등을 고려하여 책정됩니다. 에이치디자인은 투명한 가격 정책을 지향하며, 초기 상담 시 상세한 견적을 제공해 드립니다. 일반적으로 프로젝트 시작 전 50%, 완료 후 50%의 비용을 지불하는 방식으로 진행되며, 대규모 프로젝트의 경우 단계별 지불 방식도 가능합니다.
+</p>
+</div>
+</div>
+<!-- FAQ 아이템 3 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+<div class="accordion-header flex justify-between items-center p-5 cursor-pointer">
+<h3 class="text-lg font-medium">디자인 수정은 몇 번까지 가능한가요?</h3>
+<i class="ri-arrow-down-s-line ri-lg accordion-icon transition-transform duration-300"></i>
+</div>
+<div class="accordion-content px-5 pb-5">
+<p class="text-gray-600">
+에이치디자인은 고객 만족을 최우선으로 생각합니다. 기본적으로 각 디자인 단계에서 2-3회의 수정 기회를 제공하며, 이는 계약서에 명시됩니다. 추가 수정이 필요한 경우, 별도의 비용이 발생할 수 있으나, 항상 사전에 고객과 상의하여 진행합니다. 저희는 고객의 비전을 완벽하게 구현하기 위해 긴밀한 소통을 중요시합니다.
+</p>
+</div>
+</div>
+<!-- FAQ 아이템 4 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+<div class="accordion-header flex justify-between items-center p-5 cursor-pointer">
+<h3 class="text-lg font-medium">디자인 파일은 어떤 형식으로 받을 수 있나요?</h3>
+<i class="ri-arrow-down-s-line ri-lg accordion-icon transition-transform duration-300"></i>
+</div>
+<div class="accordion-content px-5 pb-5">
+<p class="text-gray-600">
+프로젝트 완료 후 고객에게 제공되는 파일 형식은 디자인 유형에 따라 다릅니다. 브랜드 디자인의 경우 AI, EPS, PDF, JPG, PNG 파일을, 웹 디자인은 PSD, XD, Figma 파일을 제공합니다. 인쇄물은 인쇄 가능한 고해상도 PDF를, 공간 디자인은 3D 렌더링 이미지와 도면을 제공합니다. 특별한 파일 형식이 필요한 경우 사전에 말씀해 주시면 최대한 맞춰드립니다.
+</p>
+</div>
+</div>
+<!-- FAQ 아이템 5 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+<div class="accordion-header flex justify-between items-center p-5 cursor-pointer">
+<h3 class="text-lg font-medium">지방에 있어도 프로젝트 진행이 가능한가요?</h3>
+<i class="ri-arrow-down-s-line ri-lg accordion-icon transition-transform duration-300"></i>
+</div>
+<div class="accordion-content px-5 pb-5">
+<p class="text-gray-600">
+네, 물론입니다. 에이치디자인은 전국 어디서나 프로젝트를 진행할 수 있습니다. 화상 회의 툴을 활용한 원격 미팅, 이메일, 메신저 등 다양한 소통 채널을 통해 효율적인 협업이 가능합니다. 필요에 따라 중요한 미팅이나 현장 답사가 필요한 경우 직접 방문도 가능합니다. 지역에 상관없이 최상의 디자인 서비스를 제공하기 위해 최선을 다하고 있습니다.
+</p>
+</div>
+</div>
+<!-- FAQ 아이템 6 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+<div class="accordion-header flex justify-between items-center p-5 cursor-pointer">
+<h3 class="text-lg font-medium">디자인 저작권은 누구에게 있나요?</h3>
+<i class="ri-arrow-down-s-line ri-lg accordion-icon transition-transform duration-300"></i>
+</div>
+<div class="accordion-content px-5 pb-5">
+<p class="text-gray-600">
+프로젝트 완료 및 최종 결제가 이루어지면 디자인의 사용권은 고객에게 이전됩니다. 다만, 에이치디자인은 포트폴리오 및 홍보 목적으로 제작된 디자인을 활용할 권리를 보유합니다. 이는 계약서에 명시되며, 특별한 요청이 있을 경우 별도로 협의 가능합니다. 저작권에 관한 자세한 사항은 프로젝트 시작 전 계약서를 통해 명확히 안내해 드립니다.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA 섹션 -->
+<section class="py-16 bg-gradient-to-r from-primary/10 to-primary/5">
+<div class="container mx-auto px-4 text-center">
+<h2 class="text-2xl md:text-3xl font-bold mb-4">아직 궁금한 점이 있으신가요?</h2>
+<p class="text-gray-600 mb-8 max-w-2xl mx-auto">
+문의 양식을 통해 연락해 주시거나, 전화 또는 이메일로 직접 문의해 주세요.<br>
+에이치디자인이 귀사의 비전을 실현하는 데 도움을 드리겠습니다.
+</p>
+<div class="flex flex-col md:flex-row gap-4 justify-center">
+<a href="tel:021234567" class="bg-white text-primary border border-primary py-3 px-8 rounded-button font-medium hover:bg-primary hover:bg-opacity-5 transition-colors whitespace-nowrap !rounded-button">
+<i class="ri-phone-line mr-2"></i> 전화 문의하기
+</a>
+<a href="mailto:contact@hdesign.co.kr" class="bg-primary text-white py-3 px-8 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button">
+<i class="ri-mail-line mr-2"></i> 이메일 문의하기
+</a>
+</div>
+</div>
+</section>
+<!-- 푸터 -->
+<footer class="bg-gray-900 text-white py-12">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<div>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/ec9e3f64-8d8f-4578-8daa-17734376e05a" data-readdy="true" class="h-6 mb-4 inline-block">
+<img src="https://static.readdy.ai/image/3c16391a4b5d74433155a2d2f7dc5d27/28b33284de352d170bd25741ad52ba00.png" alt="logo" class="h-full">
+</a>
+<p class="text-gray-400 text-sm">에이치디자인은 병원 전문 디자인 에이전시로, 10년 이상의 경험을 바탕으로 최고의 디자인 솔루션을 제공합니다.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">서비스</h3>
+<ul class="space-y-2 text-gray-400">
+<li><a href="#" class="hover:text-white transition-colors">공간 디자인</a></li>
+<li><a href="#" class="hover:text-white transition-colors">사인물 디자인</a></li>
+<li><a href="#" class="hover:text-white transition-colors">인쇄물 디자인</a></li>
+<li><a href="#" class="hover:text-white transition-colors">온라인 디자인</a></li>
+<li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/ff9e2b6a-180b-4b0d-8e35-d2da2f4082fd" class="hover:text-white transition-colors text-primary">디자인 올팩</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">회사 정보</h3>
+<ul class="space-y-2 text-gray-400">
+<li><a href="#" class="hover:text-white transition-colors">회사 소개</a></li>
+<li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="hover:text-white transition-colors">포트폴리오</a></li>
+<li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/b5e7fbfd-237a-4dc1-b7e2-87ee46bf5928" data-readdy="true" class="hover:text-white transition-colors">프로세스</a></li>
+<li><a href="#" class="hover:text-white transition-colors">블로그</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">연락처</h3>
+<ul class="space-y-2 text-gray-400">
+<li class="flex items-center gap-2">
+<i class="ri-map-pin-line"></i>
+<span>서울특별시 강남구 테헤란로 123</span>
+</li>
+<li class="flex items-center gap-2">
+<i class="ri-phone-line"></i>
+<span>02-1234-5678</span>
+</li>
+<li class="flex items-center gap-2">
+<i class="ri-mail-line"></i>
+<span>contact@hdesign.co.kr</span>
+</li>
+</ul>
+<div class="flex gap-4 mt-4">
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-instagram-line"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-facebook-line"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-youtube-line"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-kakao-talk-line"></i>
+</a>
+</div>
+</div>
+</div>
+<div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+<p>© 2025 에이치디자인. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<!-- 확인 모달 -->
+<div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+<div class="bg-white rounded-lg p-8 max-w-md w-full">
+<div class="text-center">
+<div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+<i class="ri-check-line ri-2x text-green-500"></i>
+</div>
+<h3 class="text-2xl font-bold mb-2">문의가 접수되었습니다</h3>
+<p class="text-gray-600 mb-6">
+에이치디자인에 관심을 가져주셔서 감사합니다. 담당자가 검토 후 1-2영업일 내에 연락드리겠습니다.
+</p>
+<button id="closeModalBtn" class="bg-primary text-white py-3 px-8 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button">
+확인
+</button>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 서비스 드롭다운 메뉴 관리
+const serviceDropdownBtn = document.getElementById('service-dropdown-btn');
+const serviceDropdownMenu = document.getElementById('service-dropdown-menu');
+const serviceDropdownIcon = document.getElementById('service-dropdown-icon');
+let isDropdownOpen = false;
+serviceDropdownBtn.addEventListener('click', function(e) {
+e.preventDefault();
+isDropdownOpen = !isDropdownOpen;
+if(isDropdownOpen) {
+serviceDropdownMenu.classList.remove('hidden');
+serviceDropdownIcon.style.transform = 'rotate(180deg)';
+} else {
+serviceDropdownMenu.classList.add('hidden');
+serviceDropdownIcon.style.transform = 'rotate(0deg)';
+}
+});
+document.addEventListener('click', function(e) {
+if (!document.getElementById('service-dropdown').contains(e.target)) {
+serviceDropdownMenu.classList.add('hidden');
+serviceDropdownIcon.style.transform = 'rotate(0deg)';
+isDropdownOpen = false;
+}
+});
+// 커스텀 셀렉트 박스
+const selectSelected = document.querySelector('.select-selected');
+const selectItems = document.querySelector('.select-items');
+const selectOptions = document.querySelectorAll('.select-items div');
+const selectedOption = document.getElementById('selectedOption');
+selectSelected.addEventListener('click', function() {
+selectItems.classList.toggle('select-hide');
+this.classList.toggle('select-arrow-active');
+});
+selectOptions.forEach(option => {
+option.addEventListener('click', function() {
+selectedOption.textContent = this.textContent;
+selectItems.classList.add('select-hide');
+selectSelected.classList.remove('select-arrow-active');
+});
+});
+document.addEventListener('click', function(e) {
+if (!selectSelected.contains(e.target) && !selectItems.contains(e.target)) {
+selectItems.classList.add('select-hide');
+selectSelected.classList.remove('select-arrow-active');
+}
+});
+// 아코디언
+const accordionHeaders = document.querySelectorAll('.accordion-header');
+accordionHeaders.forEach(header => {
+header.addEventListener('click', function() {
+const content = this.nextElementSibling;
+const icon = this.querySelector('.accordion-icon');
+content.classList.toggle('active');
+if (content.classList.contains('active')) {
+icon.style.transform = 'rotate(180deg)';
+} else {
+icon.style.transform = 'rotate(0deg)';
+}
+});
+});
+// 파일 업로드 표시
+const fileUpload = document.getElementById('fileUpload');
+fileUpload.addEventListener('change', function() {
+const fileName = this.files[0] ? this.files[0].name : '파일을 선택해주세요';
+const fileNameDisplay = document.querySelector('.text-sm.text-gray-500');
+fileNameDisplay.textContent = fileName;
+});
+// 폼 제출 및 모달
+const contactForm = document.getElementById('contactForm');
+const confirmationModal = document.getElementById('confirmationModal');
+const closeModalBtn = document.getElementById('closeModalBtn');
+contactForm.addEventListener('submit', function(e) {
+e.preventDefault();
+confirmationModal.classList.remove('hidden');
+});
+closeModalBtn.addEventListener('click', function() {
+confirmationModal.classList.add('hidden');
+contactForm.reset();
+document.querySelector('.text-sm.text-gray-500').textContent = '클릭하여 파일 업로드';
+selectedOption.textContent = '문의 유형을 선택해주세요';
+});
+});
+</script>
+</body>
+</html>

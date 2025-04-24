@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H DESIGN - 공간 디자인</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#2C3E50',secondary:'#95A5A6'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Noto Sans KR', sans-serif;
+}
+.service-card {
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.service-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.process-step {
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.process-step:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.portfolio-item {
+transition: transform 0.3s ease;
+}
+.portfolio-item:hover {
+transform: scale(1.03);
+}
+.portfolio-overlay {
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+.portfolio-item:hover .portfolio-overlay {
+opacity: 1;
+}
+.before-after-slider {
+position: relative;
+overflow: hidden;
+}
+.before-after-slider .before {
+position: absolute;
+top: 0;
+left: 0;
+width: 50%;
+height: 100%;
+overflow: hidden;
+}
+.before-after-slider .after {
+width: 100%;
+height: 100%;
+}
+.before-after-slider .slider-handle {
+position: absolute;
+top: 0;
+bottom: 0;
+left: 50%;
+width: 4px;
+background: #fff;
+transform: translateX(-50%);
+cursor: ew-resize;
+z-index: 10;
+}
+.before-after-slider .slider-handle::before {
+content: '';
+position: absolute;
+top: 50%;
+left: 50%;
+width: 40px;
+height: 40px;
+background: #fff;
+border-radius: 50%;
+transform: translate(-50%, -50%);
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.before-after-slider .slider-handle::after {
+content: '';
+position: absolute;
+top: 50%;
+left: 50%;
+width: 20px;
+height: 20px;
+border-left: 2px solid #2C3E50;
+border-right: 2px solid #2C3E50;
+transform: translate(-50%, -50%);
+}
+</style>
+</head>
+<body class="bg-white text-gray-800">
+<!-- 헤더 -->
+<header class="w-full bg-white shadow-sm fixed top-0 z-50">
+<div class="container mx-auto px-4 py-4 flex justify-between items-center">
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/ec9e3f64-8d8f-4578-8daa-17734376e05a" data-readdy="true" class="h-8">
+<img src="https://static.readdy.ai/image/3c16391a4b5d74433155a2d2f7dc5d27/28b33284de352d170bd25741ad52ba00.png" alt="logo" class="h-full">
+</a>
+<nav class="hidden md:flex space-x-8">
+<div class="relative" id="service-dropdown">
+<a href="#" class="font-medium text-primary transition-colors flex items-center gap-1" id="service-dropdown-btn">
+서비스
+<i class="ri-arrow-down-s-line transition-transform duration-200" id="service-dropdown-icon"></i>
+</a>
+<div class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden z-50" id="service-dropdown-menu">
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/23fdb509-1062-4974-b009-a52dded521a2" data-readdy="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">브랜드 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-primary hover:bg-gray-50 hover:text-primary">공간 디자인</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/73ea4681-a0e4-4fa0-bf32-c02388d76d08" data-readdy="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">그래픽 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">디지털 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">모션 디자인</a>
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">디자인 컨설팅</a>
+</div>
+</div>
+<a href="#" class="font-medium hover:text-primary transition-colors">디자인 올팩 All Pack</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="font-medium hover:text-primary transition-colors">포트폴리오</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/b5e7fbfd-237a-4dc1-b7e2-87ee46bf5928" data-readdy="true" class="font-medium hover:text-primary transition-colors">프로세스</a>
+<a href="#" class="font-medium hover:text-primary transition-colors">문의하기</a>
+</nav>
+<div class="md:hidden w-8 h-8 flex items-center justify-center">
+<i class="ri-menu-line ri-lg"></i>
+</div>
+</div>
+</header>
+<!-- 공간 디자인 헤더 -->
+<section class="pt-32 pb-16 bg-gradient-to-r from-primary/5 to-primary/10" style="background-image: url('https://readdy.ai/api/search-image?query=luxury%2520hospital%2520waiting%2520room%2520with%2520high-end%2520modern%2520design%252C%2520elegant%2520seating%2520area%252C%2520warm%2520lighting%252C%2520premium%2520materials%252C%2520marble%2520floors%252C%2520sophisticated%2520color%2520scheme%252C%2520artistic%2520lighting%2520fixtures%252C%2520professional%2520healthcare%2520interior%2520design%252C%2520spacious%2520and%2520welcoming%2520atmosphere&width=1920&height=600&seq=1&orientation=landscape'); background-size: cover; background-position: center;">
+<div class="container mx-auto px-4">
+<div class="max-w-3xl mx-auto text-center">
+<h1 class="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-lg">공간 디자인</h1>
+<p class="text-lg text-white drop-shadow-lg">브랜드의 가치를 공간에 구현하는 차별화된 공간 디자인 솔루션</p>
+</div>
+</div>
+</section>
+<!-- 공간 디자인 소개 -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div>
+<h2 class="text-3xl font-bold mb-6">공간에 생명을 불어넣는<br>전략적 디자인 파트너</h2>
+<p class="text-gray-600 mb-6">
+에이치디자인은 단순한 인테리어를 넘어 브랜드의 가치와 철학을 공간에 구현하는 전략적 공간 디자인을 제공합니다. 10년 이상의 경험을 바탕으로 클라이언트의 비즈니스 목표와 타겟 고객의 경험을 깊이 이해하고, 이를 차별화된 공간으로 구현합니다.
+</p>
+<p class="text-gray-600 mb-8">
+인테리어 디자인부터 공간 브랜딩, 사이니지 시스템까지, 일관된 브랜드 경험을 구축하는 모든 요소를 전문적으로 디자인하여 고객과의 강력한 정서적 연결을 형성하고 비즈니스 성과를 극대화합니다.
+</p>
+<a href="#contact" class="bg-primary text-white py-3 px-8 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button inline-flex items-center">
+공간 디자인 상담하기
+<i class="ri-arrow-right-line ml-2"></i>
+</a>
+</div>
+<div class="rounded-lg overflow-hidden shadow-xl">
+<img src="https://readdy.ai/api/search-image?query=professional%2520korean%2520design%2520team%2520working%2520on%2520interior%2520design%2520project%252C%2520asian%2520designers%2520reviewing%2520floor%2520plans%2520and%2520material%2520samples%252C%2520creative%2520workspace%2520with%2520mood%2520boards%2520and%2520color%2520palettes%252C%2520modern%2520korean%2520office%2520environment%252C%2520professional%2520atmosphere&width=600&height=400&seq=2&orientation=landscape" alt="공간 디자인 작업" class="w-full h-full object-cover object-top">
+</div>
+</div>
+</div>
+</section>
+<!-- 주요 서비스 -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="text-center mb-16">
+<h2 class="text-3xl font-bold mb-4">주요 서비스</h2>
+<p class="text-gray-600 max-w-3xl mx-auto">
+공간의 본질을 담아내는 전략적 디자인부터 일관된 브랜드 경험을 구축하는
+종합적인 공간 디자인 서비스를 제공합니다
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- 서비스 1: 인테리어 디자인 -->
+<div class="service-card bg-white rounded-lg p-8 shadow-md">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+<i class="ri-home-4-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-bold mb-4">인테리어 디자인</h3>
+<p class="text-gray-600 mb-6">
+브랜드의 아이덴티티와 비즈니스 목표를 반영한 맞춤형 인테리어 디자인을 제공합니다. 공간의 기능성과 심미성을 모두 고려한 최적의 디자인 솔루션을 개발합니다.
+</p>
+<ul class="space-y-2 text-gray-600">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>상업 공간 인테리어 디자인</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>오피스 및 업무 공간 디자인</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>호텔 및 숙박 시설 디자인</span>
+</li>
+</ul>
+</div>
+<!-- 서비스 2: 공간 브랜딩 -->
+<div class="service-card bg-white rounded-lg p-8 shadow-md">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+<i class="ri-store-2-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-bold mb-4">공간 브랜딩</h3>
+<p class="text-gray-600 mb-6">
+브랜드의 핵심 가치와 메시지를 공간에 일관되게 구현하여 차별화된 고객 경험을 제공합니다. 공간을 통해 브랜드 스토리를 효과적으로 전달합니다.
+</p>
+<ul class="space-y-2 text-gray-600">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>브랜드 스토리텔링 공간 구성</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>고객 경험 중심 공간 설계</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>브랜드 아이덴티티 공간 적용</span>
+</li>
+</ul>
+</div>
+<!-- 서비스 3: 사이니지 시스템 -->
+<div class="service-card bg-white rounded-lg p-8 shadow-md">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+<i class="ri-guide-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-bold mb-4">사이니지 시스템</h3>
+<p class="text-gray-600 mb-6">
+공간 내 효과적인 안내와 정보 전달을 위한 체계적인 사이니지 시스템을 개발합니다. 브랜드 아이덴티티와 일관성을 유지하는 디자인을 제공합니다.
+</p>
+<ul class="space-y-2 text-gray-600">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>방향 안내 사이니지 디자인</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>브랜드 통합 사이니지 시스템</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>디지털 사이니지 솔루션</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+<!-- 서비스 4: 공간 컨설팅 -->
+<div class="service-card bg-white rounded-lg p-8 shadow-md">
+<div class="flex items-center mb-6">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+<i class="ri-building-4-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-bold">공간 컨설팅</h3>
+</div>
+<p class="text-gray-600 mb-6">
+비즈니스 목표와 고객 경험을 최적화하기 위한 전략적 공간 컨설팅을 제공합니다. 공간의 효율성, 기능성, 브랜드 일관성을 종합적으로 분석하고 개선 방안을 제시합니다.
+</p>
+<ul class="space-y-2 text-gray-600">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>공간 활용 효율성 분석</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>고객 동선 및 경험 최적화</span>
+</li>
+</ul>
+</div>
+<!-- 서비스 5: 시공 관리 -->
+<div class="service-card bg-white rounded-lg p-8 shadow-md">
+<div class="flex items-center mb-6">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+<i class="ri-tools-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-bold">시공 관리</h3>
+</div>
+<p class="text-gray-600 mb-6">
+디자인 의도가 완벽하게 구현될 수 있도록 전문적인 시공 관리 서비스를 제공합니다. 품질 관리부터 일정 관리까지 프로젝트의 성공적인 완료를 지원합니다.
+</p>
+<ul class="space-y-2 text-gray-600">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>시공 품질 관리 및 감리</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>자재 선정 및 조달 지원</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- 공간 디자인 프로세스 -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="text-center mb-16">
+<h2 class="text-3xl font-bold mb-4">공간 디자인 프로세스</h2>
+<p class="text-gray-600 max-w-3xl mx-auto">
+에이치디자인만의 체계적인 공간 디자인 프로세스를 통해
+클라이언트의 비전을 성공적인 공간으로 구현합니다
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+<!-- 프로세스 1 -->
+<div class="process-step bg-white rounded-lg p-6 shadow-md">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white mb-4 mx-auto">
+<span class="font-bold">01</span>
+</div>
+<h3 class="text-lg font-bold text-center mb-3">공간 분석</h3>
+<p class="text-gray-600 text-center text-sm">
+클라이언트의 비즈니스 목표, 타겟 고객, 공간의 물리적 특성, 주변 환경 등을 종합적으로 분석하여 공간의 잠재력과 제약 조건을 파악합니다.
+</p>
+</div>
+<!-- 프로세스 2 -->
+<div class="process-step bg-white rounded-lg p-6 shadow-md">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white mb-4 mx-auto">
+<span class="font-bold">02</span>
+</div>
+<h3 class="text-lg font-bold text-center mb-3">컨셉 개발</h3>
+<p class="text-gray-600 text-center text-sm">
+분석 결과를 바탕으로 공간의 핵심 컨셉과 방향성을 설정하고, 이를 시각화한 무드보드와 초기 스케치를 통해 디자인 아이디어를 구체화합니다.
+</p>
+</div>
+<!-- 프로세스 3 -->
+<div class="process-step bg-white rounded-lg p-6 shadow-md">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white mb-4 mx-auto">
+<span class="font-bold">03</span>
+</div>
+<h3 class="text-lg font-bold text-center mb-3">디자인 설계</h3>
+<p class="text-gray-600 text-center text-sm">
+확정된 컨셉을 바탕으로 공간 레이아웃, 마감재, 가구, 조명, 사이니지 등 세부적인 디자인 요소를 설계하고 3D 렌더링을 통해 시각화합니다.
+</p>
+</div>
+<!-- 프로세스 4 -->
+<div class="process-step bg-white rounded-lg p-6 shadow-md">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white mb-4 mx-auto">
+<span class="font-bold">04</span>
+</div>
+<h3 class="text-lg font-bold text-center mb-3">시공 관리</h3>
+<p class="text-gray-600 text-center text-sm">
+디자인 의도가 완벽하게 구현될 수 있도록 시공 과정을 체계적으로 관리하고, 자재 선정, 품질 관리, 일정 관리 등을 전문적으로 수행합니다.
+</p>
+</div>
+<!-- 프로세스 5 -->
+<div class="process-step bg-white rounded-lg p-6 shadow-md">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white mb-4 mx-auto">
+<span class="font-bold">05</span>
+</div>
+<h3 class="text-lg font-bold text-center mb-3">완공 및 피드백</h3>
+<p class="text-gray-600 text-center text-sm">
+완공된 공간의 품질을 최종 점검하고, 실제 사용 과정에서의 피드백을 수집하여 필요한 경우 추가적인 개선 사항을 반영합니다.
+</p>
+</div>
+</div>
+<div class="mt-16 bg-gray-50 rounded-lg p-8 shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div>
+<h3 class="text-2xl font-bold mb-4">공간 디자인 심층 프로세스</h3>
+<p class="text-gray-600 mb-6">
+에이치디자인은 단순한 인테리어를 넘어 공간의 본질과 가치를 깊이 이해하고 이를 효과적으로 구현하기 위한 심층적인 프로세스를 운영합니다. 각 단계마다 클라이언트와의 긴밀한 소통을 통해 공간의 비전을 정확히 구현합니다.
+</p>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/b5e7fbfd-237a-4dc1-b7e2-87ee46bf5928" data-readdy="true" class="text-primary font-medium flex items-center">
+디자인 프로세스 자세히 보기
+<i class="ri-arrow-right-line ml-1"></i>
+</a>
+</div>
+<div class="rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=korean%2520design%2520team%2520in%2520modern%2520office%2520reviewing%2520interior%2520design%2520process%2520documents%252C%2520asian%2520professionals%2520discussing%2520space%2520planning%2520with%2520floor%2520plans%2520and%2520material%2520samples%2520on%2520table%252C%2520collaborative%2520workspace%2520with%2520interior%2520mood%2520boards%252C%2520professional%2520atmosphere&width=600&height=400&seq=3&orientation=landscape" alt="공간 디자인 프로세스" class="w-full h-full object-cover object-top">
+</div>
+</div>
+</div>
+</section>
+<!-- 포트폴리오 섹션 -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="text-center mb-16">
+<h2 class="text-3xl font-bold mb-4">공간 디자인 포트폴리오</h2>
+<p class="text-gray-600 max-w-3xl mx-auto">
+에이치디자인이 진행한 다양한 공간 디자인 프로젝트를 소개합니다
+</p>
+</div>
+<div class="mb-8">
+<div class="flex flex-wrap justify-center gap-4 mb-8">
+<button class="bg-primary text-white py-2 px-6 rounded-full text-sm font-medium whitespace-nowrap">전체보기</button>
+<button class="bg-white text-gray-700 py-2 px-6 rounded-full text-sm font-medium hover:bg-gray-100 whitespace-nowrap">상업 공간</button>
+<button class="bg-white text-gray-700 py-2 px-6 rounded-full text-sm font-medium hover:bg-gray-100 whitespace-nowrap">오피스</button>
+<button class="bg-white text-gray-700 py-2 px-6 rounded-full text-sm font-medium hover:bg-gray-100 whitespace-nowrap">호텔 & 리조트</button>
+<button class="bg-white text-gray-700 py-2 px-6 rounded-full text-sm font-medium hover:bg-gray-100 whitespace-nowrap">의료 시설</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- 포트폴리오 아이템 1 -->
+<div class="portfolio-item bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative h-64">
+<img src="https://readdy.ai/api/search-image?query=modern%2520korean%2520cafe%2520interior%2520with%2520minimalist%2520design%252C%2520warm%2520wood%2520elements%252C%2520clean%2520lines%252C%2520natural%2520light%252C%2520stylish%2520furniture%252C%2520coffee%2520shop%2520with%2520brand%2520identity%2520elements%2520integrated%2520into%2520space%252C%2520professional%2520interior%2520photography&width=600&height=400&seq=4&orientation=landscape" alt="모닝브루 카페 인테리어" class="w-full h-full object-cover object-top">
+<div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+<h4 class="text-xl font-bold mb-2">모닝브루 카페</h4>
+<p class="text-sm text-center mb-4">스페셜티 커피 브랜드의 플래그십 스토어 인테리어 디자인</p>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+자세히 보기
+</a>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold mb-2">모닝브루 카페</h4>
+<p class="text-gray-600 text-sm">스페셜티 커피 브랜드 플래그십</p>
+</div>
+</div>
+<!-- 포트폴리오 아이템 2 -->
+<div class="portfolio-item bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative h-64">
+<img src="https://readdy.ai/api/search-image?query=modern%2520korean%2520tech%2520company%2520office%2520interior%2520with%2520open%2520plan%2520layout%252C%2520collaborative%2520spaces%252C%2520glass%2520partitions%252C%2520sleek%2520furniture%252C%2520brand%2520colors%2520integrated%2520into%2520design%252C%2520contemporary%2520lighting%252C%2520professional%2520workspace%2520design%2520with%2520asian%2520aesthetic%2520touches&width=600&height=400&seq=5&orientation=landscape" alt="테크노바 오피스 디자인" class="w-full h-full object-cover object-top">
+<div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+<h4 class="text-xl font-bold mb-2">테크노바 오피스</h4>
+<p class="text-sm text-center mb-4">IT 기업의 창의적이고 기능적인 업무 공간 디자인</p>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+자세히 보기
+</a>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold mb-2">테크노바 오피스</h4>
+<p class="text-gray-600 text-sm">IT 솔루션 기업 사옥</p>
+</div>
+</div>
+<!-- 포트폴리오 아이템 3 -->
+<div class="portfolio-item bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative h-64">
+<img src="https://readdy.ai/api/search-image?query=luxury%2520korean%2520boutique%2520hotel%2520lobby%2520with%2520elegant%2520design%252C%2520high%2520ceilings%252C%2520sophisticated%2520furniture%252C%2520ambient%2520lighting%252C%2520artistic%2520elements%252C%2520marble%2520surfaces%252C%2520professional%2520hospitality%2520interior%2520design%2520with%2520eastern%2520and%2520western%2520fusion%2520aesthetic&width=600&height=400&seq=6&orientation=landscape" alt="아리아 호텔 로비" class="w-full h-full object-cover object-top">
+<div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+<h4 class="text-xl font-bold mb-2">아리아 호텔</h4>
+<p class="text-sm text-center mb-4">부티크 호텔의 럭셔리한 로비 및 객실 디자인</p>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+자세히 보기
+</a>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold mb-2">아리아 호텔</h4>
+<p class="text-gray-600 text-sm">럭셔리 부티크 호텔</p>
+</div>
+</div>
+<!-- 포트폴리오 아이템 4 -->
+<div class="portfolio-item bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative h-64">
+<img src="https://readdy.ai/api/search-image?query=modern%2520korean%2520medical%2520center%2520interior%2520with%2520clean%2520design%252C%2520calming%2520color%2520palette%252C%2520comfortable%2520waiting%2520area%252C%2520professional%2520healthcare%2520facility%2520design%252C%2520integrated%2520wayfinding%2520system%252C%2520patient-centered%2520environment%252C%2520high-end%2520medical%2520office%2520interior&width=600&height=400&seq=7&orientation=landscape" alt="세인트 메디컬 센터 인테리어" class="w-full h-full object-cover object-top">
+<div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+<h4 class="text-xl font-bold mb-2">세인트 메디컬 센터</h4>
+<p class="text-sm text-center mb-4">환자 중심의 의료 공간 및 통합 사이니지 시스템</p>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+자세히 보기
+</a>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold mb-2">세인트 메디컬 센터</h4>
+<p class="text-gray-600 text-sm">종합 의료 센터</p>
+</div>
+</div>
+<!-- 포트폴리오 아이템 5 -->
+<div class="portfolio-item bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative h-64">
+<img src="https://readdy.ai/api/search-image?query=luxury%2520korean%2520cosmetic%2520store%2520interior%2520with%2520premium%2520display%2520fixtures%252C%2520elegant%2520lighting%252C%2520brand%2520identity%2520elements%2520integrated%2520into%2520space%252C%2520high-end%2520retail%2520design%252C%2520beauty%2520product%2520showcases%252C%2520customer%2520experience%2520focused%2520layout%252C%2520professional%2520retail%2520interior&width=600&height=400&seq=8&orientation=landscape" alt="루나 코스메틱 매장" class="w-full h-full object-cover object-top">
+<div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+<h4 class="text-xl font-bold mb-2">루나 코스메틱</h4>
+<p class="text-sm text-center mb-4">프리미엄 화장품 브랜드의 플래그십 스토어 디자인</p>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+자세히 보기
+</a>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold mb-2">루나 코스메틱</h4>
+<p class="text-gray-600 text-sm">프리미엄 화장품 플래그십</p>
+</div>
+</div>
+<!-- 포트폴리오 아이템 6 -->
+<div class="portfolio-item bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative h-64">
+<img src="https://readdy.ai/api/search-image?query=modern%2520korean%2520restaurant%2520interior%2520with%2520contemporary%2520design%252C%2520natural%2520materials%252C%2520atmospheric%2520lighting%252C%2520comfortable%2520seating%252C%2520brand%2520elements%2520integrated%2520into%2520decor%252C%2520professional%2520food%2520service%2520space%2520design%252C%2520elegant%2520dining%2520environment&width=600&height=400&seq=9&orientation=landscape" alt="가온 레스토랑 인테리어" class="w-full h-full object-cover object-top">
+<div class="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center p-6 text-white">
+<h4 class="text-xl font-bold mb-2">가온 레스토랑</h4>
+<p class="text-sm text-center mb-4">모던 한식 레스토랑의 브랜드 아이덴티티 공간 구현</p>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="bg-white text-primary py-2 px-4 rounded-button text-sm font-medium whitespace-nowrap !rounded-button">
+자세히 보기
+</a>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold mb-2">가온 레스토랑</h4>
+<p class="text-gray-600 text-sm">모던 한식 다이닝</p>
+</div>
+</div>
+</div>
+<div class="text-center mt-12">
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="bg-white text-primary border border-primary py-3 px-8 rounded-button font-medium hover:bg-primary hover:bg-opacity-5 transition-colors whitespace-nowrap !rounded-button">
+더 많은 포트폴리오 보기
+</a>
+</div>
+</div>
+</section>
+<!-- 성공 사례 -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="text-center mb-16">
+<h2 class="text-3xl font-bold mb-4">공간 디자인 성공 사례</h2>
+<p class="text-gray-600 max-w-3xl mx-auto">
+에이치디자인의 공간 디자인이 클라이언트의 비즈니스에
+어떤 가치를 창출했는지 실제 사례를 통해 확인하세요
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+<!-- 성공 사례 1 -->
+<div class="bg-gray-50 rounded-lg overflow-hidden shadow-md">
+<div class="grid grid-cols-1 md:grid-cols-2">
+<div class="p-8">
+<h3 class="text-2xl font-bold mb-4">모닝브루 카페</h3>
+<p class="text-gray-600 mb-6">
+스페셜티 커피 브랜드 '모닝브루'는 에이치디자인의 공간 디자인을 통해 브랜드 아이덴티티를 효과적으로 공간에 구현하고 고객 경험을 크게 향상시켰습니다.
+</p>
+<ul class="space-y-3 mb-6">
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line ri-lg"></i>
+</div>
+<span class="text-gray-600">매장 체류 시간 35% 증가</span>
+</li>
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line ri-lg"></i>
+</div>
+<span class="text-gray-600">객단가 28% 상승</span>
+</li>
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line ri-lg"></i>
+</div>
+<span class="text-gray-600">SNS 언급량 150% 증가</span>
+</li>
+</ul>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="text-primary font-medium flex items-center">
+자세한 사례 보기
+<i class="ri-arrow-right-line ml-1"></i>
+</a>
+</div>
+<div>
+<div class="before-after-slider h-full" id="slider1">
+<div class="before h-full">
+<img src="https://readdy.ai/api/search-image?query=before%2520renovation%2520of%2520cafe%2520interior%252C%2520outdated%2520design%252C%2520poor%2520lighting%252C%2520inefficient%2520layout%252C%2520basic%2520furniture%252C%2520uninspiring%2520space%252C%2520korean%2520coffee%2520shop%2520needing%2520update&width=400&height=500&seq=10&orientation=portrait" alt="모닝브루 카페 Before" class="w-full h-full object-cover object-top">
+</div>
+<div class="after h-full">
+<img src="https://readdy.ai/api/search-image?query=after%2520renovation%2520of%2520modern%2520korean%2520cafe%2520interior%252C%2520stylish%2520design%252C%2520warm%2520lighting%252C%2520efficient%2520layout%252C%2520contemporary%2520furniture%252C%2520inspiring%2520space%2520with%2520brand%2520elements%252C%2520transformed%2520coffee%2520shop&width=400&height=500&seq=11&orientation=portrait" alt="모닝브루 카페 After" class="w-full h-full object-cover object-top">
+</div>
+<div class="slider-handle" id="handle1"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- 성공 사례 2 -->
+<div class="bg-gray-50 rounded-lg overflow-hidden shadow-md">
+<div class="grid grid-cols-1 md:grid-cols-2">
+<div class="p-8">
+<h3 class="text-2xl font-bold mb-4">세인트 메디컬 센터</h3>
+<p class="text-gray-600 mb-6">
+종합 의료 센터 '세인트 메디컬'은 에이치디자인의 환자 중심 공간 디자인과 통합 사이니지 시스템을 통해 의료 서비스 경험을 혁신하고 운영 효율성을 높였습니다.
+</p>
+<ul class="space-y-3 mb-6">
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line ri-lg"></i>
+</div>
+<span class="text-gray-600">환자 만족도 42% 향상</span>
+</li>
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line ri-lg"></i>
+</div>
+<span class="text-gray-600">환자 동선 효율성 30% 개선</span>
+</li>
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center mt-0.5 mr-2 text-primary">
+<i class="ri-check-line ri-lg"></i>
+</div>
+<span class="text-gray-600">신규 환자 유입 25% 증가</span>
+</li>
+</ul>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="text-primary font-medium flex items-center">
+자세한 사례 보기
+<i class="ri-arrow-right-line ml-1"></i>
+</a>
+</div>
+<div>
+<div class="before-after-slider h-full" id="slider2">
+<div class="before h-full">
+<img src="https://readdy.ai/api/search-image?query=before%2520renovation%2520of%2520medical%2520center%2520interior%252C%2520outdated%2520healthcare%2520facility%252C%2520cluttered%2520reception%2520area%252C%2520poor%2520wayfinding%252C%2520institutional%2520feel%252C%2520korean%2520hospital%2520needing%2520modernization&width=400&height=500&seq=12&orientation=portrait" alt="세인트 메디컬 센터 Before" class="w-full h-full object-cover object-top">
+</div>
+<div class="after h-full">
+<img src="https://readdy.ai/api/search-image?query=after%2520renovation%2520of%2520modern%2520korean%2520medical%2520center%252C%2520contemporary%2520healthcare%2520design%252C%2520welcoming%2520reception%2520area%252C%2520clear%2520wayfinding%2520system%252C%2520patient-centered%2520environment%252C%2520transformed%2520hospital%2520interior&width=400&height=500&seq=13&orientation=portrait" alt="세인트 메디컬 센터 After" class="w-full h-full object-cover object-top">
+</div>
+<div class="slider-handle" id="handle2"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 rounded-lg p-8 shadow-md">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+<div class="md:col-span-1">
+<img src="https://readdy.ai/api/search-image?query=professional%2520korean%2520male%2520CEO%2520in%2520business%2520attire%252C%2520asian%2520man%2520executive%2520with%2520confident%2520expression%252C%2520corporate%2520portrait%2520with%2520neutral%2520background%252C%2520korean%2520business%2520leader%2520in%2520modern%2520setting&width=400&height=400&seq=14&orientation=portrait" alt="박준호 대표" class="w-full h-auto rounded-lg shadow-sm">
+</div>
+<div class="md:col-span-2">
+<div class="flex mb-4">
+<div class="text-primary">
+<i class="ri-double-quotes-l ri-3x"></i>
+</div>
+</div>
+<p class="text-gray-700 text-lg italic mb-6">
+에이치디자인의 공간 디자인은 단순한 인테리어를 넘어 우리 브랜드의 철학과 가치를 완벽하게 공간으로 구현해냈습니다. 특히 고객 경험을 중심으로 한 동선 설계와 브랜드 스토리텔링 요소의 자연스러운 통합이 인상적이었습니다. 새로운 공간은 고객들에게 특별한 경험을 제공하고 비즈니스 성과에도 큰 기여를 하고 있습니다.
+</p>
+<div>
+<p class="font-bold">박준호 대표</p>
+<p class="text-gray-600 text-sm">모닝브루 카페 CEO</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 상담 신청 섹션 -->
+<section id="contact" class="py-16 bg-gradient-to-r from-primary/10 to-primary/5">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div>
+<h2 class="text-3xl font-bold mb-6">공간 디자인 상담 신청</h2>
+<p class="text-gray-600 mb-8">
+에이치디자인과 함께 귀사의 브랜드 가치를 공간에 구현하는 여정을 시작하세요.
+전문 공간 디자이너가 귀사의 비즈니스 목표와 니즈에 맞는
+최적의 공간 디자인 솔루션을 제안해 드립니다.
+</p>
+<div class="bg-white rounded-lg p-6 shadow-md mb-8">
+<h3 class="text-xl font-bold mb-4">상담 절차</h3>
+<ul class="space-y-4">
+<li class="flex items-start">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mr-4 flex-shrink-0">
+<span class="font-bold">1</span>
+</div>
+<div>
+<h4 class="font-bold">상담 신청</h4>
+<p class="text-gray-600 text-sm">온라인 양식을 통해 간단한 정보를 입력하고 상담을 신청합니다.</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mr-4 flex-shrink-0">
+<span class="font-bold">2</span>
+</div>
+<div>
+<h4 class="font-bold">담당자 연락</h4>
+<p class="text-gray-600 text-sm">1-2일 내에 전담 디자이너가 연락하여 상세한 상담 일정을 조율합니다.</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mr-4 flex-shrink-0">
+<span class="font-bold">3</span>
+</div>
+<div>
+<h4 class="font-bold">현장 방문 및 분석</h4>
+<p class="text-gray-600 text-sm">필요한 경우 현장을 방문하여 공간을 분석하고 요구사항을 파악합니다.</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mr-4 flex-shrink-0">
+<span class="font-bold">4</span>
+</div>
+<div>
+<h4 class="font-bold">맞춤형 제안</h4>
+<p class="text-gray-600 text-sm">귀사의 니즈에 맞는 맞춤형 공간 디자인 솔루션을 제안합니다.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div>
+<div class="bg-white rounded-lg p-8 shadow-lg">
+<h3 class="text-xl font-bold mb-6 text-center">상담 신청하기</h3>
+<form>
+<div class="mb-4">
+<label for="company" class="block text-gray-700 font-medium mb-2">회사명</label>
+<input type="text" id="company" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="회사명을 입력해주세요">
+</div>
+<div class="mb-4">
+<label for="name" class="block text-gray-700 font-medium mb-2">담당자명</label>
+<input type="text" id="name" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="담당자명을 입력해주세요">
+</div>
+<div class="mb-4">
+<label for="email" class="block text-gray-700 font-medium mb-2">이메일</label>
+<input type="email" id="email" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="이메일을 입력해주세요">
+</div>
+<div class="mb-4">
+<label for="phone" class="block text-gray-700 font-medium mb-2">연락처</label>
+<input type="tel" id="phone" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="연락처를 입력해주세요">
+</div>
+<div class="mb-4">
+<label for="space-type" class="block text-gray-700 font-medium mb-2">공간 유형</label>
+<select id="space-type" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm pr-8">
+<option value="">공간 유형을 선택해주세요</option>
+<option value="commercial">상업 공간</option>
+<option value="office">오피스</option>
+<option value="hospitality">호텔 & 리조트</option>
+<option value="medical">의료 시설</option>
+<option value="other">기타</option>
+</select>
+</div>
+<div class="mb-6">
+<label for="message" class="block text-gray-700 font-medium mb-2">문의 내용</label>
+<textarea id="message" rows="4" class="w-full px-4 py-3 rounded border-none bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-none text-sm" placeholder="공간 디자인 관련 문의 내용을 입력해주세요"></textarea>
+</div>
+<div class="mb-6">
+<label class="flex items-start">
+<input type="checkbox" class="mt-1 mr-2">
+<span class="text-sm text-gray-600">개인정보 수집 및 이용에 동의합니다. (필수)</span>
+</label>
+</div>
+<button type="submit" class="w-full bg-primary text-white py-3 px-6 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button">
+상담 신청하기
+</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 자주 묻는 질문 -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="text-center mb-16">
+<h2 class="text-3xl font-bold mb-4">자주 묻는 질문</h2>
+<p class="text-gray-600 max-w-3xl mx-auto">
+공간 디자인 서비스에 대해 궁금한 점을 확인하세요
+</p>
+</div>
+<div class="max-w-3xl mx-auto">
+<div class="mb-6">
+<button class="flex justify-between items-center w-full text-left p-6 bg-gray-50 rounded-lg focus:outline-none" id="faq1-btn">
+<h3 class="text-lg font-bold">공간 디자인 프로젝트는 얼마나 걸리나요?</h3>
+<i class="ri-add-line ri-lg" id="faq1-icon"></i>
+</button>
+<div class="hidden overflow-hidden bg-white p-6 rounded-b-lg shadow-sm" id="faq1-content">
+<p class="text-gray-600">
+공간 디자인 프로젝트의 기간은 공간의 규모와 복잡성에 따라 다릅니다. 일반적으로 소규모 상업 공간(100㎡ 이하)은 디자인부터 시공까지 2-3개월, 중규모 공간(100-300㎡)은 3-5개월, 대규모 프로젝트(300㎡ 이상)는 6개월 이상이 소요됩니다. 디자인 단계만 고려하면 소규모는 3-4주, 중규모는 4-8주, 대규모는 8-12주가 필요합니다. 정확한 일정은 초기 상담을 통해 확인해 드립니다.
+</p>
+</div>
+</div>
+<div class="mb-6">
+<button class="flex justify-between items-center w-full text-left p-6 bg-gray-50 rounded-lg focus:outline-none" id="faq2-btn">
+<h3 class="text-lg font-bold">공간 디자인 비용은 어떻게 책정되나요?</h3>
+<i class="ri-add-line ri-lg" id="faq2-icon"></i>
+</button>
+<div class="hidden overflow-hidden bg-white p-6 rounded-b-lg shadow-sm" id="faq2-content">
+<p class="text-gray-600">
+공간 디자인 비용은 프로젝트의 규모, 복잡성, 디자인 요구사항 등에 따라 책정됩니다. 일반적으로 디자인 비용은 공간 면적(㎡)당 기본 단가를 기준으로 산정하며, 디자인의 난이도, 브랜딩 요소의 복잡성, 특수 기능 요구사항 등에 따라 조정됩니다. 시공 관리 서비스를 포함할 경우 별도의 관리 비용이 추가될 수 있습니다. 에이치디자인은 클라이언트의 예산과 니즈에 맞는 맞춤형 견적을 제공하며, 정확한 비용은 초기 상담과 현장 분석 후 안내해 드립니다.
+</p>
+</div>
+</div>
+<div class="mb-6">
+<button class="flex justify-between items-center w-full text-left p-6 bg-gray-50 rounded-lg focus:outline-none" id="faq3-btn">
+<h3 class="text-lg font-bold">프로젝트 진행 시 필요한 자료는 무엇인가요?</h3>
+<i class="ri-add-line ri-lg" id="faq3-icon"></i>
+</button>
+<div class="hidden overflow-hidden bg-white p-6 rounded-b-lg shadow-sm" id="faq3-content">
+<p class="text-gray-600">
+공간 디자인 프로젝트를 효과적으로 진행하기 위해 다음과 같은 자료가 필요합니다: 1) 공간의 도면 또는 실측 정보, 2) 비즈니스 개요 및 브랜드 자료, 3) 공간 사용 목적 및 요구사항, 4) 타겟 고객 또는 사용자 정보, 5) 디자인 선호도 및 참고 이미지, 6) 예산 범위, 7) 일정 제약 사항. 이러한 기본 정보가 준비되어 있으면 프로젝트 초기 단계에서 더 효율적으로 진행할 수 있으며, 추가 정보는 프로젝트 진행 과정에서 요청드릴 수 있습니다.
+</p>
+</div>
+</div>
+<div class="mb-6">
+<button class="flex justify-between items-center w-full text-left p-6 bg-gray-50 rounded-lg focus:outline-none" id="faq4-btn">
+<h3 class="text-lg font-bold">시공사 선정도 도와주나요?</h3>
+<i class="ri-add-line ri-lg" id="faq4-icon"></i>
+</button>
+<div class="hidden overflow-hidden bg-white p-6 rounded-b-lg shadow-sm" id="faq4-content">
+<p class="text-gray-600">
+네, 에이치디자인은 클라이언트의 요청에 따라 시공사 선정을 지원해 드립니다. 프로젝트의 특성과 요구사항에 맞는 검증된 시공사 파트너들을 추천해 드리며, 입찰 과정을 관리하고 최적의 시공사를 선정하는 데 도움을 드립니다. 또한 시공 과정에서 디자인 의도가 정확히 구현될 수 있도록 시공 관리 서비스도 제공하고 있습니다. 이를 통해 디자인부터 시공까지 일관된 품질을 유지하고 클라이언트의 부담을 줄여드립니다.
+</p>
+</div>
+</div>
+<div>
+<button class="flex justify-between items-center w-full text-left p-6 bg-gray-50 rounded-lg focus:outline-none" id="faq5-btn">
+<h3 class="text-lg font-bold">인허가 관련 지원도 가능한가요?</h3>
+<i class="ri-add-line ri-lg" id="faq5-icon"></i>
+</button>
+<div class="hidden overflow-hidden bg-white p-6 rounded-b-lg shadow-sm" id="faq5-content">
+<p class="text-gray-600">
+네, 에이치디자인은 공간 디자인 프로젝트와 관련된 인허가 절차를 지원해 드립니다. 건축법, 소방법, 위생법 등 관련 법규를 고려한 디자인 설계를 진행하며, 필요한 경우 인허가 전문 파트너와 협업하여 인허가 서류 준비 및 제출 과정을 지원합니다. 특히 상업 공간, 의료 시설, 식음료 매장 등 특수한 인허가 요건이 필요한 프로젝트에서는 초기 단계부터 인허가 요건을 고려한 설계를 통해 추후 발생할 수 있는 문제를 예방합니다.
+</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA 섹션 -->
+<section class="py-16 bg-gradient-to-r from-primary/10 to-primary/5">
+<div class="container mx-auto px-4 text-center">
+<h2 class="text-2xl md:text-3xl font-bold mb-4">에이치디자인과 함께 공간의 가치를 높이세요</h2>
+<p class="text-gray-600 mb-8 max-w-2xl mx-auto">
+차별화된 공간 디자인으로 고객 경험을 향상시키고
+비즈니스의 성과를 극대화하세요
+</p>
+<div class="flex flex-col md:flex-row gap-4 justify-center">
+<a href="#contact" class="bg-primary text-white py-3 px-8 rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap !rounded-button">
+무료 상담 신청하기
+</a>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="bg-white text-primary border border-primary py-3 px-8 rounded-button font-medium hover:bg-primary hover:bg-opacity-5 transition-colors whitespace-nowrap !rounded-button">
+포트폴리오 보기
+</a>
+</div>
+</div>
+</section>
+<!-- 푸터 -->
+<footer class="bg-gray-900 text-white py-12">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<div>
+<a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/ec9e3f64-8d8f-4578-8daa-17734376e05a" data-readdy="true" class="h-6 mb-4 inline-block">
+<img src="https://static.readdy.ai/image/3c16391a4b5d74433155a2d2f7dc5d27/28b33284de352d170bd25741ad52ba00.png" alt="logo" class="h-full brightness-0 invert">
+</a>
+<p class="text-gray-400 text-sm">에이치디자인은 병원 전문 디자인 에이전시로, 10년 이상의 경험을 바탕으로 최고의 디자인 솔루션을 제공합니다.</p>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">서비스</h3>
+<ul class="space-y-2 text-gray-400">
+<li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/23fdb509-1062-4974-b009-a52dded521a2" data-readdy="true" class="hover:text-white transition-colors">브랜드 디자인</a></li>
+<li><a href="#" class="hover:text-white transition-colors">공간 디자인</a></li>
+<li><a href="#" class="hover:text-white transition-colors">그래픽 디자인</a></li>
+<li><a href="#" class="hover:text-white transition-colors">디지털 디자인</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">회사 정보</h3>
+<ul class="space-y-2 text-gray-400">
+<li><a href="#" class="hover:text-white transition-colors">회사 소개</a></li>
+<li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/33ae875f-35ba-494d-9af9-e3afeeb1aea2" data-readdy="true" class="hover:text-white transition-colors">포트폴리오</a></li>
+<li><a href="https://readdy.ai/home/f70a9584-66f2-4b0f-a797-2e53f53d6160/b5e7fbfd-237a-4dc1-b7e2-87ee46bf5928" data-readdy="true" class="hover:text-white transition-colors">프로세스</a></li>
+<li><a href="#" class="hover:text-white transition-colors">채용 정보</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-bold mb-4">연락처</h3>
+<ul class="space-y-2 text-gray-400">
+<li class="flex items-center gap-2">
+<i class="ri-map-pin-line"></i>
+<span>서울특별시 강남구 테헤란로 123</span>
+</li>
+<li class="flex items-center gap-2">
+<i class="ri-phone-line"></i>
+<span>02-1234-5678</span>
+</li>
+<li class="flex items-center gap-2">
+<i class="ri-mail-line"></i>
+<span>info@hdesign.co.kr</span>
+</li>
+</ul>
+<div class="flex gap-4 mt-4">
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-instagram-line"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-facebook-line"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-youtube-line"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-kakao-talk-line"></i>
+</a>
+</div>
+</div>
+</div>
+<div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+<p>© 2025 에이치디자인. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 서비스 드롭다운 메뉴 관리
+const serviceDropdownBtn = document.getElementById('service-dropdown-btn');
+const serviceDropdownMenu = document.getElementById('service-dropdown-menu');
+const serviceDropdownIcon = document.getElementById('service-dropdown-icon');
+let isDropdownOpen = false;
+serviceDropdownBtn.addEventListener('click', function(e) {
+e.preventDefault();
+isDropdownOpen = !isDropdownOpen;
+if(isDropdownOpen) {
+serviceDropdownMenu.classList.remove('hidden');
+serviceDropdownIcon.style.transform = 'rotate(180deg)';
+} else {
+serviceDropdownMenu.classList.add('hidden');
+serviceDropdownIcon.style.transform = 'rotate(0deg)';
+}
+});
+document.addEventListener('click', function(e) {
+if (!document.getElementById('service-dropdown').contains(e.target)) {
+serviceDropdownMenu.classList.add('hidden');
+serviceDropdownIcon.style.transform = 'rotate(0deg)';
+isDropdownOpen = false;
+}
+});
+// FAQ 아코디언
+const faqBtns = document.querySelectorAll('[id$="-btn"]');
+faqBtns.forEach(btn => {
+btn.addEventListener('click', function() {
+const contentId = this.id.replace('-btn', '-content');
+const iconId = this.id.replace('-btn', '-icon');
+const content = document.getElementById(contentId);
+const icon = document.getElementById(iconId);
+if (content.classList.contains('hidden')) {
+content.classList.remove('hidden');
+icon.classList.remove('ri-add-line');
+icon.classList.add('ri-subtract-line');
+} else {
+content.classList.add('hidden');
+icon.classList.remove('ri-subtract-line');
+icon.classList.add('ri-add-line');
+}
+});
+});
+// Before-After 슬라이더 기능
+function setupBeforeAfterSlider(sliderId, handleId) {
+const slider = document.getElementById(sliderId);
+const handle = document.getElementById(handleId);
+const before = slider.querySelector('.before');
+function updateSlider(x) {
+const sliderRect = slider.getBoundingClientRect();
+let position = (x - sliderRect.left) / sliderRect.width;
+position = Math.max(0, Math.min(1, position));
+before.style.width = position * 100 + '%';
+handle.style.left = position * 100 + '%';
+}
+let isDragging = false;
+handle.addEventListener('mousedown', function() {
+isDragging = true;
+});
+document.addEventListener('mousemove', function(e) {
+if (!isDragging) return;
+updateSlider(e.clientX);
+});
+document.addEventListener('mouseup', function() {
+isDragging = false;
+});
+slider.addEventListener('click', function(e) {
+updateSlider(e.clientX);
+});
+// 터치 이벤트 지원
+handle.addEventListener('touchstart', function() {
+isDragging = true;
+});
+document.addEventListener('touchmove', function(e) {
+if (!isDragging) return;
+updateSlider(e.touches[0].clientX);
+});
+document.addEventListener('touchend', function() {
+isDragging = false;
+});
+}
+setupBeforeAfterSlider('slider1', 'handle1');
+setupBeforeAfterSlider('slider2', 'handle2');
+// 포트폴리오 아이템 애니메이션
+const portfolioItems = document.querySelectorAll('.portfolio-item');
+const observerOptions = {
+threshold: 0.1,
+rootMargin: '0px 0px -50px 0px'
+};
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.style.opacity = '1';
+entry.target.style.transform = 'translateY(0)';
+}
+});
+}, observerOptions);
+portfolioItems.forEach(item => {
+item.style.opacity = '0';
+item.style.transform = 'translateY(20px)';
+item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+observer.observe(item);
+});
+// 프로세스 스텝 애니메이션
+const processSteps = document.querySelectorAll('.process-step');
+processSteps.forEach(step => {
+step.style.opacity = '0';
+step.style.transform = 'translateY(20px)';
+step.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+observer.observe(step);
+});
+});
+</script>
+</body>
+</html>

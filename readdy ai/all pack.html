@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>에이치디자인 - 올팩 서비스</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#1e3a8a',secondary:'#64748b'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}},fontFamily:{sans:['Pretendard','Apple SD Gothic Neo','-apple-system','BlinkMacSystemFont','system-ui','Segoe UI','Roboto','Helvetica Neue','Arial','sans-serif']}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+.tab-content {
+display: none;
+}
+.tab-content.active {
+display: block;
+}
+.category-content {
+display: none;
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.5s ease-in-out;
+}
+.category-content.active {
+display: block;
+max-height: 2000px;
+}
+input[type="radio"] {
+display: none;
+}
+.radio-label {
+cursor: pointer;
+padding: 0.75rem 1.5rem;
+border-radius: 9999px;
+background-color: #f3f4f6;
+color: #4b5563;
+transition: all 0.3s ease;
+}
+input[type="radio"]:checked + .radio-label {
+background-color: #1e3a8a;
+color: white;
+}
+.sample-slide {
+scroll-snap-type: x mandatory;
+scroll-behavior: smooth;
+}
+.sample-slide > div {
+scroll-snap-align: start;
+}
+.sample-nav-dot {
+width: 8px;
+height: 8px;
+border-radius: 50%;
+background-color: #e5e7eb;
+transition: all 0.3s ease;
+}
+.sample-nav-dot.active {
+background-color: #1e3a8a;
+width: 24px;
+border-radius: 4px;
+}
+.category-card {
+transition: all 0.3s ease;
+}
+.category-card:hover {
+transform: translateY(-4px);
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+.category-card.selected {
+border-color: #1e3a8a;
+background-color: rgba(30, 58, 138, 0.05);
+}
+</style>
+</head>
+<body class="bg-white min-h-screen">
+<!-- 헤더 -->
+<header class="w-full bg-white shadow-sm py-4">
+<div class="container mx-auto px-4 flex justify-between items-center">
+<div class="h-8">
+<img src="https://static.readdy.ai/image/3c16391a4b5d74433155a2d2f7dc5d27/ea2abadf4d35d0dd62dfb4f8e49ab1ac.png" alt="logo" class="h-full">
+</div>
+<nav class="hidden md:flex space-x-8">
+<div class="relative group">
+<a href="#" class="text-gray-800 hover:text-primary transition-colors flex items-center">
+서비스
+<i class="ri-arrow-down-s-line ml-1"></i>
+</a>
+<div class="absolute top-full left-0 mt-1 bg-white shadow-lg rounded-lg py-2 w-48 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300 z-50">
+<a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-50 hover:text-primary">공간 디자인</a>
+<a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-50 hover:text-primary">사인물 디자인</a>
+<a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-50 hover:text-primary">인쇄물 디자인</a>
+<a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-50 hover:text-primary">온라인 디자인</a>
+<a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-50 hover:text-primary">광고/홍보</a>
+<a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-50 hover:text-primary">디지털 사이니지</a>
+</div>
+</div>
+<a href="#" class="text-primary font-bold hover:text-primary/90 transition-colors border-b-2 border-primary">디자인 올팩 All Pack</a>
+<a href="#" class="text-gray-800 hover:text-primary transition-colors">포트폴리오</a>
+<a href="#" class="text-gray-800 hover:text-primary transition-colors">고객 후기</a>
+<a href="#" class="text-gray-800 hover:text-primary transition-colors">문의하기</a>
+</nav>
+<div class="md:hidden w-8 h-8 flex items-center justify-center">
+<i class="ri-menu-line ri-lg"></i>
+</div>
+</div>
+</header>
+<!-- 메인 섹션 -->
+<main class="container mx-auto px-4 py-12">
+<!-- 헤더 섹션 -->
+<section class="mb-16 text-center">
+<h1 class="text-4xl md:text-5xl font-bold mb-4">All Pack, 나만의 스타일을 찾아보세요</h1>
+<p class="text-lg text-gray-600 max-w-3xl mx-auto">에이치디자인의 전문가들이 병원의 특성과 공간에 맞는 최적의 디자인을 제안해드립니다.</p>
+</section>
+<!-- 디자인 항목 선택 섹션 -->
+<section class="mb-16">
+<h2 class="text-2xl font-bold mb-8 text-center">디자인 항목 선택</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- 공간 디자인 -->
+<div class="category-card border border-gray-200 rounded-lg p-6 cursor-pointer" data-category="space">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 flex items-center justify-center bg-blue-50 rounded-full mr-4">
+<i class="ri-home-4-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold">공간 디자인</h3>
+</div>
+<p class="text-gray-600">병원 내부 공간 디자인, 인테리어, 레이아웃 설계 등</p>
+</div>
+<!-- 사인물 디자인 -->
+<div class="category-card border border-gray-200 rounded-lg p-6 cursor-pointer" data-category="sign">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 flex items-center justify-center bg-blue-50 rounded-full mr-4">
+<i class="ri-artboard-2-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold">사인물 디자인</h3>
+</div>
+<p class="text-gray-600">간판, 실내 사인, 안내판, 명패 등 디자인</p>
+</div>
+<!-- 인쇄물 디자인 -->
+<div class="category-card border border-gray-200 rounded-lg p-6 cursor-pointer" data-category="print">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 flex items-center justify-center bg-blue-50 rounded-full mr-4">
+<i class="ri-file-list-3-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold">인쇄물 디자인</h3>
+</div>
+<p class="text-gray-600">명함, 브로셔, 리플렛, 처방전, 안내장 등</p>
+</div>
+<!-- 온라인 디자인 -->
+<div class="category-card border border-gray-200 rounded-lg p-6 cursor-pointer" data-category="online">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 flex items-center justify-center bg-blue-50 rounded-full mr-4">
+<i class="ri-global-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold">온라인 디자인</h3>
+</div>
+<p class="text-gray-600">웹사이트, 모바일 앱, SNS 콘텐츠 등</p>
+</div>
+<!-- 광고/홍보 -->
+<div class="category-card border border-gray-200 rounded-lg p-6 cursor-pointer" data-category="ad">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 flex items-center justify-center bg-blue-50 rounded-full mr-4">
+<i class="ri-advertisement-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold">광고/홍보</h3>
+</div>
+<p class="text-gray-600">배너, 포스터, 전단지, 온라인 광고 등</p>
+</div>
+<!-- 디지털 사이니지 -->
+<div class="category-card border border-gray-200 rounded-lg p-6 cursor-pointer" data-category="digital">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 flex items-center justify-center bg-blue-50 rounded-full mr-4">
+<i class="ri-tv-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold">디지털 사이니지</h3>
+</div>
+<p class="text-gray-600">디지털 안내판, 키오스크, 대기실 화면 등</p>
+</div>
+</div>
+</section>
+<!-- 스타일 선택 영역 -->
+<section id="styleSelectionSection" class="mb-16 hidden">
+<div id="spaceContent" class="category-content" data-category="space">
+<h2 class="text-2xl font-bold mb-6">공간 디자인 스타일 선택</h2>
+<div class="flex justify-center mb-8">
+<div class="inline-flex p-1 bg-gray-100 rounded-full">
+<input type="radio" id="space-simple" name="space-style" value="simple" checked>
+<label for="space-simple" class="radio-label whitespace-nowrap">심플</label>
+<input type="radio" id="space-modern" name="space-style" value="modern">
+<label for="space-modern" class="radio-label whitespace-nowrap ml-2">모던</label>
+<input type="radio" id="space-luxury" name="space-style" value="luxury">
+<label for="space-luxury" class="radio-label whitespace-nowrap ml-2">럭셔리</label>
+</div>
+</div>
+<!-- 스타일 샘플 슬라이더 -->
+<div class="relative">
+<div class="space-tab-content active" data-style="simple">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20modern%20korean%20medical%20clinic%20interior%20design%2C%20clean%20white%20walls%2C%20simple%20furniture%2C%20bright%20and%20airy%20space%2C%20natural%20light%2C%20wooden%20accents%2C%20reception%20area&width=600&height=400&seq=1&orientation=landscape" alt="심플한 공간 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 화이트 리셉션</h4>
+<p class="text-gray-600 text-sm">깔끔한 화이트 톤과 심플한 라인으로 구성된 모던한 리셉션 공간</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20dental%20clinic%20interior%2C%20clean%20white%20treatment%20room%2C%20simple%20medical%20equipment%2C%20bright%20lighting%2C%20functional%20space%20design%2C%20organized%20storage&width=600&height=400&seq=2&orientation=landscape" alt="심플한 공간 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 진료실</h4>
+<p class="text-gray-600 text-sm">기능성을 강조한 심플한 진료 공간, 효율적인 동선과 수납 설계</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20waiting%20area%2C%20simple%20comfortable%20seating%2C%20clean%20white%20walls%2C%20indoor%20plants%2C%20natural%20wood%20elements%2C%20bright%20and%20welcoming%20space&width=600&height=400&seq=3&orientation=landscape" alt="심플한 공간 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 대기 공간</h4>
+<p class="text-gray-600 text-sm">편안한 대기 공간, 자연 채광과 식물을 활용한 안정감 있는 디자인</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+<div class="space-tab-content" data-style="modern">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20interior%2C%20sleek%20design%2C%20gray%20and%20blue%20color%20scheme%2C%20contemporary%20furniture%2C%20geometric%20patterns%2C%20glass%20partitions%2C%20high-tech%20reception%20area&width=600&height=400&seq=4&orientation=landscape" alt="모던한 공간 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 리셉션</h4>
+<p class="text-gray-600 text-sm">세련된 그레이 & 블루 컬러 조합의 현대적인 리셉션 공간</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20dermatology%20clinic%20treatment%20room%2C%20contemporary%20design%2C%20sleek%20medical%20equipment%2C%20indirect%20lighting%2C%20built-in%20storage%2C%20neutral%20color%20palette%20with%20accent%20colors&width=600&height=400&seq=5&orientation=landscape" alt="모던한 공간 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 진료실</h4>
+<p class="text-gray-600 text-sm">간접 조명과 내장형 수납을 활용한 현대적인 진료 공간</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20corridor%20and%20waiting%20area%2C%20geometric%20ceiling%20design%2C%20built-in%20LED%20lighting%2C%20contemporary%20seating%2C%20digital%20displays%2C%20neutral%20color%20palette%20with%20blue%20accents&width=600&height=400&seq=6&orientation=landscape" alt="모던한 공간 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 복도 및 대기 공간</h4>
+<p class="text-gray-600 text-sm">기하학적 천장 디자인과 LED 조명을 활용한 현대적 공용 공간</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+<div class="space-tab-content" data-style="luxury">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20plastic%20surgery%20clinic%20reception%2C%20high-end%20materials%2C%20marble%20counters%2C%20crystal%20chandelier%2C%20velvet%20seating%2C%20gold%20accents%2C%20sophisticated%20lighting%2C%20premium%20hotel-like%20atmosphere&width=600&height=400&seq=7&orientation=landscape" alt="럭셔리한 공간 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 리셉션</h4>
+<p class="text-gray-600 text-sm">대리석과 골드 액센트를 활용한 호텔급 고급스러운 리셉션 공간</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20VIP%20treatment%20room%2C%20premium%20materials%2C%20sophisticated%20design%2C%20high-end%20medical%20equipment%2C%20custom%20cabinetry%2C%20mood%20lighting%2C%20exclusive%20private%20space&width=600&height=400&seq=8&orientation=landscape" alt="럭셔리한 공간 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 VIP 진료실</h4>
+<p class="text-gray-600 text-sm">프리미엄 소재와 맞춤형 가구를 활용한 VIP 전용 진료 공간</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20spa%20lounge%20area%2C%20premium%20materials%2C%20marble%20flooring%2C%20designer%20furniture%2C%20sophisticated%20lighting%2C%20water%20feature%2C%20exclusive%20ambiance%2C%20high-end%20clinic%20waiting%20area&width=600&height=400&seq=9&orientation=landscape" alt="럭셔리한 공간 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 라운지</h4>
+<p class="text-gray-600 text-sm">디자이너 가구와 수경 요소를 활용한 고급스러운 휴식 공간</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+</div>
+</div>
+<div id="signContent" class="category-content" data-category="sign">
+<h2 class="text-2xl font-bold mb-6">사인물 디자인 스타일 선택</h2>
+<div class="flex justify-center mb-8">
+<div class="inline-flex p-1 bg-gray-100 rounded-full">
+<input type="radio" id="sign-simple" name="sign-style" value="simple" checked>
+<label for="sign-simple" class="radio-label whitespace-nowrap">심플</label>
+<input type="radio" id="sign-modern" name="sign-style" value="modern">
+<label for="sign-modern" class="radio-label whitespace-nowrap ml-2">모던</label>
+<input type="radio" id="sign-luxury" name="sign-style" value="luxury">
+<label for="sign-luxury" class="radio-label whitespace-nowrap ml-2">럭셔리</label>
+</div>
+</div>
+<!-- 스타일 샘플 슬라이더 -->
+<div class="relative">
+<div class="sign-tab-content active" data-style="simple">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20signage%2C%20simple%20typography%2C%20clean%20design%2C%20white%20background%20with%20black%20text%2C%20clear%20wayfinding%2C%20modern%20hospital%20exterior%20sign&width=600&height=400&seq=10&orientation=landscape" alt="심플한 사인물 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 외부 간판</h4>
+<p class="text-gray-600 text-sm">깔끔한 타이포그래피와 미니멀한 디자인의 외부 사인</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20interior%20signage%2C%20simple%20wayfinding%20system%2C%20clean%20typography%2C%20pictograms%2C%20white%20and%20light%20blue%20color%20scheme%2C%20functional%20design&width=600&height=400&seq=11&orientation=landscape" alt="심플한 사인물 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 내부 안내 사인</h4>
+<p class="text-gray-600 text-sm">픽토그램과 깔끔한 타이포그래피를 활용한 실내 안내 시스템</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20door%20signs%20and%20nameplates%2C%20simple%20design%2C%20clean%20typography%2C%20acrylic%20material%2C%20functional%20room%20identification%2C%20doctors%20office%20signs&width=600&height=400&seq=12&orientation=landscape" alt="심플한 사인물 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 도어 사인 및 명패</h4>
+<p class="text-gray-600 text-sm">아크릴 소재의 깔끔한 도어 사인과 의사 명패 디자인</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+<div class="sign-tab-content" data-style="modern">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20signage%2C%20LED%20backlit%20sign%2C%20sleek%20design%2C%20blue%20and%20white%20color%20scheme%2C%20contemporary%20typography%2C%20illuminated%20exterior%20sign%20at%20night&width=600&height=400&seq=13&orientation=landscape" alt="모던한 사인물 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 LED 백라이트 간판</h4>
+<p class="text-gray-600 text-sm">LED 백라이트를 활용한 세련된 현대적 외부 사인</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20interior%20directional%20signage%2C%20sleek%20design%2C%20geometric%20elements%2C%20glass%20and%20metal%20materials%2C%20digital%20wayfinding%2C%20contemporary%20style&width=600&height=400&seq=14&orientation=landscape" alt="모던한 사인물 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 방향 안내 사인</h4>
+<p class="text-gray-600 text-sm">유리와 금속 소재를 활용한 현대적인 방향 안내 시스템</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20reception%20desk%20signage%2C%203D%20logo%20sign%2C%20backlit%20reception%20counter%20sign%2C%20sleek%20design%2C%20contemporary%20branding%2C%20illuminated%20sign&width=600&height=400&seq=15&orientation=landscape" alt="모던한 사인물 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 리셉션 데스크 사인</h4>
+<p class="text-gray-600 text-sm">3D 로고와 백라이트를 활용한 현대적인 리셉션 데스크 사인</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+<div class="sign-tab-content" data-style="luxury">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20exterior%20sign%2C%20premium%20materials%2C%20gold%20lettering%2C%20marble%20background%2C%20elegant%20design%2C%20high-end%20clinic%20branding%2C%20sophisticated%20signage&width=600&height=400&seq=16&orientation=landscape" alt="럭셔리한 사인물 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 외부 사인</h4>
+<p class="text-gray-600 text-sm">대리석 배경과 골드 레터링을 활용한 고급스러운 외부 사인</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20directory%20sign%2C%20premium%20materials%2C%20gold%20and%20black%20color%20scheme%2C%20elegant%20typography%2C%20marble%20or%20wood%20background%2C%20high-end%20wayfinding&width=600&height=400&seq=17&orientation=landscape" alt="럭셔리한 사인물 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 디렉토리 사인</h4>
+<p class="text-gray-600 text-sm">골드와 블랙 컬러 조합의 고급스러운 층별 안내 사인</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20doctor%20nameplate%2C%20premium%20materials%2C%20gold%20and%20acrylic%2C%20elegant%20design%2C%20sophisticated%20typography%2C%20high-end%20office%20door%20sign&width=600&height=400&seq=18&orientation=landscape" alt="럭셔리한 사인물 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 의사 명패</h4>
+<p class="text-gray-600 text-sm">골드와 아크릴 소재를 활용한 고급스러운 의사 사무실 명패</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+</div>
+</div>
+<div id="printContent" class="category-content" data-category="print">
+<h2 class="text-2xl font-bold mb-6">인쇄물 디자인 스타일 선택</h2>
+<div class="flex justify-center mb-8">
+<div class="inline-flex p-1 bg-gray-100 rounded-full">
+<input type="radio" id="print-simple" name="print-style" value="simple" checked>
+<label for="print-simple" class="radio-label whitespace-nowrap">심플</label>
+<input type="radio" id="print-modern" name="print-style" value="modern">
+<label for="print-modern" class="radio-label whitespace-nowrap ml-2">모던</label>
+<input type="radio" id="print-luxury" name="print-style" value="luxury">
+<label for="print-luxury" class="radio-label whitespace-nowrap ml-2">럭셔리</label>
+</div>
+</div>
+<!-- 스타일 샘플 슬라이더 -->
+<div class="relative">
+<div class="print-tab-content active" data-style="simple">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20business%20cards%20and%20stationery%2C%20clean%20design%2C%20simple%20typography%2C%20white%20background%2C%20light%20blue%20accent%20color%2C%20professional%20medical%20branding&width=600&height=400&seq=19&orientation=landscape" alt="심플한 인쇄물 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 명함 및 스테이셔너리</h4>
+<p class="text-gray-600 text-sm">깔끔한 디자인과 미니멀한 타이포그래피의 명함 및 편지지</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20brochure%20and%20leaflet%2C%20clean%20layout%2C%20simple%20infographics%2C%20white%20space%2C%20clear%20typography%2C%20medical%20information%20design&width=600&height=400&seq=20&orientation=landscape" alt="심플한 인쇄물 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 브로셔 및 리플렛</h4>
+<p class="text-gray-600 text-sm">여백을 활용한 깔끔한 레이아웃의 브로셔 및 안내 리플렛</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20prescription%20pad%20and%20appointment%20card%2C%20clean%20design%2C%20simple%20layout%2C%20functional%20medical%20stationery%2C%20professional%20healthcare%20print%20materials&width=600&height=400&seq=21&orientation=landscape" alt="심플한 인쇄물 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 처방전 및 예약 카드</h4>
+<p class="text-gray-600 text-sm">기능적이고 깔끔한 디자인의 처방전 및 환자 예약 카드</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+<div class="print-tab-content" data-style="modern">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20business%20cards%20and%20stationery%2C%20contemporary%20design%2C%20geometric%20patterns%2C%20blue%20and%20gray%20color%20scheme%2C%20sleek%20typography%2C%20professional%20healthcare%20branding&width=600&height=400&seq=22&orientation=landscape" alt="모던한 인쇄물 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 명함 및 스테이셔너리</h4>
+<p class="text-gray-600 text-sm">기하학적 패턴과 세련된 타이포그래피의 현대적인 명함 세트</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20brochure%20and%20folder%2C%20contemporary%20layout%2C%20infographics%2C%20data%20visualization%2C%20blue%20and%20white%20color%20scheme%2C%20professional%20healthcare%20materials&width=600&height=400&seq=23&orientation=landscape" alt="모던한 인쇄물 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 브로셔 및 폴더</h4>
+<p class="text-gray-600 text-sm">인포그래픽과 데이터 시각화를 활용한 현대적인 브로셔</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20welcome%20kit%20and%20patient%20materials%2C%20contemporary%20design%2C%20organized%20information%2C%20professional%20healthcare%20package%2C%20blue%20and%20white%20color%20scheme&width=600&height=400&seq=24&orientation=landscape" alt="모던한 인쇄물 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 웰컴 키트</h4>
+<p class="text-gray-600 text-sm">체계적인 정보 구성의 현대적인 환자 웰컴 키트 패키지</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+<div class="print-tab-content" data-style="luxury">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20business%20cards%20and%20stationery%2C%20premium%20paper%2C%20gold%20foil%20stamping%2C%20embossing%2C%20sophisticated%20design%2C%20high-end%20healthcare%20branding%20materials&width=600&height=400&seq=25&orientation=landscape" alt="럭셔리한 인쇄물 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 명함 및 스테이셔너리</h4>
+<p class="text-gray-600 text-sm">금박과 엠보싱을 활용한 프리미엄 명함 및 편지지 세트</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20brochure%20and%20catalog%2C%20premium%20printing%2C%20gold%20accents%2C%20elegant%20layout%2C%20high-quality%20photography%2C%20sophisticated%20healthcare%20materials&width=600&height=400&seq=26&orientation=landscape" alt="럭셔리한 인쇄물 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 브로셔 및 카탈로그</h4>
+<p class="text-gray-600 text-sm">고품질 사진과 골드 액센트를 활용한 고급스러운 브로셔</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20VIP%20membership%20package%2C%20premium%20materials%2C%20custom%20box%2C%20elegant%20design%2C%20gold%20foil%20details%2C%20high-end%20patient%20welcome%20kit&width=600&height=400&seq=27&orientation=landscape" alt="럭셔리한 인쇄물 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 VIP 멤버십 패키지</h4>
+<p class="text-gray-600 text-sm">맞춤형 박스와 골드 디테일의 고급스러운 VIP 환자 패키지</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+</div>
+</div>
+<div id="onlineContent" class="category-content" data-category="online">
+<h2 class="text-2xl font-bold mb-6">온라인 디자인 스타일 선택</h2>
+<div class="flex justify-center mb-8">
+<div class="inline-flex p-1 bg-gray-100 rounded-full">
+<input type="radio" id="online-simple" name="online-style" value="simple" checked>
+<label for="online-simple" class="radio-label whitespace-nowrap">심플</label>
+<input type="radio" id="online-modern" name="online-style" value="modern">
+<label for="online-modern" class="radio-label whitespace-nowrap ml-2">모던</label>
+<input type="radio" id="online-luxury" name="online-style" value="luxury">
+<label for="online-luxury" class="radio-label whitespace-nowrap ml-2">럭셔리</label>
+</div>
+</div>
+<!-- 스타일 샘플 슬라이더 -->
+<div class="relative">
+<div class="online-tab-content active" data-style="simple">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20website%20design%2C%20clean%20layout%2C%20simple%20navigation%2C%20white%20background%2C%20functional%20design%2C%20responsive%20medical%20website%20mockup%20on%20devices&width=600&height=400&seq=28&orientation=landscape" alt="심플한 온라인 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 웹사이트 디자인</h4>
+<p class="text-gray-600 text-sm">깔끔한 레이아웃과 직관적인 내비게이션의 반응형 웹사이트</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20mobile%20app%20design%2C%20clean%20user%20interface%2C%20simple%20booking%20system%2C%20appointment%20management%2C%20white%20and%20light%20blue%20color%20scheme&width=600&height=400&seq=29&orientation=landscape" alt="심플한 온라인 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 모바일 앱 디자인</h4>
+<p class="text-gray-600 text-sm">간편한 예약 시스템과 깔끔한 UI의 병원 모바일 앱</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20social%20media%20templates%2C%20clean%20design%2C%20simple%20graphics%2C%20consistent%20branding%2C%20healthcare%20social%20media%20posts%2C%20Instagram%20and%20Facebook%20mockups&width=600&height=400&seq=30&orientation=landscape" alt="심플한 온라인 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 SNS 템플릿</h4>
+<p class="text-gray-600 text-sm">일관된 브랜딩의 깔끔한 소셜 미디어 게시물 템플릿</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+<div class="online-tab-content" data-style="modern">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20website%20design%2C%20contemporary%20layout%2C%20interactive%20elements%2C%20parallax%20scrolling%2C%20blue%20and%20white%20color%20scheme%2C%20professional%20healthcare%20website%20mockup&width=600&height=400&seq=31&orientation=landscape" alt="모던한 온라인 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 웹사이트 디자인</h4>
+<p class="text-gray-600 text-sm">인터랙티브 요소와 패럴랙스 스크롤링의 현대적인 웹사이트</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20mobile%20app%20design%2C%20sleek%20user%20interface%2C%20appointment%20booking%2C%20patient%20portal%2C%20telemedicine%20features%2C%20professional%20healthcare%20app%20mockup&width=600&height=400&seq=32&orientation=landscape" alt="모던한 온라인 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 모바일 앱 디자인</h4>
+<p class="text-gray-600 text-sm">환자 포털과 원격 진료 기능을 갖춘 세련된 모바일 앱</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20email%20newsletter%20and%20digital%20marketing%2C%20contemporary%20design%2C%20interactive%20content%2C%20professional%20healthcare%20digital%20campaign%20mockups&width=600&height=400&seq=33&orientation=landscape" alt="모던한 온라인 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 이메일 뉴스레터</h4>
+<p class="text-gray-600 text-sm">인터랙티브 콘텐츠를 활용한 현대적인 디지털 마케팅 자료</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+<div class="online-tab-content" data-style="luxury">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20website%20design%2C%20premium%20layout%2C%20elegant%20animations%2C%20gold%20and%20navy%20color%20scheme%2C%20high-end%20healthcare%20website%20mockup%2C%20sophisticated%20design&width=600&height=400&seq=34&orientation=landscape" alt="럭셔리한 온라인 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 웹사이트 디자인</h4>
+<p class="text-gray-600 text-sm">골드와 네이비 컬러의 우아한 애니메이션이 특징인 프리미엄 웹사이트</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20VIP%20patient%20portal%2C%20premium%20digital%20experience%2C%20exclusive%20features%2C%20personalized%20healthcare%20interface%2C%20high-end%20medical%20app%20design&width=600&height=400&seq=35&orientation=landscape" alt="럭셔리한 온라인 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 VIP 환자 포털</h4>
+<p class="text-gray-600 text-sm">맞춤형 서비스와 독점 기능을 제공하는 VIP 환자 전용 포털</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20digital%20branding%20package%2C%20premium%20online%20presence%2C%20sophisticated%20social%20media%2C%20elegant%20digital%20assets%2C%20high-end%20healthcare%20digital%20marketing&width=600&height=400&seq=36&orientation=landscape" alt="럭셔리한 온라인 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 디지털 브랜딩 패키지</h4>
+<p class="text-gray-600 text-sm">세련된 소셜 미디어와 고급스러운 디지털 자산 패키지</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+</div>
+</div>
+<div id="adContent" class="category-content" data-category="ad">
+<h2 class="text-2xl font-bold mb-6">광고/홍보 스타일 선택</h2>
+<div class="flex justify-center mb-8">
+<div class="inline-flex p-1 bg-gray-100 rounded-full">
+<input type="radio" id="ad-simple" name="ad-style" value="simple" checked>
+<label for="ad-simple" class="radio-label whitespace-nowrap">심플</label>
+<input type="radio" id="ad-modern" name="ad-style" value="modern">
+<label for="ad-modern" class="radio-label whitespace-nowrap ml-2">모던</label>
+<input type="radio" id="ad-luxury" name="ad-style" value="luxury">
+<label for="ad-luxury" class="radio-label whitespace-nowrap ml-2">럭셔리</label>
+</div>
+</div>
+<!-- 스타일 샘플 슬라이더 -->
+<div class="relative">
+<div class="ad-tab-content active" data-style="simple">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20banner%20ads%2C%20clean%20design%2C%20simple%20message%2C%20white%20background%2C%20blue%20accent%20color%2C%20healthcare%20online%20advertising%20mockups&width=600&height=400&seq=37&orientation=landscape" alt="심플한 광고/홍보 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 배너 광고</h4>
+<p class="text-gray-600 text-sm">깔끔한 디자인과 명확한 메시지의 온라인 배너 광고</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20poster%20design%2C%20clean%20layout%2C%20simple%20information%2C%20healthcare%20promotion%2C%20medical%20service%20advertisement%2C%20functional%20design&width=600&height=400&seq=38&orientation=landscape" alt="심플한 광고/홍보 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 포스터 디자인</h4>
+<p class="text-gray-600 text-sm">명확한 정보 전달에 중점을 둔 깔끔한 의료 서비스 포스터</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20promotional%20flyers%2C%20clean%20design%2C%20simple%20layout%2C%20healthcare%20service%20information%2C%20medical%20promotion%20materials%2C%20functional%20design&width=600&height=400&seq=39&orientation=landscape" alt="심플한 광고/홍보 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 홍보 전단지</h4>
+<p class="text-gray-600 text-sm">필수 정보만 담은 기능적이고 깔끔한 의료 서비스 전단지</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+<div class="ad-tab-content" data-style="modern">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20digital%20advertising%20campaign%2C%20contemporary%20design%2C%20dynamic%20graphics%2C%20blue%20color%20scheme%2C%20healthcare%20service%20promotion%2C%20professional%20medical%20marketing&width=600&height=400&seq=40&orientation=landscape" alt="모던한 광고/홍보 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 디지털 광고 캠페인</h4>
+<p class="text-gray-600 text-sm">다이나믹한 그래픽과 현대적인 디자인의 디지털 마케팅 자료</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20outdoor%20advertising%2C%20contemporary%20billboard%20design%2C%20bus%20stop%20ad%2C%20sleek%20graphics%2C%20professional%20healthcare%20promotion%2C%20blue%20color%20scheme&width=600&height=400&seq=41&orientation=landscape" alt="모던한 광고/홍보 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 옥외 광고</h4>
+<p class="text-gray-600 text-sm">세련된 그래픽의 현대적인 빌보드 및 버스 정류장 광고</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20promotional%20video%20thumbnails%2C%20contemporary%20design%2C%20video%20marketing%20materials%2C%20healthcare%20service%20promotion%2C%20professional%20medical%20content&width=600&height=400&seq=42&orientation=landscape" alt="모던한 광고/홍보 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 영상 마케팅</h4>
+<p class="text-gray-600 text-sm">현대적인 디자인의 프로모션 비디오 및 썸네일 세트</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+<div class="ad-tab-content" data-style="luxury">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20plastic%20surgery%20clinic%20magazine%20advertisement%2C%20premium%20design%2C%20elegant%20layout%2C%20high-end%20photography%2C%20gold%20accents%2C%20sophisticated%20healthcare%20marketing&width=600&height=400&seq=43&orientation=landscape" alt="럭셔리한 광고/홍보 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 매거진 광고</h4>
+<p class="text-gray-600 text-sm">고품질 사진과 골드 액센트의 고급스러운 매거진 광고</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20VIP%20event%20invitation%20and%20promotional%20materials%2C%20premium%20design%2C%20gold%20foil%20details%2C%20elegant%20layout%2C%20high-end%20healthcare%20marketing&width=600&height=400&seq=44&orientation=landscape" alt="럭셔리한 광고/홍보 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 VIP 이벤트 초대장</h4>
+<p class="text-gray-600 text-sm">금박 디테일과 우아한 레이아웃의 고급스러운 이벤트 자료</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20premium%20advertising%20campaign%2C%20high-end%20marketing%20materials%2C%20elegant%20design%2C%20sophisticated%20branding%2C%20exclusive%20healthcare%20promotion&width=600&height=400&seq=45&orientation=landscape" alt="럭셔리한 광고/홍보 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 프리미엄 광고 캠페인</h4>
+<p class="text-gray-600 text-sm">세련된 브랜딩과 고급스러운 디자인의 종합 마케팅 자료</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+</div>
+</div>
+<div id="digitalContent" class="category-content" data-category="digital">
+<h2 class="text-2xl font-bold mb-6">디지털 사이니지 스타일 선택</h2>
+<div class="flex justify-center mb-8">
+<div class="inline-flex p-1 bg-gray-100 rounded-full">
+<input type="radio" id="digital-simple" name="digital-style" value="simple" checked>
+<label for="digital-simple" class="radio-label whitespace-nowrap">심플</label>
+<input type="radio" id="digital-modern" name="digital-style" value="modern">
+<label for="digital-modern" class="radio-label whitespace-nowrap ml-2">모던</label>
+<input type="radio" id="digital-luxury" name="digital-style" value="luxury">
+<label for="digital-luxury" class="radio-label whitespace-nowrap ml-2">럭셔리</label>
+</div>
+</div>
+<!-- 스타일 샘플 슬라이더 -->
+<div class="relative">
+<div class="digital-tab-content active" data-style="simple">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20digital%20information%20display%2C%20clean%20design%2C%20simple%20layout%2C%20waiting%20room%20screen%2C%20patient%20information%2C%20functional%20healthcare%20signage&width=600&height=400&seq=46&orientation=landscape" alt="심플한 디지털 사이니지 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 정보 디스플레이</h4>
+<p class="text-gray-600 text-sm">깔끔한 레이아웃의 대기실 환자 정보 디스플레이 화면</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20wayfinding%20kiosk%2C%20clean%20interface%2C%20simple%20navigation%2C%20digital%20directory%2C%20functional%20design%2C%20healthcare%20facility%20signage&width=600&height=400&seq=47&orientation=landscape" alt="심플한 디지털 사이니지 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 안내 키오스크</h4>
+<p class="text-gray-600 text-sm">직관적인 내비게이션의 깔끔한 디지털 안내 키오스크</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=minimalist%20korean%20medical%20clinic%20digital%20menu%20board%2C%20clean%20design%2C%20simple%20layout%2C%20service%20information%20display%2C%20pricing%20screen%2C%20functional%20healthcare%20signage&width=600&height=400&seq=48&orientation=landscape" alt="심플한 디지털 사이니지 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">심플 서비스 메뉴 보드</h4>
+<p class="text-gray-600 text-sm">명확한 정보 전달에 중점을 둔 서비스 및 가격 안내 화면</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+<div class="digital-tab-content" data-style="modern">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20interactive%20digital%20wall%2C%20contemporary%20design%2C%20touch%20screen%20interface%2C%20patient%20information%20system%2C%20blue%20color%20scheme%2C%20professional%20healthcare%20technology&width=600&height=400&seq=49&orientation=landscape" alt="모던한 디지털 사이니지 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 인터랙티브 디지털 월</h4>
+<p class="text-gray-600 text-sm">터치스크린 인터페이스의 현대적인 대형 정보 디스플레이</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20digital%20check-in%20kiosk%2C%20contemporary%20design%2C%20self-service%20interface%2C%20patient%20registration%20system%2C%20professional%20healthcare%20technology&width=600&height=400&seq=50&orientation=landscape" alt="모던한 디지털 사이니지 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 셀프 체크인 키오스크</h4>
+<p class="text-gray-600 text-sm">환자 등록 및 셀프 체크인이 가능한 현대적인 키오스크</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%20korean%20medical%20clinic%20waiting%20room%20entertainment%20system%2C%20contemporary%20design%2C%20digital%20content%20display%2C%20patient%20education%20videos%2C%20professional%20healthcare%20technology&width=600&height=400&seq=51&orientation=landscape" alt="모던한 디지털 사이니지 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">모던 대기실 엔터테인먼트 시스템</h4>
+<p class="text-gray-600 text-sm">환자 교육 비디오와 콘텐츠를 제공하는 현대적인 디스플레이</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+<div class="digital-tab-content" data-style="luxury">
+<div class="sample-slide flex overflow-x-auto hide-scrollbar">
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20premium%20digital%20welcome%20wall%2C%20high-end%20design%2C%20personalized%20patient%20greeting%2C%20elegant%20animations%2C%20sophisticated%20healthcare%20technology&width=600&height=400&seq=52&orientation=landscape" alt="럭셔리한 디지털 사이니지 디자인 1" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 웰컴 월</h4>
+<p class="text-gray-600 text-sm">개인 맞춤형 환영 메시지와 우아한 애니메이션의 프리미엄 디스플레이</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20VIP%20lounge%20digital%20experience%2C%20high-end%20interactive%20displays%2C%20premium%20content%2C%20elegant%20design%2C%20sophisticated%20healthcare%20technology&width=600&height=400&seq=53&orientation=landscape" alt="럭셔리한 디지털 사이니지 디자인 2" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 VIP 라운지 디지털 경험</h4>
+<p class="text-gray-600 text-sm">프리미엄 콘텐츠와 고급스러운 인터랙티브 디스플레이</p>
+</div>
+</div>
+</div>
+<div class="min-w-full md:min-w-[33.333%] px-2">
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=luxury%20korean%20medical%20clinic%20consultation%20room%20digital%20presentation%20system%2C%20high-end%20design%2C%20premium%20patient%20education%20display%2C%20sophisticated%20healthcare%20technology&width=600&height=400&seq=54&orientation=landscape" alt="럭셔리한 디지털 사이니지 디자인 3" class="w-full h-64 object-cover object-top">
+<div class="p-4">
+<h4 class="font-semibold mb-2">럭셔리 상담실 디지털 프레젠테이션</h4>
+<p class="text-gray-600 text-sm">고급스러운 환자 교육 및 상담용 디지털 프레젠테이션 시스템</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4 space-x-2">
+<span class="sample-nav-dot active"></span>
+<span class="sample-nav-dot"></span>
+<span class="sample-nav-dot"></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 견적 요약 섹션 -->
+<section id="quoteSummary" class="bg-gray-50 rounded-lg p-8 mb-16 hidden">
+<h2 class="text-2xl font-bold mb-6 text-center">견적 요약</h2>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse">
+<thead>
+<tr class="bg-gray-100">
+<th class="text-left py-3 px-4 border-b border-gray-200">항목</th>
+<th class="text-left py-3 px-4 border-b border-gray-200">선택 스타일</th>
+<th class="text-right py-3 px-4 border-b border-gray-200">예상 금액</th>
+</tr>
+</thead>
+<tbody id="quoteTableBody">
+<!-- 선택된 항목들이 여기에 추가됩니다 -->
+</tbody>
+<tfoot>
+<tr class="font-bold">
+<td class="py-4 px-4" colspan="2">총 예상 금액</td>
+<td class="py-4 px-4 text-right" id="totalAmount">0원</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</section>
+<!-- CTA 영역 -->
+<section id="ctaSection" class="text-center mb-16 hidden">
+<div class="flex flex-col md:flex-row justify-center gap-4">
+<button class="bg-primary text-white py-3 px-6 rounded-button font-semibold hover:bg-primary/90 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 whitespace-nowrap">이 스타일로 견적 요청하기</button>
+<button class="bg-white text-primary py-3 px-6 rounded-button font-semibold border border-primary hover:bg-gray-50 transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 whitespace-nowrap">상담 신청하고 PDF로 받기</button>
+<button class="text-gray-600 py-3 px-6 rounded-button font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-0.5 whitespace-nowrap">전체 스타일 다시 보기</button>
+</div>
+</section>
+<!-- FAQ 섹션 -->
+<section class="mb-16 max-w-3xl mx-auto">
+<h2 class="text-2xl font-bold mb-6 text-center">자주 묻는 질문</h2>
+<div class="space-y-4">
+<div class="border border-gray-200 rounded-lg overflow-hidden">
+<button class="faq-toggle w-full flex justify-between items-center p-4 text-left font-semibold hover:bg-gray-50">
+<span>올팩(All Pack) 서비스는 어떤 서비스인가요?</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-add-line ri-lg"></i>
+</div>
+</button>
+<div class="faq-content hidden p-4 pt-0 text-gray-600 border-t border-gray-100">
+<p>올팩(All Pack)은 병원 개원에 필요한 모든 디자인 요소를 한 번에 제공하는 에이치디자인의 통합 디자인 서비스입니다. 공간 디자인부터 사인물, 인쇄물, 온라인 디자인, 광고/홍보, 디지털 사이니지까지 병원에 필요한 모든 디자인 요소를 일관된 브랜드 아이덴티티로 제공합니다.</p>
+</div>
+</div>
+<div class="border border-gray-200 rounded-lg overflow-hidden">
+<button class="faq-toggle w-full flex justify-between items-center p-4 text-left font-semibold hover:bg-gray-50">
+<span>디자인 스타일은 어떻게 선택하나요?</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-add-line ri-lg"></i>
+</div>
+</button>
+<div class="faq-content hidden p-4 pt-0 text-gray-600 border-t border-gray-100">
+<p>각 디자인 항목별로 심플, 모던, 럭셔리 세 가지 스타일 중 하나를 선택할 수 있습니다. 각 항목마다 다른 스타일을 선택할 수 있어 병원의 특성과 예산에 맞게 커스터마이징이 가능합니다. 선택한 스타일에 따라 샘플 시안을 확인하실 수 있습니다.</p>
+</div>
+</div>
+<div class="border border-gray-200 rounded-lg overflow-hidden">
+<button class="faq-toggle w-full flex justify-between items-center p-4 text-left font-semibold hover:bg-gray-50">
+<span>견적은 어떻게 산출되나요?</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-add-line ri-lg"></i>
+</div>
+</button>
+<div class="faq-content hidden p-4 pt-0 text-gray-600 border-t border-gray-100">
+<p>견적은 선택하신 디자인 항목과 스타일에 따라 자동으로 계산됩니다. 심플, 모던, 럭셔리 스타일에 따라 가격대가 달라지며, 선택한 항목이 많을수록 패키지 할인이 적용됩니다. 정확한 최종 견적은 상담 신청 후 병원의 규모와 세부 요구사항에 따라 조정될 수 있습니다.</p>
+</div>
+</div>
+<div class="border border-gray-200 rounded-lg overflow-hidden">
+<button class="faq-toggle w-full flex justify-between items-center p-4 text-left font-semibold hover:bg-gray-50">
+<span>디자인 작업 기간은 얼마나 소요되나요?</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-add-line ri-lg"></i>
+</div>
+</button>
+<div class="faq-content hidden p-4 pt-0 text-gray-600 border-t border-gray-100">
+<p>디자인 작업 기간은 선택하신 항목의 수와 복잡도에 따라 달라집니다. 일반적으로 공간 디자인은 4-6주, 사인물과 인쇄물은 2-3주, 온라인 디자인은 3-4주, 광고/홍보물은 2주, 디지털 사이니지는 3주 정도 소요됩니다. 전체 패키지 진행 시 일정 조율을 통해 개원 일정에 맞춰 순차적으로 진행해 드립니다.</p>
+</div>
+</div>
+<div class="border border-gray-200 rounded-lg overflow-hidden">
+<button class="faq-toggle w-full flex justify-between items-center p-4 text-left font-semibold hover:bg-gray-50">
+<span>디자인 수정은 몇 번까지 가능한가요?</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-add-line ri-lg"></i>
+</div>
+</button>
+<div class="faq-content hidden p-4 pt-0 text-gray-600 border-t border-gray-100">
+<p>기본적으로 각 디자인 항목별로 2회의 수정 기회가 제공됩니다. 심플 스타일은 2회, 모던 스타일은 3회, 럭셔리 스타일은 무제한 수정이 가능합니다. 추가 수정이 필요한 경우 별도 비용이 발생할 수 있으며, 이는 사전에 안내해 드립니다.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- 푸터 -->
+<footer class="bg-gray-900 text-white py-12">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<div>
+<div class="text-2xl font-['Pacifico'] text-white mb-4">logo</div>
+<p class="text-gray-400 mb-4">에이치디자인은 병원 디자인 전문 회사로, 공간부터 브랜딩까지 토탈 디자인 솔루션을 제공합니다.</p>
+<div class="flex space-x-4">
+<a href="#" class="text-gray-400 hover:text-white transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-instagram-line ri-lg"></i>
+</div>
+</a>
+<a href="#" class="text-gray-400 hover:text-white transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-facebook-fill ri-lg"></i>
+</div>
+</a>
+<a href="#" class="text-gray-400 hover:text-white transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-youtube-line ri-lg"></i>
+</div>
+</a>
+<a href="#" class="text-gray-400 hover:text-white transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-kakao-talk-fill ri-lg"></i>
+</div>
+</a>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4">서비스</h3>
+<ul class="space-y-2">
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">공간 디자인</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">사인물 디자인</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">인쇄물 디자인</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">온라인 디자인</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">광고/홍보</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">디지털 사이니지</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4">회사 정보</h3>
+<ul class="space-y-2">
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">회사 소개</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">포트폴리오</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">고객 후기</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">채용 정보</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">뉴스 & 블로그</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4">문의하기</h3>
+<ul class="space-y-2 text-gray-400">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mr-2 mt-0.5">
+<i class="ri-map-pin-line"></i>
+</div>
+<span>서울특별시 강남구 테헤란로 123 에이치타워 8층</span>
+</li>
+<li class="flex items-center">
+<div class="w-5 h-5 flex items-center justify-center mr-2">
+<i class="ri-phone-line"></i>
+</div>
+<span>02-1234-5678</span>
+</li>
+<li class="flex items-center">
+<div class="w-5 h-5 flex items-center justify-center mr-2">
+<i class="ri-mail-line"></i>
+</div>
+<span>info@hdesign.co.kr</span>
+</li>
+</ul>
+<div class="mt-4">
+<h4 class="text-sm font-semibold mb-2">뉴스레터 구독</h4>
+<div class="flex">
+<input type="email" placeholder="이메일 주소" class="bg-gray-800 text-white px-3 py-2 rounded-l-button focus:outline-none focus:ring-2 focus:ring-primary/50 flex-1 text-sm border-none placeholder-gray-500">
+<button class="bg-primary text-white px-4 py-2 rounded-r-button text-sm whitespace-nowrap hover:bg-primary/90 transition-colors">구독하기</button>
+</div>
+</div>
+</div>
+</div>
+<div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+<p class="text-gray-500 text-sm">© 2025 에이치디자인(H DESIGN). All rights reserved.</p>
+<div class="flex space-x-4 mt-4 md:mt-0">
+<a href="#" class="text-gray-500 hover:text-white text-sm transition-colors">개인정보처리방침</a>
+<a href="#" class="text-gray-500 hover:text-white text-sm transition-colors">이용약관</a>
+<a href="#" class="text-gray-500 hover:text-white text-sm transition-colors">사이트맵</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// 카테고리 선택 처리
+const categoryCards = document.querySelectorAll('.category-card');
+const styleSelectionSection = document.getElementById('styleSelectionSection');
+const quoteSummary = document.getElementById('quoteSummary');
+const ctaSection = document.getElementById('ctaSection');
+const selectedCategories = new Set();
+const categoryStyles = {};
+// 가격 정보 (실제 서비스에서는 서버에서 가져올 것입니다)
+const prices = {
+'space': { 'simple': 5000000, 'modern': 8000000, 'luxury': 15000000 },
+'sign': { 'simple': 2000000, 'modern': 3500000, 'luxury': 6000000 },
+'print': { 'simple': 1500000, 'modern': 2500000, 'luxury': 4000000 },
+'online': { 'simple': 3000000, 'modern': 5000000, 'luxury': 8000000 },
+'ad': { 'simple': 2000000, 'modern': 3000000, 'luxury': 5000000 },
+'digital': { 'simple': 3500000, 'modern': 6000000, 'luxury': 10000000 }
+};
+// 카테고리 이름 매핑
+const categoryNames = {
+'space': '공간 디자인',
+'sign': '사인물 디자인',
+'print': '인쇄물 디자인',
+'online': '온라인 디자인',
+'ad': '광고/홍보',
+'digital': '디지털 사이니지'
+};
+// 스타일 이름 매핑
+const styleNames = {
+'simple': '심플',
+'modern': '모던',
+'luxury': '럭셔리'
+};
+// 카테고리 카드 클릭 이벤트
+categoryCards.forEach(card => {
+card.addEventListener('click', function() {
+const category = this.dataset.category;
+// 선택 상태 토글
+if (this.classList.contains('selected')) {
+this.classList.remove('selected');
+selectedCategories.delete(category);
+// 해당 카테고리 콘텐츠 닫기
+const categoryContent = document.getElementById(`${category}Content`);
+if (categoryContent) {
+categoryContent.classList.remove('active');
+}
+} else {
+this.classList.add('selected');
+selectedCategories.add(category);
+// 기본 스타일 설정
+if (!categoryStyles[category]) {
+categoryStyles[category] = 'simple';
+}
+// 해당 카테고리 콘텐츠 열기
+const categoryContent = document.getElementById(`${category}Content`);
+if (categoryContent) {
+categoryContent.classList.add('active');
+}
+}
+// 스타일 선택 섹션 표시 여부 결정
+if (selectedCategories.size > 0) {
+styleSelectionSection.classList.remove('hidden');
+} else {
+styleSelectionSection.classList.add('hidden');
+}
+updateQuoteSummary();
+});
+});
+// 스타일 선택 라디오 버튼 이벤트
+const styleRadios = document.querySelectorAll('input[type="radio"][name$="-style"]');
+styleRadios.forEach(radio => {
+radio.addEventListener('change', function() {
+const [category, style] = this.id.split('-');
+categoryStyles[category] = style;
+// 탭 콘텐츠 변경
+const tabContents = document.querySelectorAll(`.${category}-tab-content`);
+tabContents.forEach(content => {
+if (content.dataset.style === style) {
+content.classList.add('active');
+} else {
+content.classList.remove('active');
+}
+});
+updateQuoteSummary();
+});
+});
+// 견적 요약 업데이트 함수
+function updateQuoteSummary() {
+if (selectedCategories.size > 0) {
+quoteSummary.classList.remove('hidden');
+ctaSection.classList.remove('hidden');
+const tableBody = document.getElementById('quoteTableBody');
+tableBody.innerHTML = '';
+let totalAmount = 0;
+selectedCategories.forEach(category => {
+const style = categoryStyles[category] || 'simple';
+const price = prices[category][style];
+totalAmount += price;
+const row = document.createElement('tr');
+row.innerHTML = `
+<td class="py-3 px-4 border-b border-gray-200">${categoryNames[category]}</td>
+<td class="py-3 px-4 border-b border-gray-200">${styleNames[style]}</td>
+<td class="py-3 px-4 border-b border-gray-200 text-right">${price.toLocaleString()}원</td>
+`;
+tableBody.appendChild(row);
+});
+document.getElementById('totalAmount').textContent = `${totalAmount.toLocaleString()}원`;
+} else {
+quoteSummary.classList.add('hidden');
+ctaSection.classList.add('hidden');
+}
+}
+// FAQ 토글 기능
+const faqToggles = document.querySelectorAll('.faq-toggle');
+faqToggles.forEach(toggle => {
+toggle.addEventListener('click', function() {
+const content = this.nextElementSibling;
+const icon = this.querySelector('i');
+if (content.classList.contains('hidden')) {
+content.classList.remove('hidden');
+icon.classList.remove('ri-add-line');
+icon.classList.add('ri-subtract-line');
+} else {
+content.classList.add('hidden');
+icon.classList.remove('ri-subtract-line');
+icon.classList.add('ri-add-line');
+}
+});
+});
+// 슬라이더 내비게이션 닷 기능
+const sampleSlides = document.querySelectorAll('.sample-slide');
+sampleSlides.forEach(slide => {
+const dots = slide.parentElement.nextElementSibling.querySelectorAll('.sample-nav-dot');
+dots.forEach((dot, index) => {
+dot.addEventListener('click', function() {
+// 활성 상태 업데이트
+dots.forEach(d => d.classList.remove('active'));
+this.classList.add('active');
+// 슬라이드 스크롤
+const slideWidth = slide.querySelector('div').offsetWidth;
+slide.scrollTo({
+left: slideWidth * index,
+behavior: 'smooth'
+});
+});
+});
+// 스크롤 이벤트로 활성 닷 업데이트
+slide.addEventListener('scroll', function() {
+const slideWidth = slide.querySelector('div').offsetWidth;
+const scrollPosition = slide.scrollLeft;
+const activeIndex = Math.round(scrollPosition / slideWidth);
+dots.forEach((dot, index) => {
+if (index === activeIndex) {
+dot.classList.add('active');
+} else {
+dot.classList.remove('active');
+}
+});
+});
+});
+});
+</script>
+</body>
+</html>
